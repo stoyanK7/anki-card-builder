@@ -55,7 +55,7 @@
         },
         {
             "matches": ["https://www.deepl.com/*"],
-            "js": ["src/content-scripts/deepl.js"]
+            "js": ["src/content-scripts/deepl.js", "src/utils/xpath.js"]
         }
     ]
 }
