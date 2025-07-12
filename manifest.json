@@ -1,0 +1,61 @@
+{
+    "name": "Anki Card Builder",
+    "description": "Speed up creation of Anki cards from web content.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "icons": {
+        "16": "icons/flashcards-16.png",
+        "32": "icons/flashcards-32.png",
+        "48": "icons/flashcards-48.png",
+        "128": "icons/flashcards-128.png"
+    },
+    "action": {
+        "default_popup": "src/popup/popup.html",
+        "default_icon": {
+            "16": "icons/flashcards-16.png",
+            "32": "icons/flashcards-32.png",
+            "48": "icons/flashcards-48.png",
+            "128": "icons/flashcards-128.png"
+        }
+    },
+    "background": {
+        "scripts": [
+            "src/background.js"
+        ],
+        "service_worker": "src/background.js"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "notifications"
+    ],
+    "host_permissions": [
+        "https://fr.wiktionary.org/*",
+        "https://translate.google.com/*",
+        "https://www.google.com/search*",
+        "https://www.collinsdictionary.com/*",
+        "https://www.deepl.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["https://fr.wiktionary.org/*"],
+            "js": ["src/content-scripts/wiktionary.js"]
+        },
+        {
+            "matches": ["https://translate.google.com/*"],
+            "js": ["src/content-scripts/google-translate.js"]
+        },
+        {
+            "matches": ["https://www.google.com/search*"],
+            "js": ["src/content-scripts/google-images.js"]
+        },
+        {
+            "matches": ["https://www.collinsdictionary.com/*"],
+            "js": ["src/content-scripts/collins-dictionary.js"]
+        },
+        {
+            "matches": ["https://www.deepl.com/*"],
+            "js": ["src/content-scripts/deepl.js"]
+        }
+    ]
+}
