@@ -61,6 +61,13 @@ async function fetchDeckNames() {
 
 function updateCardEditor() {
     browser.storage.local.get().then((data) => {
+        if (data.audioSrc) {
+            const audioSrcTextarea = document.getElementById('audio-src');
+            const audioPlayerElement = document.getElementById('audio-player');
+            audioSrcTextarea.value = data.audioSrc;
+            audioPlayerElement.src = data.audioSrc;
+        }
+
         if (data.frenchPlural) {
             const frenchPluralInput = document.getElementById('french-plural');
             frenchPluralInput.value = data.frenchPlural;
@@ -136,6 +143,18 @@ document.getElementById('select-image').addEventListener('click', () => {
             console.error('No Google Images tab found');
         }
     });
+});
+
+document.getElementById('audio-src').addEventListener('input', (event) => {
+    const audioSrc = event.target.value.trim();
+    const audioPlayerElement = document.getElementById('audio-player');
+    if (audioSrc) {
+        audioPlayerElement.src = audioSrc;
+        browser.storage.local.set({ audioSrc });
+    } else {
+        audioPlayerElement.src = '';
+        browser.storage.local.remove('audioSrc');
+    }
 });
 
 document.getElementById('image-src').addEventListener('input', (event) => {

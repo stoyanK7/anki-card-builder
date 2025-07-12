@@ -86,9 +86,9 @@ document
                 frenchWord
             )}`
         ];
-        urls.forEach((url) => {
-            browser.tabs.create({ url });
-        });
+        // urls.forEach((url) => {
+        //     browser.tabs.create({ url });
+        // });
     });
 
 function disableButton(button) {

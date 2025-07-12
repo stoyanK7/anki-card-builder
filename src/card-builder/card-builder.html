@@ -23,6 +23,18 @@
                 <legend>🇫🇷 <span id="french-word">french-word</span></legend>
 
                 <div id="french-wrapper">
+                    <label for="audio-src">Pronunciation<br />Src:</label>
+                    <textarea
+                        id="audio-src"
+                        rows="1"
+                        cols="30"
+                        placeholder="e.g. https://example.com/audio.mp3"
+                    ></textarea>
+                    <audio
+                        id="audio-player"
+                        controls
+                        src="/shared-assets/audio/t-rex-roar.mp3"
+                    ></audio>
                     <label for="french-plural">Plural Form:</label>
                     <input
                         type="text"

@@ -4,6 +4,7 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
     margin: 0;
     width: 350px;
     padding: 5px;
@@ -58,6 +59,11 @@ textarea {
     grid-template-columns: auto 1fr;
     row-gap: 3px;
     column-gap: 5px;
+}
+
+#audio-player {
+    height: 30px;
+    grid-column: 1 / -1;
 }
 
 label[for='masculine'] {
