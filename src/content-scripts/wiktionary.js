@@ -1,26 +1,17 @@
-const xpathGender =
+const frenchGenderXPath =
     '/html/body/div[2]/div/div[3]/main/div[3]/div[3]/div[1]/section[2]/section[2]/p/span/i';
-const xpathPlural =
+const frenchPluralXPath =
     '/html/body/div[2]/div/div[3]/main/div[3]/div[3]/div[1]/section[2]/section[2]/table/tbody/tr[2]/td[2]/bdi/a';
 
-function getValue(xpath) {
-    const result = document.evaluate(
-        xpath,
-        document,
-        null,
-        XPathResult.STRING_TYPE,
-        null
-    );
-    return result.stringValue.trim();
+async function main() {
+    const frenchGender = window.getStringFromXPath(frenchGenderXPath);
+    const frenchPlural = window.getStringFromXPath(frenchPluralXPath);
+
+    await browser.storage.local.set({
+        frenchGender,
+        frenchPlural
+    });
+    await browser.runtime.sendMessage({ type: 'data-updated' });
 }
 
-const frenchGender = getValue(xpathGender);
-const frenchPlural = getValue(xpathPlural);
-
-// TODO: Fix race condition
-browser.storage.local.set({
-    frenchGender,
-    frenchPlural
-});
-
-browser.runtime.sendMessage({ type: 'data-updated' });
+main();
