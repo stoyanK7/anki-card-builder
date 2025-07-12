@@ -196,10 +196,10 @@ async function saveCard() {
             }
         ]
     };
+
     try {
         await invokeAnkiConnect('multi', requestParams);
     } catch (error) {
-        const errorDiv = document.getElementById('error-message');
         errorDiv.textContent = error.message;
         errorDiv.style.display = 'block';
         saveButton.disabled = false;
