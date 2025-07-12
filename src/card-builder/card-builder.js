@@ -90,24 +90,66 @@ document.getElementById('select-image').addEventListener('click', () => {
 });
 
 async function saveCard() {
+    // Disable to prevent multiple requests triggering
+    const saveButton = document.getElementById('save-card-button');
+    saveButton.disabled = true;
+
     // Clear any previous error message
     const errorDiv = document.getElementById('error-message');
     errorDiv.textContent = '';
     errorDiv.style.display = 'none';
 
-    const saveButton = document.getElementById('save-card-button');
-    saveButton.disabled = true;
+    // Get the values from the form. It is the source of truth.
+    const frenchWord = document
+        .getElementById('french-word')
+        .textContent.trim();
+    const frenchPlural = document.getElementById('french-plural').value.trim();
+    const frenchGender = document
+        .querySelector('input[name="french-gender"]:checked')
+        .value.trim();
+    const frenchSentence = document
+        .getElementById('french-sentence')
+        .value.trim();
+    const bulgarianWord = document
+        .getElementById('bulgarian-word')
+        .value.trim();
+    const bulgarianSentence = document
+        .getElementById('bulgarian-sentence')
+        .value.trim();
+    const imageSrc = document.getElementById('image-src').value.trim();
 
-    const frenchWord = document.getElementById('french-word').textContent;
-    const frenchPlural = document.getElementById('french-plural').value;
-    const frenchGender = document.querySelector(
-        'input[name="french-gender"]:checked'
-    ).value;
-    const frenchSentence = document.getElementById('french-sentence').value;
-    const bulgarianWord = document.getElementById('bulgarian-word').value;
-    const bulgarianSentence =
-        document.getElementById('bulgarian-sentence').value;
-    const imageSrc = document.getElementById('image-src').value;
+    // Validate the inputs
+    if (!frenchPlural) {
+        errorDiv.textContent = 'French plural is required.';
+        errorDiv.style.display = 'block';
+        saveButton.disabled = false;
+        return;
+    } else if (!frenchGender) {
+        errorDiv.textContent = 'French gender is required.';
+        errorDiv.style.display = 'block';
+        saveButton.disabled = false;
+        return;
+    } else if (!frenchSentence) {
+        errorDiv.textContent = 'French sentence is required.';
+        errorDiv.style.display = 'block';
+        saveButton.disabled = false;
+        return;
+    } else if (!bulgarianWord) {
+        errorDiv.textContent = 'Bulgarian word is required.';
+        errorDiv.style.display = 'block';
+        saveButton.disabled = false;
+        return;
+    } else if (!bulgarianSentence) {
+        errorDiv.textContent = 'Bulgarian sentence is required.';
+        errorDiv.style.display = 'block';
+        saveButton.disabled = false;
+        return;
+    } else if (!imageSrc) {
+        errorDiv.textContent = 'Image source is required.';
+        errorDiv.style.display = 'block';
+        saveButton.disabled = false;
+        return;
+    }
 
     // Default to just the word because we don't have only nouns.
     let frenchWordWithDefiniteArticle = frenchWord;
@@ -158,12 +200,13 @@ async function saveCard() {
         await invokeAnkiConnect('multi', requestParams);
     } catch (error) {
         const errorDiv = document.getElementById('error-message');
-        errorDiv.textContent = message;
+        errorDiv.textContent = error.message;
         errorDiv.style.display = 'block';
         saveButton.disabled = false;
         return;
     }
 
+    // Close the card builder popup.
     browser.windows.getCurrent().then((currentWindow) => {
         browser.windows.remove(currentWindow.id);
     });
