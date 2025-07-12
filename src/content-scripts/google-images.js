@@ -95,7 +95,7 @@ function enableImageSelection() {
         const img = tile.querySelector('img');
 
         if (img && img.src) {
-            browser.storage.local.set({ imageSrc: firstImg.src }).then(() => {
+            browser.storage.local.set({ imageSrc: img.src }).then(() => {
                 browser.runtime.sendMessage({ type: 'data-updated' });
                 cleanup();
             });
@@ -108,11 +108,13 @@ function enableImageSelection() {
         selectingImage = false;
         const style = document.getElementById('custom-cursor-style');
         if (style) style.remove();
-        images.forEach((img) => {
-            img.removeEventListener('mouseenter', highlight);
-            img.removeEventListener('mouseleave', removeHighlight);
-            img.removeEventListener('click', selectImage);
-            img.style.outline = '';
-        });
     }
 }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && selectingImage) {
+        selectingImage = false;
+        const style = document.getElementById('custom-cursor-style');
+        if (style) style.remove();
+    }
+});
