@@ -124,6 +124,7 @@ document.getElementById('select-image').addEventListener('click', () => {
         const imageTab = tabs.find(
             (tab) =>
                 tab.url.includes('https://www.google.com/search') &&
+                // NOTE: I am not sure this check is doing anything good.
                 tab.url.includes(`q=${frenchWord}`)
         );
 
