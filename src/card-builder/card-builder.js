@@ -128,9 +128,6 @@ document.getElementById('select-image').addEventListener('click', () => {
         );
 
         if (imageTab) {
-            console.log(
-                'Sending message to Google Images tab to start image selection'
-            );
             browser.tabs.sendMessage(imageTab.id, {
                 type: 'start-image-selection'
             });
