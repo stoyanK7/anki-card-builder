@@ -140,6 +140,18 @@ document.getElementById('select-image').addEventListener('click', () => {
     });
 });
 
+document.getElementById('image-src').addEventListener('input', (event) => {
+    const imageSrc = event.target.value.trim();
+    const imagePreview = document.getElementById('image-preview');
+    if (imageSrc) {
+        imagePreview.src = imageSrc;
+        browser.storage.local.set({ imageSrc });
+    } else {
+        imagePreview.src = '';
+        browser.storage.local.remove('imageSrc');
+    }
+});
+
 async function saveCard() {
     // Disable to prevent multiple requests triggering
     const saveButton = document.getElementById('save-card-button');
