@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="popup.css" />
+    </head>
+
+    <body>
+        <h3>Anki Card Builder</h3>
+
+        <div id="anki-connect-status">
+            <button id="reload">⭮</button>
+            &nbsp;Anki Connect Status:&nbsp;
+            <span id="status-word">Unknown</span>
+            <div id="error-message"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="decks-loading">Choose Deck:</label>
+            <select id="decks-loading"></select>
+        </div>
+
+        <div class="form-group">
+            <label for="french-word">French Word:</label>
+            <input
+                type="text"
+                placeholder="Enter word in French..."
+                id="french-word"
+                autocomplete="off"
+            />
+        </div>
+
+        <button id="prepare-card-button">Prepare Card</button>
+
+        <p class="helper-text">
+            Select a deck, enter a French word, and click "Prepare Card". The
+            card editor will open for you to review and save the card to Anki.
+        </p>
+        <script src="../utils/anki-connect.js"></script>
+        <script src="popup.js"></script>
+    </body>
+</html>

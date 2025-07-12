@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 1.5em;
+    max-width: 400px;
+}
+
+#reload {
+    cursor: pointer;
+    background-color: #cccccc;
+    border: 1px solid #999999;
+}
+
+#anki-connect-status {
+    margin: 10px 0;
+    font-size: 0.7em;
+}
+
+#status-word {
+    color: #333;
+}
+
+#error-message {
+    color: red;
+    margin: 10px 0;
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 0.3em;
+}
+
+label {
+    font-size: 0.95em;
+    margin-bottom: 0.3em;
+    display: block;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#prepare-card-button {
+    padding: 0.6em 1.2em;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    background: #0077cc;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#prepare-card-button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+.helper-text {
+    font-size: 0.92em;
+    color: #555;
+    margin-top: 0.7em;
+    margin-bottom: 0;
+}

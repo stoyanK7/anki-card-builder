@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!-- Renders emojis correctly -->
+        <link rel="stylesheet" href="card-builder.css" />
+    </head>
+
+    <body>
+        <div id="controls">
+            <div id="error-message"></div>
+            <button id="save-card-button">Save Card</button>
+
+            <fieldset>
+                <legend>🇫🇷 <span id="french-word">french-word</span></legend>
+
+                <div id="french-wrapper">
+                    <label for="french-plural">Plural Form:</label>
+                    <input
+                        type="text"
+                        id="french-plural"
+                        placeholder="e.g. voitures"
+                    />
+
+                    <label for="french-gender">Gender:</label>
+                    <div>
+                        <input
+                            type="radio"
+                            id="masculine"
+                            name="french-gender"
+                            value="masculin"
+                            checked
+                        />
+                        <label for="masculine">Masculine</label>
+
+                        <input
+                            type="radio"
+                            id="feminine"
+                            name="french-gender"
+                            value="féminin"
+                        />
+                        <label for="feminine">Feminine</label>
+                        <br />
+
+                        <input
+                            type="radio"
+                            id="undefined"
+                            name="french-gender"
+                            value="undefined"
+                            checked="true"
+                        />
+                        <label for="undefined">Undefined</label>
+                    </div>
+
+                    <label for="french-sentence">Sentence:</label>
+                    <textarea
+                        id="french-sentence"
+                        rows="2"
+                        cols="30"
+                        placeholder="e.g. Je peux conduire une voiture."
+                    ></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>🇧🇬</legend>
+
+                <div id="bulgarian-wrapper">
+                    <label for="bulgarian-word">Word:</label>
+                    <input
+                        type="text"
+                        id="bulgarian-word"
+                        placeholder="e.g. кола"
+                    />
+
+                    <label for="bulgarian-sentence">Sentence:</label>
+                    <textarea
+                        id="bulgarian-sentence"
+                        rows="2"
+                        cols="30"
+                        placeholder="Мога да карам кола."
+                    ></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>📷</legend>
+
+                <div id="image-wrapper">
+                    <button id="select-image">👆 Select Image</button>
+
+                    <label for="image-src">Image Src:</label>
+                    <textarea
+                        id="image-src"
+                        rows="2"
+                        cols="30"
+                        placeholder="e.g. https://example.com/image.jpg"
+                    ></textarea>
+
+                    <label for="image-preview">Image Preview:</label>
+                    <img
+                        src="https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg"
+                        alt=""
+                        id="image-preview"
+                    />
+                </div>
+            </fieldset>
+        </div>
+        <script src="card-builder.js"></script>
+        <script src="../utils/anki-connect.js"></script>
+    </body>
+</html>
