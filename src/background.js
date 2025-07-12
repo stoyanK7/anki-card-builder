@@ -3,17 +3,10 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         browser.tabs.create({ url: message.url });
     }
 
-    if (message.type === 'card-saved') {
-        const notificationId = `card-saved-${message.frenchWord}`;
-        browser.notifications.create(notificationId, {
-            type: 'basic',
-            iconUrl: browser.runtime.getURL('icons/flashcards-64.png'),
-            title: 'Card Saved',
-            message: `Card "${message.frenchWord}" saved in deck "${message.deckName}".`
-        });
-
+    if (message.type === 'create-notification') {
+        browser.notifications.create(message.id, message.options);
         setTimeout(() => {
-            browser.notifications.clear(notificationId);
+            browser.notifications.clear(message.id);
         }, 5000);
     }
 });

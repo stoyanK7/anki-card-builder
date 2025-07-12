@@ -188,10 +188,17 @@ async function saveCard() {
     await browser.storage.local.clear();
     await browser.storage.local.set({ deckName });
 
+    // Send a message to the background script to create a notification.
+    // Only the background script can create notifications.
     browser.runtime.sendMessage({
-        type: 'card-saved',
-        deckName: deckName,
-        frenchWord: frenchWord
+        type: 'create-notification',
+        id: `card-saved-${message.frenchWord}`,
+        options: {
+            type: 'basic',
+            iconUrl: browser.runtime.getURL('icons/flashcards-64.png'),
+            title: 'Card Saved',
+            message: `Card "${message.frenchWord}" saved in deck "${message.deckName}".`
+        }
     });
 }
 
