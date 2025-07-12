@@ -12,6 +12,14 @@
             <button id="save-card-button">Save Card</button>
 
             <fieldset>
+                <legend>📁</legend>
+                <div id="deck-wrapper">
+                    <label for="deck-name">Deck Name:</label>
+                    <select id="deck-name"></select>
+                </div>
+            </fieldset>
+
+            <fieldset>
                 <legend>🇫🇷 <span id="french-word">french-word</span></legend>
 
                 <div id="french-wrapper">
@@ -106,7 +114,8 @@
                 </div>
             </fieldset>
         </div>
-        <script src="card-builder.js"></script>
         <script src="../utils/anki-connect.js"></script>
+        <!-- Anki Connect script must load first to ensure it is ready when the card builder script runs. -->
+        <script src="card-builder.js"></script>
     </body>
 </html>

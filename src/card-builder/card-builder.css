@@ -36,6 +36,17 @@ textarea {
     cursor: not-allowed;
 }
 
+#deck-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 5px;
+}
+
+#deck-name {
+    width: 100%;
+}
+
 #french-word {
     margin: 0;
     font-weight: bold;

@@ -2,8 +2,6 @@
     if (!(await ensureAnkiConnectIsAvailable())) {
         return;
     }
-    const deckNames = await fetchDeckNames();
-    populateDecksDropdown(deckNames);
 })();
 
 document
@@ -28,59 +26,6 @@ async function ensureAnkiConnectIsAvailable() {
             'AnkiConnect is not available. Please ensure it is installed, enabled and that Anki is running. Error: ' +
             error.message;
         return false;
-    }
-}
-
-async function fetchDeckNames() {
-    try {
-        const deckNames = await invokeAnkiConnect('deckNames');
-        if (!Array.isArray(deckNames)) {
-            throw new Error(
-                'Invalid response from AnkiConnect: expected an array of deck names.'
-            );
-        }
-        return deckNames;
-    } catch (error) {
-        document.getElementById('error-message').textContent = error.message;
-        document.getElementById('error-message').style.display = 'block';
-    }
-}
-
-async function populateDecksDropdown(deckNames) {
-    // Create dropdown for deck selection
-    let select = document.createElement('select');
-    select.id = 'deck-select';
-    select.name = 'deck-select';
-    select.addEventListener('change', async (event) => {
-        const deckName = event.target.value;
-        browser.storage.local.set({ deckName });
-    });
-
-    // Remove 'Default' deck if it exists.
-    // Nobody uses that deck, so it is better to not show it.
-    const defaultIndex = deckNames.indexOf('Default');
-    if (defaultIndex !== -1) {
-        deckNames.splice(defaultIndex, 1);
-    }
-
-    // Populate dropdown with deck names
-    deckNames.forEach((deckName) => {
-        let option = document.createElement('option');
-        option.value = deckName;
-        option.textContent = deckName;
-        select.appendChild(option);
-    });
-
-    // Replace the empty select element with the populated one
-    let emptySelect = document.getElementById('decks-loading');
-    emptySelect.replaceWith(select);
-
-    // Load previously selected deck name from storage (if any) and select it
-    const storageResult = await browser.storage.local.get('deckName');
-    if (storageResult.deckName && deckNames.includes(storageResult.deckName)) {
-        select.value = storageResult.deckName;
-    } else {
-        select.value = '';
     }
 }
 
@@ -120,7 +65,7 @@ document
             url: browser.runtime.getURL('src/card-builder/card-builder.html'),
             type: 'popup',
             width: 350,
-            height: 520,
+            height: 560,
             focused: true
         });
 

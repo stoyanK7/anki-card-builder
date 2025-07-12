@@ -1,12 +1,63 @@
 let frenchWord = '';
 let deckName = '';
 let frenchWordSpan = document.getElementById('french-word');
+let deckNameInput = document.getElementById('deck-name');
 
 browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
     frenchWord = result.frenchWord;
     deckName = result.deckName;
     frenchWordSpan.textContent = frenchWord;
+    deckNameInput.value = deckName;
 });
+
+(async () => {
+    const deckNames = await fetchDeckNames();
+    // Remove 'Default' deck if it exists.
+    // Nobody uses that deck, so it is better to not show it.
+    const defaultIndex = deckNames.indexOf('Default');
+    if (defaultIndex !== -1) {
+        deckNames.splice(defaultIndex, 1);
+    }
+
+    const deckNameSelect = document.getElementById('deck-name');
+
+    // Populate dropdown with deck names
+    deckNames.forEach((deckName) => {
+        let option = document.createElement('option');
+        option.value = deckName;
+        option.textContent = deckName;
+        deckNameSelect.appendChild(option);
+    });
+
+    deckNameSelect.addEventListener('change', async (event) => {
+        const deckName = event.target.value;
+        browser.storage.local.set({ deckName });
+    });
+
+    // Load previously selected deck name from storage (if any) and select it
+    const storageResult = await browser.storage.local.get('deckName');
+    if (storageResult.deckName && deckNames.includes(storageResult.deckName)) {
+        deckNameSelect.value = storageResult.deckName;
+    } else {
+        // Else, don't choose anything. Let the user select a deck.
+        deckNameSelect.value = '';
+    }
+})();
+
+async function fetchDeckNames() {
+    try {
+        const deckNames = await invokeAnkiConnect('deckNames');
+        if (!Array.isArray(deckNames)) {
+            throw new Error(
+                'Invalid response from AnkiConnect: expected an array of deck names.'
+            );
+        }
+        return deckNames;
+    } catch (error) {
+        document.getElementById('error-message').textContent = error.message;
+        document.getElementById('error-message').style.display = 'block';
+    }
+}
 
 function updateCardEditor() {
     browser.storage.local.get().then((data) => {
