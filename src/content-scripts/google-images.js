@@ -26,13 +26,8 @@ function observeAndAutoSelectFirstImage() {
             const firstImg = firstTile.querySelector('img');
 
             if (firstImg && firstImg.src) {
-                // Use .then to prevent race conditions
-                browser.storage.local
-                    .set({ imageSrc: firstImg.src })
-                    .then(() => {
-                        browser.runtime.sendMessage({ type: 'data-updated' });
-                        observer.disconnect(); // only after everything is done
-                    });
+                browser.storage.local.set({ imageSrc: firstImg.src });
+                observer.disconnect();
             }
         }
     });
@@ -95,10 +90,8 @@ function enableImageSelection() {
         const img = tile.querySelector('img');
 
         if (img && img.src) {
-            browser.storage.local.set({ imageSrc: img.src }).then(() => {
-                browser.runtime.sendMessage({ type: 'data-updated' });
-                cleanup();
-            });
+            browser.storage.local.set({ imageSrc: img.src });
+            cleanup();
         } else {
             console.warn('No image found in tile:', tile);
         }

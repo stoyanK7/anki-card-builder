@@ -5,9 +5,7 @@ function main() {
     const observer = new MutationObserver(async (mutations, obs) => {
         const bulgarianWord = getStringFromXPath(wordTranslationXPath);
         if (bulgarianWord) {
-            await browser.storage.local.set({ bulgarianWord });
-            await browser.runtime.sendMessage({ type: 'data-updated' });
-
+            browser.storage.local.set({ bulgarianWord });
             obs.disconnect();
         }
     });

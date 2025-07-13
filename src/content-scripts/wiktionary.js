@@ -7,11 +7,10 @@ async function main() {
     const frenchGender = getStringFromXPath(frenchGenderXPath);
     const frenchPlural = getStringFromXPath(frenchPluralXPath);
 
-    await browser.storage.local.set({
+    browser.storage.local.set({
         frenchGender,
         frenchPlural
     });
-    await browser.runtime.sendMessage({ type: 'data-updated' });
 
     // Wait 2 seconds before doing all the audio stuff.
     setTimeout(() => {}, 2000);

@@ -54,10 +54,7 @@ async function main() {
         }) || exampleDivs[0];
 
     const frenchSentence = exampleDiv.textContent.replace(/\n/g, ' ').trim();
-    await browser.storage.local.set({ frenchSentence });
-    await browser.runtime.sendMessage({
-        type: 'data-updated'
-    });
+    browser.storage.local.set({ frenchSentence });
 
     browser.runtime.sendMessage({
         type: 'create-tab',

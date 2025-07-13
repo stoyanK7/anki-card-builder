@@ -28,8 +28,7 @@ browser.webRequest.onCompleted.addListener(
             return;
         }
 
-        await browser.storage.local.set({ audioSrc: details.url });
-        await browser.runtime.sendMessage({ type: 'data-updated' });
+        browser.storage.local.set({ audioSrc: details.url });
     },
     { urls: ['https://fr.wiktionary.org/*', 'https://upload.wikimedia.org/*'] },
     ['responseHeaders']
