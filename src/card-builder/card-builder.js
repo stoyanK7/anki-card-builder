@@ -69,8 +69,7 @@ function updateCardEditor() {
         }
 
         if (data.frenchPlural) {
-            const frenchPluralInput = document.getElementById('french-plural');
-            frenchPluralInput.value = data.frenchPlural;
+            document.getElementById('french-plural').value = data.frenchPlural;
         }
 
         if (data.frenchGender) {
@@ -85,21 +84,18 @@ function updateCardEditor() {
         }
 
         if (data.frenchSentence) {
-            const frenchSentenceTextarea =
-                document.getElementById('french-sentence');
-            frenchSentenceTextarea.value = data.frenchSentence;
+            document.getElementById('french-sentence').value =
+                data.frenchSentence;
         }
 
         if (data.bulgarianWord) {
-            const bulgarianWordInput =
-                document.getElementById('bulgarian-word');
-            bulgarianWordInput.value = data.bulgarianWord;
+            document.getElementById('bulgarian-word').value =
+                data.bulgarianWord;
         }
 
         if (data.bulgarianSentence) {
-            const bulgarianSentenceTextarea =
-                document.getElementById('bulgarian-sentence');
-            bulgarianSentenceTextarea.value = data.bulgarianSentence;
+            document.getElementById('bulgarian-sentence').value =
+                data.bulgarianSentence;
         }
 
         if (data.imageSrc) {
