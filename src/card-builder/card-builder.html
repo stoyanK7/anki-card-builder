@@ -108,8 +108,6 @@
                 <legend>📷</legend>
 
                 <div id="image-wrapper">
-                    <button id="select-image">👆 Select Image</button>
-
                     <label for="image-src">Image Src:</label>
                     <textarea
                         id="image-src"
@@ -118,12 +116,15 @@
                         placeholder="e.g. https://example.com/image.jpg"
                     ></textarea>
 
-                    <label for="image-preview">Image Preview:</label>
-                    <img
-                        src="https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg"
-                        alt=""
-                        id="image-preview"
-                    />
+                    <div id="image-preview-wrapper">
+                        <label for="image-preview">Image Preview:</label>
+                        <button id="select-image">👆 Select Image</button>
+                        <img
+                            src="https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg"
+                            alt=""
+                            id="image-preview"
+                        />
+                    </div>
                 </div>
             </fieldset>
         </div>
