@@ -1,3 +1,5 @@
+import { invokeAnkiConnect } from '../shared/anki-connect.js';
+
 let frenchWord = '';
 let deckName = '';
 let frenchWordSpan = document.getElementById('french-word');

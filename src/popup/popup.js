@@ -1,4 +1,4 @@
-import { invokeAnkiConnect } from '../utils/anki-connect.js';
+import { invokeAnkiConnect } from '../shared/anki-connect.js';
 import { validateFrenchWord } from '../shared/input-validation.js';
 import { startCardBuildingProcess } from '../shared/card-workflow.js';
 
