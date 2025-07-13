@@ -62,10 +62,10 @@ async function fetchDeckNames() {
 function updateCardEditor() {
     browser.storage.local.get().then((data) => {
         if (data.audioSrc) {
-            const audioSrcTextarea = document.getElementById('audio-src');
-            const audioPlayerElement = document.getElementById('audio-player');
-            audioSrcTextarea.value = data.audioSrc;
-            audioPlayerElement.src = data.audioSrc;
+            if (document.getElementById('audio-src').value !== data.audioSrc) {
+                document.getElementById('audio-src').value = data.audioSrc;
+                document.getElementById('audio-player').src = data.audioSrc;
+            }
         }
 
         if (data.frenchPlural) {
@@ -103,10 +103,10 @@ function updateCardEditor() {
         }
 
         if (data.imageSrc) {
-            document.getElementById('image-preview').src = data.imageSrc;
-
-            const imageSrcTextarea = document.getElementById('image-src');
-            imageSrcTextarea.value = data.imageSrc;
+            if (document.getElementById('image-src').value !== data.imageSrc) {
+                document.getElementById('image-src').value = data.imageSrc;
+                document.getElementById('image-preview').src = data.imageSrc;
+            }
         }
     });
 }
