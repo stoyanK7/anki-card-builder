@@ -43,11 +43,11 @@
     "content_scripts": [
         {
             "matches": ["https://fr.wiktionary.org/*"],
-            "js": ["src/utils/xpath.js", "src/content-scripts/wiktionary.js"]
+            "js": ["src/shared/xpath.js", "src/content-scripts/wiktionary.js"]
         },
         {
             "matches": ["https://translate.google.com/*"],
-            "js": ["src/utils/xpath.js", "src/content-scripts/google-translate.js"]
+            "js": ["src/shared/xpath.js", "src/content-scripts/google-translate.js"]
         },
         {
             "matches": ["https://www.google.com/search*"],
@@ -59,7 +59,7 @@
         },
         {
             "matches": ["https://www.deepl.com/*"],
-            "js": ["src/utils/xpath.js", "src/content-scripts/deepl.js"]
+            "js": ["src/shared/xpath.js", "src/content-scripts/deepl.js"]
         }
     ]
 }

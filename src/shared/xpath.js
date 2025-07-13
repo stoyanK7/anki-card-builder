@@ -8,6 +8,3 @@ function getStringFromXPath(xpath) {
     );
     return result.stringValue.trim();
 }
-
-// Expose the function globally so it can be used in other scripts
-window.getStringFromXPath = getStringFromXPath;

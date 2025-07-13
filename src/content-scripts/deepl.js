@@ -4,8 +4,7 @@ const translationTextXPath =
 
 function main() {
     const observer = new MutationObserver(async (mutations, obs) => {
-        const bulgarianSentence =
-            window.getStringFromXPath(translationTextXPath);
+        const bulgarianSentence = getStringFromXPath(translationTextXPath);
         if (bulgarianSentence) {
             await browser.storage.local.set({ bulgarianSentence });
             await browser.runtime.sendMessage({ type: 'data-updated' });
