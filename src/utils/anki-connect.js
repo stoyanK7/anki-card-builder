@@ -1,6 +1,6 @@
 // Taken from https://github.com/amikey/anki-connect?tab=readme-ov-file#sample-invocation
 // and modified to use fetch API instead of XMLHttpRequest
-function invokeAnkiConnect(action, params = {}) {
+export function invokeAnkiConnect(action, params = {}) {
     const ankiConnectVersion = 6;
 
     return fetch('http://127.0.0.1:8765', {
