@@ -34,11 +34,13 @@ async function ensureAnkiConnectIsAvailable() {
 }
 
 async function startCardPreparation() {
-    const frenchWord = document.getElementById('french-word').value.trim();
+    const frenchWord = document
+        .getElementById('french-word-input')
+        .value.trim();
 
     const validationResult = validateFrenchWord(frenchWord);
     if (!validationResult.valid) {
-        placeRedBorder(document.getElementById('french-word'));
+        placeRedBorder(document.getElementById('french-word-input'));
         document.getElementById(
             'error-message'
         ).textContent = `Invalid word: ${validationResult.reason}`;
@@ -54,11 +56,13 @@ document
     .getElementById('prepare-card-button')
     .addEventListener('click', startCardPreparation);
 
-document.getElementById('french-word').addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        startCardPreparation();
-    }
-});
+document
+    .getElementById('french-word-input')
+    .addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            startCardPreparation();
+        }
+    });
 
 function disableButton(button) {
     button.disabled = true;
