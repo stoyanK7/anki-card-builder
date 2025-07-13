@@ -27,10 +27,12 @@
     "permissions": [
         "storage",
         "tabs",
-        "notifications"
+        "notifications",
+        "webRequest"
     ],
     "host_permissions": [
         "https://fr.wiktionary.org/*",
+        "https://upload.wikimedia.org/*",
         "https://translate.google.com/*",
         "https://www.google.com/search*",
         "https://www.collinsdictionary.com/*",

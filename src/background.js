@@ -10,3 +10,24 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }, 5000);
     }
 });
+
+browser.webRequest.onCompleted.addListener(
+    async (details) => {
+        if (details.type !== 'media' || details.method !== 'GET') {
+            return;
+        }
+
+        // check response headers
+        const contentType = details.responseHeaders.find(
+            (header) => header.name.toLowerCase() === 'content-type'
+        );
+        if (!contentType || !contentType.value.startsWith('audio/')) {
+            return;
+        }
+
+        await browser.storage.local.set({ audioSrc: details.url });
+        await browser.runtime.sendMessage({ type: 'data-updated' });
+    },
+    { urls: ['https://fr.wiktionary.org/*', 'https://upload.wikimedia.org/*'] },
+    ['responseHeaders']
+);
