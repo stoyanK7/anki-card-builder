@@ -29,59 +29,67 @@ async function ensureAnkiConnectIsAvailable() {
     }
 }
 
+async function startCardPreparation() {
+    const frenchWord = document.getElementById('french-word').value.trim();
+
+    // Ensure the word is not empty
+    if (frenchWord.length === 0) {
+        disableButton(document.getElementById('prepare-card-button'));
+        placeRedBorder(document.getElementById('french-word'));
+        return;
+    }
+
+    if (!isValidFrenchWord(frenchWord)) {
+        disableButton(document.getElementById('prepare-card-button'));
+        placeRedBorder(document.getElementById('french-word'));
+        return;
+    }
+
+    // Wait for the frenchWord to be saved before creating the card builder
+    // else a race condition may occur and the card builder may not display
+    // the correct word.
+    await browser.storage.local.set({ frenchWord });
+
+    // Open the card editor in a separate popup window.
+    await browser.windows.create({
+        url: browser.runtime.getURL('src/card-builder/card-builder.html'),
+        type: 'popup',
+        width: 350,
+        height: 560,
+        focused: true
+    });
+
+    // Open all tabs with relevant links. The content scripts will scrape the data.
+    const urls = [
+        // Wiktionary for gender and plural form.
+        `https://fr.wiktionary.org/wiki/${encodeURIComponent(frenchWord)}`,
+        // Google Translate for bulgarian translation.
+        `https://translate.google.com/?sl=fr&tl=bg&text=${encodeURIComponent(
+            frenchWord
+        )}&op=translate`,
+        // Google Images for visual reference.
+        `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(
+            frenchWord
+        )}`,
+        // Collins Dictionary for an example sentence.
+        `https://www.collinsdictionary.com/sentences/french/${encodeURIComponent(
+            frenchWord
+        )}`
+    ];
+    urls.forEach((url) => {
+        browser.tabs.create({ url });
+    });
+}
+
 document
     .getElementById('prepare-card-button')
-    .addEventListener('click', async () => {
-        const frenchWord = document.getElementById('french-word').value.trim();
+    .addEventListener('click', startCardPreparation);
 
-        // Ensure the word is not empty
-        if (frenchWord.length === 0) {
-            disableButton(document.getElementById('prepare-card-button'));
-            placeRedBorder(document.getElementById('french-word'));
-            return;
-        }
-
-        if (!isValidFrenchWord(frenchWord)) {
-            disableButton(document.getElementById('prepare-card-button'));
-            placeRedBorder(document.getElementById('french-word'));
-            return;
-        }
-
-        // Wait for the frenchWord to be saved before creating the card builder
-        // else a race condition may occur and the card builder may not display
-        // the correct word.
-        await browser.storage.local.set({ frenchWord });
-
-        // Open the card editor in a separate popup window.
-        await browser.windows.create({
-            url: browser.runtime.getURL('src/card-builder/card-builder.html'),
-            type: 'popup',
-            width: 350,
-            height: 560,
-            focused: true
-        });
-
-        // Open all tabs with relevant links. The content scripts will scrape the data.
-        const urls = [
-            // Wiktionary for gender and plural form.
-            `https://fr.wiktionary.org/wiki/${encodeURIComponent(frenchWord)}`,
-            // Google Translate for bulgarian translation.
-            `https://translate.google.com/?sl=fr&tl=bg&text=${encodeURIComponent(
-                frenchWord
-            )}&op=translate`,
-            // Google Images for visual reference.
-            `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(
-                frenchWord
-            )}`,
-            // Collins Dictionary for an example sentence.
-            `https://www.collinsdictionary.com/sentences/french/${encodeURIComponent(
-                frenchWord
-            )}`
-        ];
-        // urls.forEach((url) => {
-        //     browser.tabs.create({ url });
-        // });
-    });
+document.getElementById('popup').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        startCardPreparation();
+    }
+});
 
 function disableButton(button) {
     button.disabled = true;

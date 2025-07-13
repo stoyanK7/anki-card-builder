@@ -70,6 +70,27 @@ input {
     cursor: pointer;
 }
 
+/* Inspired by https://dylanatsmith.com/wrote/styling-the-kbd-element */
+kbd {
+    background-color: #8c8c8c;
+    color: #ffffff;
+    border-radius: 0.25rem;
+    border: 1px solid #bfbfbf;
+    box-shadow: 0 2px 0 1px #bfbfbf;
+    cursor: default;
+    font-size: 0.75em;
+    line-height: 1;
+    min-width: 0.75rem;
+    text-align: center;
+    padding: 2px 5px;
+    position: relative;
+    top: -1px;
+    &:hover {
+        box-shadow: 0 1px 0 0.5px #bfbfbf;
+        top: 1px;
+    }
+}
+
 #prepare-card-button:disabled {
     background: #aaa;
     cursor: not-allowed;
