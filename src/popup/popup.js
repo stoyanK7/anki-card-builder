@@ -47,14 +47,6 @@ document
             return;
         }
 
-        // Ensure that a deck name is selected
-        const result = await browser.storage.local.get('deckName');
-        if (!result || !result.deckName) {
-            disableButton(document.getElementById('prepare-card-button'));
-            placeRedBorder(document.getElementById('deck-select'));
-            return;
-        }
-
         // Wait for the frenchWord to be saved before creating the card builder
         // else a race condition may occur and the card builder may not display
         // the correct word.
