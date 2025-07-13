@@ -1,5 +1,6 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 
+// TODO: Get rid of those global vars
 let frenchWord = '';
 let deckName = '';
 let frenchWordSpan = document.getElementById('french-word');
@@ -61,64 +62,61 @@ async function fetchDeckNames() {
     }
 }
 
-function updateCardEditor() {
-    browser.storage.local.get().then((data) => {
-        if (data.audioSrc) {
-            if (document.getElementById('audio-src').value !== data.audioSrc) {
-                document.getElementById('audio-src').value = data.audioSrc;
-                document.getElementById('audio-player').src = data.audioSrc;
+function updateCardEditorFromStorage(data) {
+    if ('frenchWord' in data) {
+        frenchWord = data.frenchWord;
+        document.getElementById('french-word').textContent = data.frenchWord;
+    }
+    if ('audioSrc' in data) {
+        document.getElementById('audio-src').value = data.audioSrc;
+        document.getElementById('audio-player').src = data.audioSrc;
+    }
+    if ('frenchPlural' in data) {
+        document.getElementById('french-plural').value = data.frenchPlural;
+    }
+    if ('frenchGender' in data) {
+        const frenchGenderRadios = document.querySelectorAll(
+            'input[name="french-gender"]'
+        );
+        frenchGenderRadios.forEach((radio) => {
+            if (radio.value === data.frenchGender) {
+                radio.checked = true;
             }
-        }
-
-        if (data.frenchPlural) {
-            document.getElementById('french-plural').value = data.frenchPlural;
-        }
-
-        if (data.frenchGender) {
-            const frenchGenderRadios = document.querySelectorAll(
-                'input[name="french-gender"]'
-            );
-            frenchGenderRadios.forEach((radio) => {
-                if (radio.value === data.frenchGender) {
-                    radio.checked = true;
-                }
-            });
-        }
-
-        if (data.frenchSentence) {
-            document.getElementById('french-sentence').value =
-                data.frenchSentence;
-        }
-
-        if (data.bulgarianWord) {
-            document.getElementById('bulgarian-word').value =
-                data.bulgarianWord;
-        }
-
-        if (data.bulgarianSentence) {
-            document.getElementById('bulgarian-sentence').value =
-                data.bulgarianSentence;
-        }
-
-        if (data.imageSrc) {
-            if (document.getElementById('image-src').value !== data.imageSrc) {
-                document.getElementById('image-src').value = data.imageSrc;
-                document.getElementById('image-preview').src = data.imageSrc;
-            }
-        }
-    });
+        });
+    }
+    if ('frenchSentence' in data) {
+        document.getElementById('french-sentence').value = data.frenchSentence;
+    }
+    if ('bulgarianWord' in data) {
+        document.getElementById('bulgarian-word').value = data.bulgarianWord;
+    }
+    if ('bulgarianSentence' in data) {
+        document.getElementById('bulgarian-sentence').value =
+            data.bulgarianSentence;
+    }
+    if ('imageSrc' in data) {
+        document.getElementById('image-src').value = data.imageSrc;
+        document.getElementById('image-preview').src = data.imageSrc;
+    }
 }
 
-// Populate the card editor with data from storage when it loads
-document.addEventListener('DOMContentLoaded', updateCardEditor);
-
-// Listen for updates from content scripts
-// The content scripts will scrape the page, update the local storage,
-// and then send a message to the card editor to update its UI.
-browser.runtime.onMessage.addListener((message) => {
-    if (message.type === 'data-updated') {
-        updateCardEditor();
+browser.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName !== 'local') {
+        return;
     }
+    // Build an object with only the changed new values
+    const changedData = {};
+    for (const key in changes) {
+        if (changes[key].newValue !== changes[key].oldValue) {
+            changedData[key] = changes[key].newValue;
+        }
+    }
+    updateCardEditorFromStorage(changedData);
+});
+
+// Populate the card editor with data from storage when it loads
+document.addEventListener('DOMContentLoaded', () => {
+    browser.storage.local.get().then(updateCardEditorFromStorage);
 });
 
 // Extensions cannot send messages to content scripts using browser.runtime.sendMessage.
