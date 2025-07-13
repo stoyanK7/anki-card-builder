@@ -1,3 +1,7 @@
+import { invokeAnkiConnect } from '../utils/anki-connect.js';
+import { validateFrenchWord } from '../shared/input-validation.js';
+import { startCardBuildingProcess } from '../shared/card-workflow.js';
+
 (async () => {
     if (!(await ensureAnkiConnectIsAvailable())) {
         return;
@@ -32,60 +36,25 @@ async function ensureAnkiConnectIsAvailable() {
 async function startCardPreparation() {
     const frenchWord = document.getElementById('french-word').value.trim();
 
-    // Ensure the word is not empty
-    if (frenchWord.length === 0) {
-        disableButton(document.getElementById('prepare-card-button'));
+    const validationResult = validateFrenchWord(frenchWord);
+    if (!validationResult.valid) {
         placeRedBorder(document.getElementById('french-word'));
+        document.getElementById(
+            'error-message'
+        ).textContent = `Invalid word: ${validationResult.reason}`;
+        disableButton(document.getElementById('prepare-card-button'));
         return;
     }
 
-    if (!isValidFrenchWord(frenchWord)) {
-        disableButton(document.getElementById('prepare-card-button'));
-        placeRedBorder(document.getElementById('french-word'));
-        return;
-    }
-
-    // Wait for the frenchWord to be saved before creating the card builder
-    // else a race condition may occur and the card builder may not display
-    // the correct word.
-    await browser.storage.local.set({ frenchWord });
-
-    // Open the card editor in a separate popup window.
-    await browser.windows.create({
-        url: browser.runtime.getURL('src/card-builder/card-builder.html'),
-        type: 'popup',
-        width: 350,
-        height: 560,
-        focused: true
-    });
-
-    // Open all tabs with relevant links. The content scripts will scrape the data.
-    const urls = [
-        // Wiktionary for gender and plural form.
-        `https://fr.wiktionary.org/wiki/${encodeURIComponent(frenchWord)}`,
-        // Google Translate for bulgarian translation.
-        `https://translate.google.com/?sl=fr&tl=bg&text=${encodeURIComponent(
-            frenchWord
-        )}&op=translate`,
-        // Google Images for visual reference.
-        `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(
-            frenchWord
-        )}`,
-        // Collins Dictionary for an example sentence.
-        `https://www.collinsdictionary.com/sentences/french/${encodeURIComponent(
-            frenchWord
-        )}`
-    ];
-    urls.forEach((url) => {
-        browser.tabs.create({ url });
-    });
+    browser.storage.local.set({ frenchWord });
+    startCardBuildingProcess(frenchWord);
 }
 
 document
     .getElementById('prepare-card-button')
     .addEventListener('click', startCardPreparation);
 
-document.getElementById('popup').addEventListener('keydown', (event) => {
+document.getElementById('french-word').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         startCardPreparation();
     }
@@ -103,9 +72,4 @@ function placeRedBorder(element) {
     setTimeout(() => {
         element.style.border = '';
     }, 750);
-}
-
-function isValidFrenchWord(word) {
-    const regex = /^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i;
-    return regex.test(word.trim());
 }
