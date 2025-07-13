@@ -6,7 +6,7 @@
     "icons": {
         "16": "icons/flashcards-16.png",
         "32": "icons/flashcards-32.png",
-        "48": "icons/flashcards-48.png",
+        "64": "icons/flashcards-64.png",
         "128": "icons/flashcards-128.png"
     },
     "action": {
@@ -14,7 +14,7 @@
         "default_icon": {
             "16": "icons/flashcards-16.png",
             "32": "icons/flashcards-32.png",
-            "48": "icons/flashcards-48.png",
+            "64": "icons/flashcards-64.png",
             "128": "icons/flashcards-128.png"
         }
     },
