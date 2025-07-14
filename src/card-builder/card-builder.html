@@ -1,132 +1,122 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
         <!-- Renders emojis correctly -->
+        <meta charset="UTF-8" />
         <link rel="stylesheet" href="card-builder.css" />
     </head>
 
     <body>
-        <div id="controls">
-            <div id="error-message"></div>
-            <button id="save-card-button">Save Card</button>
+        <div id="error-message"></div>
+        <button id="save-card-button">Save Card</button>
 
-            <fieldset>
-                <legend>📁</legend>
-                <div id="deck-wrapper">
-                    <label for="deck-name">Deck Name:</label>
-                    <select id="deck-name"></select>
-                </div>
-            </fieldset>
+        <fieldset>
+            <legend>📁</legend>
+            <label for="deck-name">Deck Name:</label>
+            <select id="deck-name"></select>
+        </fieldset>
 
-            <fieldset>
-                <legend>🇫🇷 <span id="french-word">french-word</span></legend>
+        <fieldset>
+            <legend>🇫🇷 <span id="french-word">french-word</span></legend>
 
-                <div id="french-wrapper">
-                    <label for="audio-src">Pronunciation<br />Src:</label>
-                    <textarea
-                        id="audio-src"
-                        rows="1"
-                        cols="30"
-                        placeholder="e.g. https://example.com/audio.mp3"
-                        required
-                    ></textarea>
-                    <audio
-                        id="audio-player"
-                        controls
-                        preload="none"
-                        src="/shared-assets/audio/t-rex-roar.mp3"
-                    ></audio>
-                    <label for="french-plural">Plural Form:</label>
-                    <input
-                        type="text"
-                        id="french-plural"
-                        placeholder="e.g. voitures"
-                        required
-                    />
+            <label for="audio-src">Audio Src:</label>
+            <textarea
+                id="audio-src"
+                rows="1"
+                cols="30"
+                placeholder="e.g. https://example.com/audio.mp3"
+                required
+            ></textarea>
+            <audio
+                id="audio-player"
+                controls
+                preload="none"
+                src="/shared-assets/audio/t-rex-roar.mp3"
+            ></audio>
+            <label for="french-plural">Plural Form:</label>
+            <input
+                id="french-plural"
+                type="text"
+                placeholder="e.g. voitures"
+                required
+            />
 
-                    <label for="french-gender">Gender:</label>
-                    <div>
-                        <input
-                            type="radio"
-                            id="masculine"
-                            name="french-gender"
-                            value="masculin"
-                        />
-                        <label for="masculine">Masculine</label>
-
-                        <input
-                            type="radio"
-                            id="feminine"
-                            name="french-gender"
-                            value="féminin"
-                        />
-                        <label for="feminine">Feminine</label>
-                        <br />
-
-                        <input
-                            type="radio"
-                            id="undefined"
-                            name="french-gender"
-                            value="undefined"
-                        />
-                        <label for="undefined">Undefined</label>
-                    </div>
-
-                    <label for="french-sentence">Sentence:</label>
-                    <textarea
-                        id="french-sentence"
-                        rows="2"
-                        cols="30"
-                        placeholder="e.g. Je peux conduire une voiture."
-                        required
-                    ></textarea>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>🇧🇬</legend>
-
-                <div id="bulgarian-wrapper">
-                    <label for="bulgarian-word">Word:</label>
-                    <input
-                        type="text"
-                        id="bulgarian-word"
-                        placeholder="e.g. кола"
-                        required
-                    />
-
-                    <label for="bulgarian-sentence">Sentence:</label>
-                    <textarea
-                        id="bulgarian-sentence"
-                        rows="2"
-                        cols="30"
-                        placeholder="напр. Мога да карам кола."
-                        required
-                    ></textarea>
-                </div>
-            </fieldset>
-
-            <fieldset id="image-fieldset">
-                <legend>📷</legend>
-
-                <label for="image-src">Image Src:</label>
-                <textarea
-                    id="image-src"
-                    rows="1"
-                    cols="30"
-                    placeholder="e.g. https://example.com/image.jpg"
-                    required
-                ></textarea>
-
-                <label for="image-preview">Image Preview:</label>
-                <img
-                    src="https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg"
-                    alt=""
-                    id="image-preview"
+            <label for="french-gender">Gender:</label>
+            <div>
+                <input
+                    id="masculine"
+                    type="radio"
+                    name="french-gender"
+                    value="masculin"
                 />
-            </fieldset>
-        </div>
+                <label for="masculine">M</label>
+
+                <input
+                    id="feminine"
+                    type="radio"
+                    name="french-gender"
+                    value="féminin"
+                />
+                <label for="feminine">F</label>
+
+                <input
+                    id="undefined"
+                    type="radio"
+                    name="french-gender"
+                    value="undefined"
+                />
+                <label for="undefined">U</label>
+            </div>
+
+            <label for="french-sentence">Sentence:</label>
+            <textarea
+                id="french-sentence"
+                rows="2"
+                cols="30"
+                placeholder="e.g. Je peux conduire une voiture."
+                required
+            ></textarea>
+        </fieldset>
+
+        <fieldset>
+            <legend>🇧🇬</legend>
+
+            <label for="bulgarian-word">Word:</label>
+            <input
+                id="bulgarian-word"
+                type="text"
+                placeholder="e.g. кола"
+                required
+            />
+
+            <label for="bulgarian-sentence">Sentence:</label>
+            <textarea
+                id="bulgarian-sentence"
+                rows="2"
+                cols="30"
+                placeholder="напр. Мога да карам кола."
+                required
+            ></textarea>
+        </fieldset>
+
+        <fieldset>
+            <legend>📷</legend>
+
+            <label for="image-src">Image Src:</label>
+            <textarea
+                id="image-src"
+                rows="1"
+                cols="30"
+                placeholder="e.g. https://example.com/image.jpg"
+                required
+            ></textarea>
+
+            <label for="image-preview">Image Preview:</label>
+            <img
+                id="image-preview"
+                src="https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg"
+            />
+        </fieldset>
         <script src="card-builder.js" type="module"></script>
     </body>
 </html>

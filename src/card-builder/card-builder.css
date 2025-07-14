@@ -13,61 +13,45 @@ body {
 input[type='text'],
 textarea {
     width: 100%;
-    padding: 3px 2px;
+    padding: 2px;
 }
 
 #error-message {
     color: red;
-    margin: 10px 0;
+    margin: 5px 0;
     display: none;
 }
 
 #save-card-button {
-    padding: 0.6em 1.2em;
     width: 100%;
+    padding: 0.6em 1.2em;
     border-radius: 5px;
     border: none;
     background: #0077cc;
     color: white;
     cursor: pointer;
-}
 
-#save-card-button:disabled {
-    background: #aaa;
-    cursor: not-allowed;
-}
+    &:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+    }
 
-#deck-wrapper {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: 5px;
-}
-
-#deck-name {
-    width: 100%;
+    &:hover {
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    }
 }
 
 #french-word {
-    margin: 0;
     font-weight: bold;
 }
 
-#french-wrapper {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    row-gap: 3px;
-    column-gap: 5px;
-}
-
-#audio-player {
-    height: 30px;
+audio {
+    height: 25px;
     grid-column: 1 / -1;
 }
 
 label[for='masculine'] {
-    color: blue;
+    color: rgb(45, 45, 255);
 }
 
 label[for='feminine'] {
@@ -78,22 +62,14 @@ label[for='undefined'] {
     color: rgb(97, 97, 97);
 }
 
-#bulgarian-wrapper {
-    width: 100%;
+fieldset {
     display: grid;
     grid-template-columns: auto 1fr;
     row-gap: 3px;
     column-gap: 5px;
 }
 
-#image-fieldset {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    row-gap: 3px;
-    column-gap: 5px;
-}
-
-#image-fieldset img {
+#image-preview {
     max-width: 100px;
     max-height: 100px;
     place-self: center;
