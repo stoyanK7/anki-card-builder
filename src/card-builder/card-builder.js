@@ -1,16 +1,8 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 
-// TODO: Get rid of those global vars
-let frenchWord = '';
-let deckName = '';
-let frenchWordSpan = document.getElementById('french-word');
-let deckNameInput = document.getElementById('deck-name');
-
 browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
-    frenchWord = result.frenchWord;
-    deckName = result.deckName;
-    frenchWordSpan.textContent = frenchWord;
-    deckNameInput.value = deckName;
+    document.getElementById('french-word').textContent = result.frenchWord;
+    document.getElementById('deck-name').value = result.deckName;
 });
 
 (async () => {
@@ -64,7 +56,6 @@ async function fetchDeckNames() {
 
 function updateCardEditorFromStorage(data) {
     if ('frenchWord' in data) {
-        frenchWord = data.frenchWord;
         document.getElementById('french-word').textContent = data.frenchWord;
     }
     if ('audioSrc' in data) {
@@ -154,6 +145,7 @@ async function saveCard() {
     errorDiv.style.display = 'none';
 
     // Get the values from the form. It is the source of truth.
+    const deckName = document.getElementById('deck-name').value.trim();
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
