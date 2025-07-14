@@ -179,6 +179,7 @@ async function saveCard() {
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
+    const audioSrc = document.getElementById('audio-src').value.trim();
     const frenchPlural = document.getElementById('french-plural').value.trim();
     const frenchGender = document
         .querySelector('input[name="french-gender"]:checked')
@@ -227,24 +228,13 @@ async function saveCard() {
         return;
     }
 
-    // Default to just the word because we don't have only nouns.
-    let frenchWordWithDefiniteArticle = frenchWord;
-    if (frenchGender === 'féminin') {
-        frenchWordWithDefiniteArticle = `la ${frenchWord}`;
-    } else if (frenchGender === 'masculin') {
-        frenchWordWithDefiniteArticle = `le ${frenchWord}`;
-    }
-
-    // TODO: Get rid of local tts and use the audioSrc from the input
     const requestParams = {
         actions: [
             {
                 action: 'storeMediaFile',
                 params: {
-                    filename: `${frenchWordWithDefiniteArticle}.wav`,
-                    url: `http://localhost:5002/api/tts?text=${encodeURIComponent(
-                        frenchWordWithDefiniteArticle
-                    )}`
+                    filename: frenchWord,
+                    url: audioSrc
                 }
             },
             {
@@ -259,7 +249,7 @@ async function saveCard() {
                             Bulgarian: bulgarianWord,
                             'Bulgarian Sentence': bulgarianSentence,
                             Image: `<img src='${imageSrc}' />`,
-                            'French Speech': `[sound:${frenchWordWithDefiniteArticle}.wav]`,
+                            'French Speech': `[sound:${frenchWord}]`,
                             'French Gender': frenchGender,
                             'French Plural': frenchPlural
                         },
