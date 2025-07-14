@@ -34,9 +34,8 @@ browser.webRequest.onCompleted.addListener(
     ['responseHeaders']
 );
 
-// TODO: Update id not to use anki-
 browser.contextMenus.create({
-    id: 'anki-prepare-card',
+    id: 'prepare-card',
     title: '🛠️ Prepare Card',
     contexts: ['selection']
 });
@@ -48,31 +47,35 @@ browser.contextMenus.create({
 });
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
-    if (info.menuItemId === 'anki-prepare-card' && info.selectionText) {
-        const frenchWord = info.selectionText.trim();
-        const validationResult = validateFrenchWord(frenchWord);
-
-        if (!validationResult.valid) {
-            browser.runtime.sendMessage({
-                type: 'create-notification',
-                id: 'french-word-validation-failed',
-                options: {
-                    type: 'basic',
-                    iconUrl: browser.runtime.getURL('icons/icon-48.png'),
-                    title: 'Invalid French Word',
-                    message: `The selected text is not a valid French word: ${validationResult.reason}`
-                }
-            });
-            return;
-        }
-
-        browser.storage.local.set({ frenchWord });
-        startCardBuildingProcess(info.selectionText.trim());
+    if (info.menuItemId === 'prepare-card') {
+        handlePrepareCardContextMenu(info);
     }
     if (info.menuItemId === 'use-image') {
         handleUseImageContextMenu(info);
     }
 });
+
+function handlePrepareCardContextMenu(info) {
+    const frenchWord = info.selectionText.trim();
+    const validationResult = validateFrenchWord(frenchWord);
+
+    if (!validationResult.valid) {
+        browser.runtime.sendMessage({
+            type: 'create-notification',
+            id: 'french-word-validation-failed',
+            options: {
+                type: 'basic',
+                iconUrl: browser.runtime.getURL('icons/icon-48.png'),
+                title: 'Invalid French Word',
+                message: `The selected text is not a valid French word: ${validationResult.reason}`
+            }
+        });
+        return;
+    }
+
+    browser.storage.local.set({ frenchWord });
+    startCardBuildingProcess(info.selectionText.trim());
+}
 
 function handleUseImageContextMenu(info) {
     if (info && info.mediaType !== 'image') {
