@@ -53,6 +53,9 @@ async function main() {
             return div.textContent.trim().length <= 85;
         }) || exampleDivs[0];
 
+    exampleDiv.style.backgroundColor = 'green';
+    exampleDiv.style.border = '2px solid blue';
+
     const frenchSentence = exampleDiv.textContent.replace(/\n/g, ' ').trim();
     browser.storage.local.set({ frenchSentence });
 
