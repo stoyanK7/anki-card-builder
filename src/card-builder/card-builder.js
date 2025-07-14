@@ -278,20 +278,15 @@ async function saveCard() {
         browser.windows.remove(currentWindow.id);
     });
 
-    browser.tabs
-        .query({
-            url: [
-                'https://fr.wiktionary.org/*',
-                'https://translate.google.com/*',
-                'https://www.google.com/search*',
-                'https://www.collinsdictionary.com/*',
-                'https://www.deepl.com/*'
-            ]
+    const storageResult = await browser.storage.local.get('resourcesWindowId');
+    const resourcesWindowId = storageResult.resourcesWindowId;
+    browser.windows
+        .remove(resourcesWindowId)
+        .then(() => {
+            browser.storage.local.remove('resourcesWindowId');
         })
-        .then((tabs) => {
-            tabs.forEach((tab) => {
-                browser.tabs.remove(tab.id);
-            });
+        .catch((error) => {
+            console.error('Error closing resources window:', error);
         });
 
     // Clear local storage except for the deck name.
