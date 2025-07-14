@@ -69,7 +69,7 @@ fieldset {
     column-gap: 5px;
 }
 
-#image-preview {
+img {
     max-width: 100px;
     max-height: 100px;
     place-self: center;
