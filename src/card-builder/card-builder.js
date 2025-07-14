@@ -289,9 +289,16 @@ async function saveCard() {
             console.error('Error closing resources window:', error);
         });
 
-    // Clear local storage except for the deck name.
-    await browser.storage.local.clear();
-    await browser.storage.local.set({ deckName });
+    browser.storage.local.remove([
+        'frenchWord',
+        'audioSrc',
+        'frenchPlural',
+        'frenchGender',
+        'frenchSentence',
+        'bulgarianWord',
+        'bulgarianSentence',
+        'imageSrc'
+    ]);
 
     // Send a message to the background script to create a notification.
     // Only the background script can create notifications.
