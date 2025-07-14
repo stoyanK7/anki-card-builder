@@ -119,28 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
     browser.storage.local.get().then(updateCardEditorFromStorage);
 });
 
-// Extensions cannot send messages to content scripts using browser.runtime.sendMessage.
-// To send messages to content scripts, tabs.sendMessage is used.
-document.getElementById('select-image').addEventListener('click', () => {
-    browser.tabs.query({}, (tabs) => {
-        // Find the tab that is currently displaying Google Images search results
-        const imageTab = tabs.find(
-            (tab) =>
-                tab.url.includes('https://www.google.com/search') &&
-                // NOTE: I am not sure this check is doing anything good.
-                tab.url.includes(`q=${frenchWord}`)
-        );
-
-        if (imageTab) {
-            browser.tabs.sendMessage(imageTab.id, {
-                type: 'start-image-selection'
-            });
-        } else {
-            console.error('No Google Images tab found');
-        }
-    });
-});
-
 document.getElementById('audio-src').addEventListener('input', (event) => {
     const audioSrc = event.target.value.trim();
     const audioPlayerElement = document.getElementById('audio-player');
