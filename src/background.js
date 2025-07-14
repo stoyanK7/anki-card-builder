@@ -37,7 +37,7 @@ browser.webRequest.onCompleted.addListener(
 // TODO: Update id not to use anki-
 browser.contextMenus.create({
     id: 'anki-prepare-card',
-    title: 'Anki Card Builder: Prepare Card',
+    title: '🛠️ Prepare Card',
     contexts: ['selection']
 });
 
