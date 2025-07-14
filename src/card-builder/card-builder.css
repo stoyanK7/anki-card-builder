@@ -86,51 +86,15 @@ label[for='undefined'] {
     column-gap: 5px;
 }
 
-#image-wrapper {
-    width: 100%;
+#image-fieldset {
     display: grid;
     grid-template-columns: auto 1fr;
     row-gap: 3px;
     column-gap: 5px;
 }
 
-#select-image {
-    padding: 5px 0;
-}
-
-#image-wrapper {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto 1fr;
-    gap: 0.5em 1em;
-    max-width: 600px;
-}
-
-#image-wrapper label[for='image-src'] {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-#image-wrapper textarea {
-    grid-column: 2;
-    grid-row: 1;
-}
-
-#image-wrapper label[for='image-preview'] {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-#image-wrapper button {
-    grid-column: 1;
-    grid-row: 3;
-}
-
-#image-wrapper img {
-    grid-column: 2;
-    grid-row: 2 / span 2;
+#image-fieldset img {
     max-width: 100px;
     max-height: 100px;
-    display: block;
     place-self: center;
 }
