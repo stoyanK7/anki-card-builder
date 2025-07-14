@@ -195,39 +195,6 @@ async function saveCard() {
         .value.trim();
     const imageSrc = document.getElementById('image-src').value.trim();
 
-    // TODO: Replace with 'required' attributes in the HTML
-    if (!frenchPlural) {
-        errorDiv.textContent = 'French plural is required.';
-        errorDiv.style.display = 'block';
-        saveButton.disabled = false;
-        return;
-    } else if (!frenchGender) {
-        errorDiv.textContent = 'French gender is required.';
-        errorDiv.style.display = 'block';
-        saveButton.disabled = false;
-        return;
-    } else if (!frenchSentence) {
-        errorDiv.textContent = 'French sentence is required.';
-        errorDiv.style.display = 'block';
-        saveButton.disabled = false;
-        return;
-    } else if (!bulgarianWord) {
-        errorDiv.textContent = 'Bulgarian word is required.';
-        errorDiv.style.display = 'block';
-        saveButton.disabled = false;
-        return;
-    } else if (!bulgarianSentence) {
-        errorDiv.textContent = 'Bulgarian sentence is required.';
-        errorDiv.style.display = 'block';
-        saveButton.disabled = false;
-        return;
-    } else if (!imageSrc) {
-        errorDiv.textContent = 'Image source is required.';
-        errorDiv.style.display = 'block';
-        saveButton.disabled = false;
-        return;
-    }
-
     const requestParams = {
         actions: [
             {
