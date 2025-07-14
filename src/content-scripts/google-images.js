@@ -39,6 +39,7 @@ function observeAndAutoSelectFirstImage() {
     });
 }
 
+// TODO: Use context menu for this, not message passing
 function enableImageSelection() {
     if (selectingImage) return;
 

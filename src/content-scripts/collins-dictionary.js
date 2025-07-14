@@ -1,3 +1,5 @@
+// TODO: Add ability to choose another example sentence from Collins Dictionary
+// by using the context menu.
 async function main() {
     // Sometimes Collins Dictionary does not have curated examples (.dictExas)
     // so we fall back to the automatically generated examples (.corpusExas).
@@ -59,6 +61,8 @@ async function main() {
     const frenchSentence = exampleDiv.textContent.replace(/\n/g, ' ').trim();
     browser.storage.local.set({ frenchSentence });
 
+    // TODO: Card builder should be responsible for handling this
+    // tab invocation.
     browser.runtime.sendMessage({
         type: 'create-tab',
         url: `https://www.deepl.com/en/translator#fr/bg/${encodeURIComponent(

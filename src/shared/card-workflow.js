@@ -34,7 +34,7 @@ async function openResourceTabsForFrenchWord(frenchWord) {
         `https://www.google.com/search?tbm=isch&q=${encodedURIfrenchWord}`,
         `https://www.collinsdictionary.com/sentences/french/${encodedURIfrenchWord}`
     ];
-    // urls.forEach((url) => {
-    //     browser.tabs.create({ url });
-    // });
+    urls.forEach((url) => {
+        browser.tabs.create({ url });
+    });
 }

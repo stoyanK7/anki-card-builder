@@ -194,7 +194,7 @@ async function saveCard() {
         .value.trim();
     const imageSrc = document.getElementById('image-src').value.trim();
 
-    // Validate the inputs
+    // TODO: Replace with 'required' attributes in the HTML
     if (!frenchPlural) {
         errorDiv.textContent = 'French plural is required.';
         errorDiv.style.display = 'block';
@@ -235,6 +235,7 @@ async function saveCard() {
         frenchWordWithDefiniteArticle = `le ${frenchWord}`;
     }
 
+    // TODO: Get rid of local tts and use the audioSrc from the input
     const requestParams = {
         actions: [
             {
