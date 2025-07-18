@@ -259,3 +259,27 @@ document.addEventListener('keydown', (event) => {
         document.querySelector('form').requestSubmit();
     }
 });
+
+function isGenderSelected() {
+    const checked = document.querySelector(
+        'input[name="french-gender"]:checked'
+    );
+    return (
+        checked && (checked.value === 'masculin' || checked.value === 'féminin')
+    );
+}
+
+function updatePluralRequired() {
+    const pluralInput = document.getElementById('french-plural');
+    if (isGenderSelected()) {
+        pluralInput.required = true;
+    } else {
+        pluralInput.removeAttribute('required');
+    }
+}
+
+document.querySelectorAll('input[name="french-gender"]').forEach((radio) => {
+    radio.addEventListener('change', updatePluralRequired);
+});
+
+document.addEventListener('DOMContentLoaded', updatePluralRequired);
