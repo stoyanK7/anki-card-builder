@@ -12,6 +12,32 @@ async function main() {
         frenchPlural
     });
 
+    // Wiktionary is doing some shenanigans with their audio elements.
+    // They have a custom audio player and the audio tags are not visible.
+    // We need to make them visible so we can right click on them.
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+                const addedNodes = Array.from(mutation.addedNodes);
+                addedNodes.forEach((node) => {
+                    if (
+                        node.nodeType === Node.ELEMENT_NODE &&
+                        node.tagName.toLowerCase() === 'audio'
+                    ) {
+                        node.controls = true;
+                        node.style.zIndex = '1';
+                        node.style.backgroundColor = 'black';
+                        node.style.position = 'relative';
+                    }
+                });
+            }
+        });
+    });
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
     // Wait 2 seconds before doing all the audio stuff.
     setTimeout(() => {}, 2000);
 
@@ -176,4 +202,5 @@ document.addEventListener('anchorSet', function (event) {
         subtree: true
     });
 });
+
 main();

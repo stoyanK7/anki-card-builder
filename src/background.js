@@ -26,12 +26,21 @@ browser.contextMenus.create({
     contexts: ['image']
 });
 
+browser.contextMenus.create({
+    id: 'use-audio',
+    title: '🔊 Use Audio',
+    contexts: ['audio']
+});
+
 browser.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === 'prepare-card') {
         handlePrepareCardContextMenu(info);
     }
     if (info.menuItemId === 'use-image') {
         handleUseImageContextMenu(info);
+    }
+    if (info.menuItemId === 'use-audio') {
+        handleUseAudioContextMenu(info);
     }
 });
 
@@ -67,4 +76,16 @@ function handleUseImageContextMenu(info) {
         return;
     }
     browser.storage.local.set({ imageSrc: info.srcUrl });
+}
+
+function handleUseAudioContextMenu(info) {
+    if (info && info.mediaType !== 'audio') {
+        console.warn('Context menu clicked on non-audio element:', info);
+        return;
+    }
+    if (!info.srcUrl) {
+        console.warn('No audio source URL found in context menu info:', info);
+        return;
+    }
+    browser.storage.local.set({ audioSrc: info.srcUrl });
 }
