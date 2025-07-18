@@ -29,7 +29,6 @@
         "storage",
         "tabs",
         "notifications",
-        "webRequest",
         "contextMenus"
     ],
     "host_permissions": [
