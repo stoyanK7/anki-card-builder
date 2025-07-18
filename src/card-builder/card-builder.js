@@ -134,7 +134,9 @@ document.getElementById('image-src').addEventListener('input', (event) => {
     }
 });
 
-async function saveCard() {
+async function saveCard(event) {
+    event.preventDefault();
+
     // Disable to prevent multiple requests triggering
     const saveButton = document.getElementById('save-card-button');
     saveButton.disabled = true;
@@ -251,9 +253,9 @@ async function saveCard() {
     });
 }
 
-document.getElementById('save-card-button').addEventListener('click', saveCard);
+document.querySelector('form').addEventListener('submit', saveCard);
 document.addEventListener('keydown', (event) => {
-    if (event.ctrlKey && event.key == 'Enter') {
-        saveCard();
+    if (event.ctrlKey && event.key === 'Enter') {
+        document.querySelector('form').requestSubmit();
     }
 });
