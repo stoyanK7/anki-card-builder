@@ -22,7 +22,7 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
     id: 'use-image',
-    title: '👆 Use Image',
+    title: '🖼️ Use Image',
     contexts: ['image']
 });
 
