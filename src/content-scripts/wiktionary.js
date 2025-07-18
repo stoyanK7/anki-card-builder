@@ -68,12 +68,28 @@ async function main() {
         }
 
         const firstLi = lisWithAudioMatchingWordFrance[0];
-        const audio = firstLi.querySelector('audio');
-        const anchor = audio.nextElementSibling;
-        if (anchor && anchor.classList.contains('mw-tmh-play')) {
-            anchor.click();
-            firstLi.style.backgroundColor = 'green';
-            firstLi.style.border = '2px solid blue';
+        let anchor = firstLi.querySelector('a.mw-tmh-play');
+        if (!anchor) {
+            const observer = new MutationObserver((mutations) => {
+                const newAnchor = firstLi.querySelector('a.mw-tmh-play');
+                if (newAnchor) {
+                    anchor = newAnchor;
+                    const event = new CustomEvent('anchorSet', {
+                        detail: { anchor, firstLi }
+                    });
+                    document.dispatchEvent(event);
+                }
+            });
+            observer.observe(firstLi, {
+                childList: true,
+                subtree: true
+            });
+            return;
+        } else {
+            const event = new CustomEvent('anchorSet', {
+                detail: { anchor, firstLi }
+            });
+            document.dispatchEvent(event);
         }
     } else if (lisWithAudioMatchingWord.length > 0) {
         for (const li of lisWithAudioMatchingWord) {
@@ -82,12 +98,28 @@ async function main() {
         }
 
         const firstLi = lisWithAudioMatchingWord[0];
-        const audio = firstLi.querySelector('audio');
-        const anchor = audio.nextElementSibling;
-        if (anchor && anchor.classList.contains('mw-tmh-play')) {
-            anchor.click();
-            firstLi.style.backgroundColor = 'green';
-            firstLi.style.border = '2px solid blue';
+        let anchor = firstLi.querySelector('a.mw-tmh-play');
+        if (!anchor) {
+            const observer = new MutationObserver((mutations) => {
+                const newAnchor = firstLi.querySelector('a.mw-tmh-play');
+                if (newAnchor) {
+                    anchor = newAnchor;
+                    const event = new CustomEvent('anchorSet', {
+                        detail: { anchor, firstLi }
+                    });
+                    document.dispatchEvent(event);
+                }
+            });
+            observer.observe(firstLi, {
+                childList: true,
+                subtree: true
+            });
+            return;
+        } else {
+            const event = new CustomEvent('anchorSet', {
+                detail: { anchor, firstLi }
+            });
+            document.dispatchEvent(event);
         }
     } else if (lisWithAudioFrance.length > 0) {
         for (const li of lisWithAudioFrance) {
@@ -96,16 +128,52 @@ async function main() {
         }
 
         const firstLi = lisWithAudioFrance[0];
-        const audio = firstLi.querySelector('audio');
-        const anchor = audio.nextElementSibling;
-        if (anchor && anchor.classList.contains('mw-tmh-play')) {
-            anchor.click();
-            firstLi.style.backgroundColor = 'green';
-            firstLi.style.border = '2px solid blue';
+        let anchor = firstLi.querySelector('a.mw-tmh-play');
+        if (!anchor) {
+            const observer = new MutationObserver((mutations) => {
+                const newAnchor = firstLi.querySelector('a.mw-tmh-play');
+                if (newAnchor) {
+                    anchor = newAnchor;
+                    const event = new CustomEvent('anchorSet', {
+                        detail: { anchor, firstLi }
+                    });
+                    document.dispatchEvent(event);
+                }
+            });
+            observer.observe(firstLi, {
+                childList: true,
+                subtree: true
+            });
+            return;
+        } else {
+            const event = new CustomEvent('anchorSet', {
+                detail: { anchor, firstLi }
+            });
+            document.dispatchEvent(event);
         }
     } else {
         console.warn('No matching audio found');
     }
 }
 
+document.addEventListener('anchorSet', function (event) {
+    const anchor = event.detail.anchor;
+    const firstLi = event.detail.firstLi;
+
+    anchor.click();
+    firstLi.style.backgroundColor = 'green';
+    firstLi.style.border = '2px solid blue';
+
+    const observer = new MutationObserver((mutations) => {
+        const audioElement = firstLi.querySelector('audio');
+        if (audioElement && audioElement.src) {
+            browser.storage.local.set({ audioSrc: audioElement.src });
+            observer.disconnect();
+        }
+    });
+    observer.observe(firstLi, {
+        childList: true,
+        subtree: true
+    });
+});
 main();

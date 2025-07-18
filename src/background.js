@@ -14,26 +14,6 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
-browser.webRequest.onCompleted.addListener(
-    async (details) => {
-        if (details.type !== 'media' || details.method !== 'GET') {
-            return;
-        }
-
-        // check response headers
-        const contentType = details.responseHeaders.find(
-            (header) => header.name.toLowerCase() === 'content-type'
-        );
-        if (!contentType || !contentType.value.startsWith('audio/')) {
-            return;
-        }
-
-        browser.storage.local.set({ audioSrc: details.url });
-    },
-    { urls: ['https://fr.wiktionary.org/*', 'https://upload.wikimedia.org/*'] },
-    ['responseHeaders']
-);
-
 browser.contextMenus.create({
     id: 'prepare-card',
     title: '🛠️ Prepare Card',
