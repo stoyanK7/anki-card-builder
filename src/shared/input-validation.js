@@ -26,6 +26,6 @@ export function validateFrenchWord(frenchWord) {
  * @returns {boolean} true if the word is valid, false otherwise
  */
 function isValidFrenchWord(word) {
-    const regex = /^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i;
+    const regex = /^[a-zàâçéèêëîïôûùüÿñæœ .,!?'`]*$/i;
     return regex.test(word.trim());
 }
