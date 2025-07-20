@@ -36,7 +36,6 @@
         "https://upload.wikimedia.org/*",
         "https://translate.google.com/*",
         "https://www.google.com/search*",
-        "https://www.collinsdictionary.com/*",
         "https://www.deepl.com/*"
     ],
     "content_scripts": [
@@ -51,10 +50,6 @@
         {
             "matches": ["https://www.google.com/search*"],
             "js": ["src/content-scripts/google-images.js"]
-        },
-        {
-            "matches": ["https://www.collinsdictionary.com/*"],
-            "js": ["src/content-scripts/collins-dictionary.js"]
         },
         {
             "matches": ["https://www.deepl.com/*"],

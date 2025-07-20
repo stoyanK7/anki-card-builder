@@ -32,8 +32,7 @@ async function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
     const urls = [
         `https://fr.wiktionary.org/wiki/${encodedURIfrenchWord}`,
         `https://translate.google.com/?sl=fr&tl=bg&text=${encodedURIfrenchWord}&op=translate`,
-        `https://www.google.com/search?tbm=isch&q=${encodedURIfrenchWord}`,
-        `https://www.collinsdictionary.com/sentences/french/${encodedURIfrenchWord}`
+        `https://www.google.com/search?tbm=isch&q=${encodedURIfrenchWord}`
     ];
 
     browser.windows
