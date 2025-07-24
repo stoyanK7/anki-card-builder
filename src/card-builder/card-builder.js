@@ -5,6 +5,8 @@ browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
     document.getElementById('deck-name').value = result.deckName;
 });
 
+reloadFrenchSentence();
+
 (async () => {
     const deckNames = await fetchDeckNames();
     // Remove 'Default' deck if it exists.
@@ -283,3 +285,48 @@ document.querySelectorAll('input[name="french-gender"]').forEach((radio) => {
 });
 
 document.addEventListener('DOMContentLoaded', updatePluralRequired);
+
+document
+    .getElementById('reload-french-sentence')
+    .addEventListener('click', reloadFrenchSentence);
+
+function reloadFrenchSentence() {
+    const frenchWord = document
+        .getElementById('french-word')
+        .textContent.trim();
+    if (!frenchWord) {
+        return;
+    }
+
+    const reloadButton = document.getElementById('reload-french-sentence');
+    reloadButton.disabled = true;
+    reloadButton.textContent = '⏳';
+
+    fetch('http://localhost:11434/api/generate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: 'jobautomation/OpenEuroLLM-French',
+            prompt: `Donne uniquement une phrase en français, niveau A1-A2, avec le mot suivant : ${frenchWord}. La phrase doit avoir 10 mots ou moins. Ne réponds qu'avec la phrase, sans explication ni introduction.`,
+            stream: false,
+            options: {
+                temperature: 0.8
+            }
+        })
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            const frenchSentence = data.response.trim();
+            browser.storage.local.set({ frenchSentence });
+        })
+        .catch((error) => {
+            // TODO: Display an error message to the user.
+            console.error('Error fetching French sentence:', error);
+        })
+        .finally(() => {
+            reloadButton.disabled = false;
+            reloadButton.textContent = '🔄';
+        });
+}
