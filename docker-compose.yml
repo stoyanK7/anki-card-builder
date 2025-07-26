@@ -18,5 +18,14 @@ services:
                           capabilities: [gpu]
         restart: unless-stopped
 
+    piper-http:
+        build:
+            context: ./
+            dockerfile: piper-http.Dockerfile
+        container_name: piper-http
+        ports:
+            - '5000:5000'
+        restart: unless-stopped
+
 volumes:
     ollama:
