@@ -24,7 +24,20 @@ services:
             dockerfile: piper-http.Dockerfile
         container_name: piper-http
         ports:
-            - '5000:5000'
+            - '5001:5000'
+        restart: unless-stopped
+
+    # Nginx proxies requests to the Piper HTTP service.
+    # Needed to handle CORS issues with the browser.
+    nginx:
+        image: nginx:alpine
+        container_name: nginx-piper-proxy
+        ports:
+            - '5000:80'
+        volumes:
+            - ./nginx-piper.conf:/etc/nginx/conf.d/default.conf:ro
+        depends_on:
+            - piper-http
         restart: unless-stopped
 
 volumes:
