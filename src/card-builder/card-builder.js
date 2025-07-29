@@ -245,12 +245,12 @@ async function saveCard(event) {
     // Only the background script can create notifications.
     browser.runtime.sendMessage({
         type: 'create-notification',
-        id: `card-saved-${message.frenchWord}`,
+        id: `card-saved-${frenchWord}`,
         options: {
             type: 'basic',
             iconUrl: browser.runtime.getURL('icons/flashcards-64.png'),
             title: 'Card Saved',
-            message: `Card "${message.frenchWord}" saved in deck "${message.deckName}".`
+            message: `Card "${frenchWord}" saved in deck "${deckName}".`
         }
     });
 }
