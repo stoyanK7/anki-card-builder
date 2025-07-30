@@ -20,20 +20,9 @@
             <fieldset>
                 <legend>🇫🇷 <span id="french-word">french-word</span></legend>
 
-                <label for="audio-src">Audio Src:</label>
-                <textarea
-                    id="audio-src"
-                    rows="1"
-                    cols="30"
-                    placeholder="e.g. https://example.com/audio.mp3"
-                    required
-                ></textarea>
-                <audio
-                    id="audio-player"
-                    controls
-                    preload="none"
-                    src="/shared-assets/audio/t-rex-roar.mp3"
-                ></audio>
+                <label for="audio-player">Audio:</label>
+                <audio id="audio-player" controls autoplay></audio>
+
                 <label for="french-plural">Plural Form:</label>
                 <input
                     id="french-plural"
