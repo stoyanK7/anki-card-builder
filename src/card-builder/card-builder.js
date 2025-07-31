@@ -3,6 +3,32 @@ import { invokeAnkiConnect } from '../shared/anki-connect.js';
 browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
     document.getElementById('french-word').textContent = result.frenchWord;
     document.getElementById('deck-name').value = result.deckName;
+
+    fetch('http://localhost:5000', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: result.frenchWord })
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(async (data) => {
+            const audioSrc = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(data);
+            });
+
+            document.getElementById('audio-player').src = audioSrc;
+            browser.storage.local.set({ audioSrc });
+        })
+        .catch((error) => {
+            console.error('Error fetching audio:', error);
+        });
 });
 
 reloadFrenchSentence();
@@ -61,7 +87,6 @@ function updateCardEditorFromStorage(data) {
         document.getElementById('french-word').textContent = data.frenchWord;
     }
     if ('audioSrc' in data) {
-        document.getElementById('audio-src').value = data.audioSrc;
         document.getElementById('audio-player').src = data.audioSrc;
     }
     if ('frenchPlural' in data) {
@@ -112,18 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     browser.storage.local.get().then(updateCardEditorFromStorage);
 });
 
-document.getElementById('audio-src').addEventListener('input', (event) => {
-    const audioSrc = event.target.value.trim();
-    const audioPlayerElement = document.getElementById('audio-player');
-    if (audioSrc) {
-        audioPlayerElement.src = audioSrc;
-        browser.storage.local.set({ audioSrc });
-    } else {
-        audioPlayerElement.src = '';
-        browser.storage.local.remove('audioSrc');
-    }
-});
-
 document.getElementById('image-src').addEventListener('input', (event) => {
     const imageSrc = event.target.value.trim();
     const imagePreview = document.getElementById('image-preview');
@@ -153,7 +166,7 @@ async function saveCard(event) {
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
-    const audioSrc = document.getElementById('audio-src').value.trim();
+    const audioSrc = document.getElementById('audio-player').src.trim();
     const frenchPlural = document.getElementById('french-plural').value.trim();
     const frenchGender = document
         .querySelector('input[name="french-gender"]:checked')
@@ -174,8 +187,9 @@ async function saveCard(event) {
             {
                 action: 'storeMediaFile',
                 params: {
-                    filename: frenchWord,
-                    url: audioSrc
+                    filename: `${frenchWord}.wav`,
+                    // Anki Connect expects the base64 data without the prefix
+                    data: audioSrc.split(',')[1]
                 }
             },
             {
@@ -190,7 +204,7 @@ async function saveCard(event) {
                             Bulgarian: bulgarianWord,
                             'Bulgarian Sentence': bulgarianSentence,
                             Image: `<img src='${imageSrc}' />`,
-                            'French Speech': `[sound:${frenchWord}]`,
+                            'French Speech': `[sound:${frenchWord}.wav]`,
                             'French Gender': frenchGender,
                             'French Plural': frenchPlural
                         },
