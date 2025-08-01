@@ -2,35 +2,59 @@ import { invokeAnkiConnect } from '../shared/anki-connect.js';
 import { validateFrenchWord } from '../shared/input-validation.js';
 import { startCardBuildingProcess } from '../shared/card-workflow.js';
 
-(async () => {
-    if (!(await ensureAnkiConnectIsAvailable())) {
-        return;
-    }
-})();
+updateAnkiConnectConnectionStatus();
+updateOllamaConnectionStatus();
 
-document
-    .getElementById('reload')
-    .addEventListener('click', ensureAnkiConnectIsAvailable);
+function updateOllamaConnectionStatus() {
+    fetch('http://localhost:11434')
+        .then((response) => {
+            if (response.ok) {
+                document.getElementById('ollama-status-word').textContent =
+                    'Connected';
+                document.getElementById('ollama-status-word').style.color =
+                    'green';
+                document.getElementById(
+                    'ollama-status-error-message'
+                ).style.display = 'none';
+            } else {
+                throw new Error('Ollama server is not reachable');
+            }
+        })
+        .catch((error) => {
+            document.getElementById('ollama-status-word').textContent = 'Error';
+            document.getElementById('ollama-status-word').style.color = 'red';
+            document.getElementById(
+                'ollama-status-error-message'
+            ).style.display = 'block';
+            document.getElementById('ollama-status-error-message').textContent =
+                error.message;
+        });
+}
 
-async function ensureAnkiConnectIsAvailable() {
-    try {
-        const version = await invokeAnkiConnect('version');
-        if (version && typeof version === 'number') {
-            document.getElementById('status-word').textContent = 'Connected';
-            document.getElementById('status-word').style.color = 'green';
-            document.getElementById('error-message').style.display = 'none';
-            return true;
-        }
-        return false;
-    } catch (error) {
-        document.getElementById('status-word').textContent = 'Error';
-        document.getElementById('status-word').style.color = 'red';
-        document.getElementById('error-message').style.display = 'block';
-        document.getElementById('error-message').textContent =
-            'AnkiConnect is not available. Please ensure it is installed, enabled and that Anki is running. Error: ' +
-            error.message;
-        return false;
-    }
+function updateAnkiConnectConnectionStatus() {
+    invokeAnkiConnect('version')
+        .then((version) => {
+            if (version && typeof version === 'number') {
+                document.getElementById('anki-status-word').textContent =
+                    'Connected';
+                document.getElementById('anki-status-word').style.color =
+                    'green';
+                document.getElementById(
+                    'anki-status-error-message'
+                ).style.display = 'none';
+            } else {
+                throw new Error('Invalid AnkiConnect version response');
+            }
+        })
+        .catch((error) => {
+            document.getElementById('anki-status-word').textContent = 'Error';
+            document.getElementById('anki-status-word').style.color = 'red';
+            document.getElementById('anki-status-error-message').style.display =
+                'block';
+            document.getElementById('anki-status-error-message').textContent =
+                'AnkiConnect is not available. Please ensure it is installed, enabled and that Anki is running. Error: ' +
+                error.message;
+        });
 }
 
 async function startCardPreparation() {

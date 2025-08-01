@@ -8,11 +8,22 @@
     <body>
         <h3>🛠️ Anki Card Builder</h3>
 
-        <div id="anki-connect-status">
-            <button id="reload">⭮</button>
-            &nbsp;Anki Connect Status:&nbsp;
-            <span id="status-word">Unknown</span>
-            <div id="error-message"></div>
+        <div class="status-wrapper">
+            Anki Connect Status:&nbsp;
+            <span id="anki-status-word" class="status-word">Unknown</span>
+            <div
+                id="anki-status-error-message"
+                class="status-error-message"
+            ></div>
+        </div>
+
+        <div class="status-wrapper">
+            Ollama Connect Status:&nbsp;
+            <span id="ollama-status-word" class="status-word">Unknown</span>
+            <div
+                id="ollama-status-error-message"
+                class="status-error-message"
+            ></div>
         </div>
 
         <div class="form-group">

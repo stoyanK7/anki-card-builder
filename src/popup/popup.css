@@ -9,22 +9,16 @@ body {
     max-width: 400px;
 }
 
-#reload {
-    cursor: pointer;
-    background-color: #cccccc;
-    border: 1px solid #999999;
-}
-
-#anki-connect-status {
+.status-wrapper {
     margin: 10px 0;
     font-size: 0.7em;
 }
 
-#status-word {
+.status-word {
     color: #333;
 }
 
-#error-message {
+.status-error-message {
     color: red;
     margin: 10px 0;
     display: none;
