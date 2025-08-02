@@ -4,6 +4,19 @@ import { startCardBuildingProcess } from '../shared/card-workflow.js';
 
 updateAnkiConnectConnectionStatus();
 updateOllamaConnectionStatus();
+updatePiperConnectionStatus();
+
+document
+    .getElementById('prepare-card-button')
+    .addEventListener('click', startCardPreparation);
+
+document
+    .getElementById('french-word-input')
+    .addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            startCardPreparation();
+        }
+    });
 
 function updateOllamaConnectionStatus() {
     fetch('http://localhost:11434')
@@ -57,7 +70,33 @@ function updateAnkiConnectConnectionStatus() {
         });
 }
 
-async function startCardPreparation() {
+function updatePiperConnectionStatus() {
+    fetch('http://localhost:5000/voices')
+        .then((response) => {
+            if (response.ok) {
+                document.getElementById('piper-status-word').textContent =
+                    'Connected';
+                document.getElementById('piper-status-word').style.color =
+                    'green';
+                document.getElementById(
+                    'piper-status-error-message'
+                ).style.display = 'none';
+            } else {
+                throw new Error('Piper server is not reachable');
+            }
+        })
+        .catch((error) => {
+            document.getElementById('piper-status-word').textContent = 'Error';
+            document.getElementById('piper-status-word').style.color = 'red';
+            document.getElementById(
+                'piper-status-error-message'
+            ).style.display = 'block';
+            document.getElementById('piper-status-error-message').textContent =
+                error.message;
+        });
+}
+
+function startCardPreparation() {
     const frenchWord = document
         .getElementById('french-word-input')
         .value.trim();
@@ -75,18 +114,6 @@ async function startCardPreparation() {
     browser.storage.local.set({ frenchWord });
     startCardBuildingProcess(frenchWord);
 }
-
-document
-    .getElementById('prepare-card-button')
-    .addEventListener('click', startCardPreparation);
-
-document
-    .getElementById('french-word-input')
-    .addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            startCardPreparation();
-        }
-    });
 
 function disableButton(button) {
     button.disabled = true;
