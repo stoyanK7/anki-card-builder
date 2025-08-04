@@ -4,6 +4,7 @@ import json from '@eslint/json';
 import markdown from '@eslint/markdown';
 import css from '@eslint/css';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import html from '@html-eslint/eslint-plugin';
 
 export default defineConfig([
     globalIgnores(['package-lock.json']),
@@ -20,6 +21,7 @@ export default defineConfig([
             'semi': ['error', 'always'],
             'quotes': ['error', 'single'],
             'max-len': ['warn', { code: 80 }],
+            'eol-last': ['error', 'always'],
             'quote-props': ['error', 'consistent-as-needed'],
             'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
             // Suggestions
@@ -76,6 +78,14 @@ export default defineConfig([
         rules: {
             // False positive on GitHub special alerts.
             'markdown/no-missing-label-refs': 'off'
+        }
+    },
+    {
+        ...html.configs['flat/recommended'],
+        files: ['**/*.html'],
+        rules: {
+            ...html.configs['flat/recommended'].rules,
+            '@html-eslint/attrs-newline': ['error', { ifAttrsMoreThan: 1 }]
         }
     },
     {
