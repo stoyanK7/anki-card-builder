@@ -13,6 +13,8 @@
     "license": " CC-BY-NC-4.0",
     "author": "Stoyan Kostadinov",
     "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
