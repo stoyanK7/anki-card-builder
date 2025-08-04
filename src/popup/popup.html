@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html>
+
     <head>
-        <meta charset="UTF-8" />
-        <link rel="stylesheet" href="popup.css" />
+        <meta charset="UTF-8">
+        <link
+            rel="stylesheet"
+            href="popup.css"
+        >
     </head>
 
     <body>
         <h3>🛠️ Anki Card Builder</h3>
 
         <div class="status-wrapper">
+            <img
+                src="img/anki.svg"
+                alt="Anki Logo"
+                class="anki-logo"
+                style="height: 24px; vertical-align: middle;"
+            >
             Anki Connect Status:&nbsp;
-            <span id="anki-status-word" class="status-word">Unknown</span>
+            <span
+                id="anki-status-word"
+                class="status-word"
+            >Unknown</span>
             <div
                 id="anki-status-error-message"
                 class="status-error-message"
@@ -18,8 +31,17 @@
         </div>
 
         <div class="status-wrapper">
+            <img
+                src="img/ollama.svg"
+                alt="Ollama Logo"
+                class="ollama-logo"
+                style="height: 24px; vertical-align: middle;"
+            >
             Ollama Connect Status:&nbsp;
-            <span id="ollama-status-word" class="status-word">Unknown</span>
+            <span
+                id="ollama-status-word"
+                class="status-word"
+            >Unknown</span>
             <div
                 id="ollama-status-error-message"
                 class="status-error-message"
@@ -27,8 +49,17 @@
         </div>
 
         <div class="status-wrapper">
+            <img
+                src="img/piper.svg"
+                alt="Piper Logo"
+                class="piper-logo"
+                style="height: 24px; vertical-align: middle;"
+            >
             Piper Connect Status:&nbsp;
-            <span id="piper-status-word" class="status-word">Unknown</span>
+            <span
+                id="piper-status-word"
+                class="status-word"
+            >Unknown</span>
             <div
                 id="piper-status-error-message"
                 class="status-error-message"
@@ -44,7 +75,7 @@
                 autofocus
                 required
                 autocomplete="off"
-            />
+            >
         </div>
 
         <button id="prepare-card-button">Prepare Card</button>
@@ -56,4 +87,5 @@
         </p>
         <script src="popup.js" type="module"></script>
     </body>
+
 </html>
