@@ -168,12 +168,6 @@ browser.storage.onChanged.addListener((changes, areaName) => {
     }
 });
 
-// Populate the card editor with data from storage when it loads
-// TODO: What is this????
-document.addEventListener('DOMContentLoaded', () => {
-    browser.storage.local.get().then(updateCardEditorFromStorage);
-});
-
 document.getElementById('image-src').addEventListener('input', (event) => {
     const imageSrc = event.target.value.trim();
     const imagePreview = document.getElementById('image-preview');
@@ -349,6 +343,7 @@ function reloadFrenchSentence() {
 
     const reloadButton = document.getElementById('reload-french-sentence');
     reloadButton.disabled = true;
+    // TODO: Make it a spinner.
     reloadButton.textContent = '⏳';
 
     fetch('http://localhost:11434/api/generate', {
