@@ -11,6 +11,7 @@ export default defineConfig([
         files: ['**/*.{js,mjs,cjs}'],
         plugins: { js },
         languageOptions: { globals: globals.browser },
+        extends: ['js/recommended'],
         rules: {
             'comma-dangle': ['error', 'never'],
             'indent': ['error', 4],
