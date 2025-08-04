@@ -18,9 +18,21 @@ export default defineConfig([
             'linebreak-style': ['error', 'unix'],
             'semi': ['error', 'always'],
             'quotes': ['error', 'single'],
-            'max-len': ['error', { code: 80 }],
+            'max-len': ['warn', { code: 80 }],
             'quote-props': ['error', 'consistent-as-needed'],
-            'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }]
+            'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
+            // Suggestions
+            'arrow-body-style': ['error', 'always'],
+            'block-scoped-var': 'error',
+            'camelcase': ['error', { properties: 'always' }],
+            'capitalized-comments': ['error', 'always'],
+            'complexity': ['error', { max: 10 }],
+            'consistent-return': 'error',
+            'curly': ['error', 'all'],
+            'eqeqeq': ['error', 'always'],
+            'func-style': ['error', 'declaration'],
+            'logical-assignment-operators': ['error', 'always'],
+            'max-depth': ['warn', { max: 3 }]
         }
     },
     {
