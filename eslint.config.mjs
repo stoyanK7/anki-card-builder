@@ -19,7 +19,8 @@ export default defineConfig([
             'semi': ['error', 'always'],
             'quotes': ['error', 'single'],
             'max-len': ['error', { code: 80 }],
-            'quote-props': ['error', 'consistent-as-needed']
+            'quote-props': ['error', 'consistent-as-needed'],
+            'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }]
         }
     },
     {
