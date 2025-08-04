@@ -27,7 +27,7 @@ function getStringFromXPath(xpath) {
     if (!element) {
         return '';
     }
-    return element.stringValue.trim();
+    return element.textContent.trim();
 }
 
 /**
