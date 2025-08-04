@@ -377,6 +377,6 @@ function reloadFrenchSentence() {
         })
         .finally(() => {
             reloadButton.disabled = false;
-            reloadButton.textContent = '🔄';
+            reloadButton.textContent = '🎨';
         });
 }
