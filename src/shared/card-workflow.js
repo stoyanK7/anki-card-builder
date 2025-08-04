@@ -1,4 +1,4 @@
-export async function startCardBuildingProcess(frenchWord) {
+export function startCardBuildingProcess(frenchWord) {
     openCardBuilderInPopupWindow();
     openResourceTabsForFrenchWordInNewWindow(frenchWord);
 }
@@ -7,7 +7,7 @@ export async function startCardBuildingProcess(frenchWord) {
  * Open the card builder panel in a popup window. The window will
  * always be on top of the other windows.
  */
-async function openCardBuilderInPopupWindow() {
+function openCardBuilderInPopupWindow() {
     browser.windows.create({
         url: browser.runtime.getURL('src/card-builder/card-builder.html'),
         type: 'popup',
@@ -27,7 +27,7 @@ async function openCardBuilderInPopupWindow() {
  *
  * @param {string} frenchWord
  */
-async function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
+function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
     const encodedURIfrenchWord = encodeURIComponent(frenchWord);
     const urls = [
         `https://fr.wiktionary.org/wiki/${encodedURIfrenchWord}`,
