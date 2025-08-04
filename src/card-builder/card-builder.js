@@ -132,9 +132,25 @@ browser.storage.onChanged.addListener((changes, areaName) => {
         }
     }
     updateCardEditorFromStorage(changedData);
+
+    if ('frenchSentence' in changedData) {
+        browser.storage.local.get('resourcesWindowId')
+            .then((storageResult) => {
+                const resourcesWindowId = storageResult.resourcesWindowId;
+                if (!resourcesWindowId) {
+                    return;
+                }
+                browser.tabs.create({
+                    url: 'https://www.deepl.com/translator#fr/bg/'
+                    + encodeURIComponent(changedData.frenchSentence),
+                    windowId: resourcesWindowId
+                });
+            });
+    }
 });
 
 // Populate the card editor with data from storage when it loads
+// TODO: What is this????
 document.addEventListener('DOMContentLoaded', () => {
     browser.storage.local.get().then(updateCardEditorFromStorage);
 });
