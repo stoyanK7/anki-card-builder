@@ -49,7 +49,7 @@
         },
         {
             "matches": ["https://www.google.com/search*"],
-            "js": ["src/content-scripts/google-images.js"]
+            "js": ["src/shared/xpath.js", "src/content-scripts/google-images.js"]
         },
         {
             "matches": ["https://www.deepl.com/*"],

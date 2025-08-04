@@ -1,65 +1,54 @@
-const imageTilesXPath =
-    '/html/body/div[3]/div/div[14]/div/div[2]'
-    + '/div[2]/div/div/div/div/div[1]/div/div/div';
-const highQualityImageXPath =
+const firstImageTileXPath =
+    '/html/body/div[3]/div/div[13]/div/div[2]'
+    + '/div[2]/div/div/div/div/div[1]/div/div/div[1]';
+const highQualityImagesXPath =
     '/html/body/div[15]/div[2]/div[3]/div/div/c-wiz'
-    + '/div/div[2]/div[2]/div/div[2]/c-wiz/div/div[2]/div[1]/a/img[1]';
+    + '/div/div[2]/div[2]/div/div[2]/c-wiz/div/div[2]/div[1]/a/img';
 let firstImgClicked = false;
 
 const observer = new MutationObserver(() => {
-    const result = document.evaluate(
-        imageTilesXPath,
-        document,
-        null,
-        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-        null
-    );
+    const firstTile = getElementFromXPath(firstImageTileXPath);
 
-    if (result.snapshotLength > 0) {
-        const firstTile = result.snapshotItem(0);
-        const firstImg = firstTile.querySelector('img');
-
-        if (!firstImg) {
-            return;
-        }
-
-        /**
-         * We click the image because we want the high quality version
-         * of the image.
-         * All images in the grid view are low quality.
-         * By clicking that image, it will open the high quality version
-         * of the image.
-         * On the right side of the screen and we can then scrape it.
-         */
-        firstImg.click();
-        firstImgClicked = true;
-    }
-
-    if (!firstImgClicked) {
+    if (!firstTile) {
         return;
     }
 
-    const highQualityImageResult = document.evaluate(
-        highQualityImageXPath,
-        document,
-        null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null
-    );
-    const highQualityImage = highQualityImageResult.singleNodeValue;
+    const firstImg = firstTile.querySelector('img');
 
-    if (
-        highQualityImage &&
-        highQualityImage.src &&
+    if (!firstImg) {
+        return;
+    }
+
+    /**
+     * Click the image to load its high-quality version.
+     * Grid images are low quality. Clicking opens a
+     * high-quality version on the right, which we can
+     * (hopefully) scrape.
+     */
+    if (!firstImgClicked) {
+        firstImg.click();
+        firstImgClicked = true;
+
         /**
-         * Google places 2 images in a div, one above the other. They have
-         * a gstatic.com as a backup image.
-         * We want the non-gstatic image which is the high quality one.
+         * Store the initial image src. It's low quality,
+         * but better than nothing if scraping fails.
          */
-        !highQualityImage.src.includes('gstatic.com')
-    ) {
-        browser.storage.local.set({ imageSrc: highQualityImage.src });
-        observer.disconnect();
+        browser.storage.local.set({ imageSrc: firstImg.src });
+    }
+
+    const highQualityImage = getElementFromXPath(highQualityImagesXPath);
+
+    if (!highQualityImage || !highQualityImage.src) {
+        return;
+    }
+
+    const highQualityImages = getAllElementsFromXPath(highQualityImagesXPath);
+
+    for (const img of highQualityImages) {
+        if (img.src && !img.src.includes('gstatic.com')) {
+            browser.storage.local.set({ imageSrc: img.src });
+            observer.disconnect();
+        }
     }
 });
 

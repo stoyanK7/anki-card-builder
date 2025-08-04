@@ -51,6 +51,7 @@ export default defineConfig([
         files: [
             'src/content-scripts/deepl.js',
             'src/content-scripts/google-translate.js',
+            'src/content-scripts/google-images.js',
             'src/content-scripts/wiktionary.js'
         ],
         languageOptions: {
