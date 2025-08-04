@@ -18,7 +18,7 @@ browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
         .then(async (data) => {
             const audioSrc = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onloadend = () => {return resolve(reader.result);};
+                reader.onloadend = () => resolve(reader.result);
                 reader.onerror = reject;
                 reader.readAsDataURL(data);
             });
@@ -121,9 +121,8 @@ function updateCardEditorFromStorage(data) {
 }
 
 browser.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName !== 'local') {
-        return;
-    }
+    if (areaName !== 'local') return;
+
     // Build an object with only the changed new values
     const changedData = {};
     for (const key in changes) {
@@ -131,20 +130,40 @@ browser.storage.onChanged.addListener((changes, areaName) => {
             changedData[key] = changes[key].newValue;
         }
     }
+
     updateCardEditorFromStorage(changedData);
 
     if ('frenchSentence' in changedData) {
+        const frenchSentence = changedData.frenchSentence.trim();
         browser.storage.local.get('resourcesWindowId')
-            .then((storageResult) => {
-                const resourcesWindowId = storageResult.resourcesWindowId;
-                if (!resourcesWindowId) {
-                    return;
-                }
-                browser.tabs.create({
-                    url: 'https://www.deepl.com/translator#fr/bg/'
-                    + encodeURIComponent(changedData.frenchSentence),
-                    windowId: resourcesWindowId
-                });
+            .then((storageResult) => storageResult.resourcesWindowId)
+            .then((resourcesWindowId) => {
+                if (!resourcesWindowId) return;
+
+                /**
+                 * Update DeepL tab with new sentence if open;
+                 * otherwise, create a new tab with it.
+                 */
+                browser.tabs.query({
+                    windowId: resourcesWindowId,
+                    url: 'https://www.deepl.com/*'
+                })
+                    .then((tabs) => {
+                        if (tabs.length > 0) {
+                            // If it is open, just update the tab.
+                            browser.tabs.update(tabs[0].id, {
+                                url: 'https://www.deepl.com/translator#fr/bg/'
+                                    + encodeURIComponent(frenchSentence)
+                            });
+                        } else {
+                            // If it is not open, create a new tab.
+                            browser.tabs.create({
+                                url: 'https://www.deepl.com/translator#fr/bg/'
+                                    + encodeURIComponent(frenchSentence),
+                                windowId: resourcesWindowId
+                            });
+                        }
+                    });
             });
     }
 });
@@ -326,9 +345,7 @@ function reloadFrenchSentence() {
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
-    if (!frenchWord) {
-        return;
-    }
+    if (!frenchWord) return;
 
     const reloadButton = document.getElementById('reload-french-sentence');
     reloadButton.disabled = true;
@@ -339,6 +356,7 @@ function reloadFrenchSentence() {
         headers: {
             'Content-Type': 'application/json'
         },
+        // TODO: Fix the prompt to be more specific.
         body: JSON.stringify({
             model: 'jobautomation/OpenEuroLLM-French',
             prompt: 'Donne uniquement une phrase en français, niveau '
@@ -351,7 +369,7 @@ function reloadFrenchSentence() {
             }
         })
     })
-        .then((response) => {return response.json();})
+        .then((response) => response.json())
         .then((data) => {
             const frenchSentence = data.response.trim();
             browser.storage.local.set({ frenchSentence });
