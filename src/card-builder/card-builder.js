@@ -199,11 +199,11 @@ async function saveCard(event) {
                         deckName: deckName,
                         modelName: 'Custom Vocabulary',
                         fields: {
-                            French: frenchWord,
+                            'French': frenchWord,
                             'French Sentence': frenchSentence,
-                            Bulgarian: bulgarianWord,
+                            'Bulgarian': bulgarianWord,
                             'Bulgarian Sentence': bulgarianSentence,
-                            Image: `<img src='${imageSrc}' />`,
+                            'Image': `<img src='${imageSrc}' />`,
                             'French Speech': `[sound:${frenchWord}.wav]`,
                             'French Gender': frenchGender,
                             'French Plural': frenchPlural

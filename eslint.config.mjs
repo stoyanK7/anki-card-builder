@@ -13,12 +13,13 @@ export default defineConfig([
         languageOptions: { globals: globals.browser },
         rules: {
             'comma-dangle': ['error', 'never'],
-            indent: ['error', 4],
+            'indent': ['error', 4],
             'no-tabs': 'error',
             'linebreak-style': ['error', 'unix'],
-            semi: ['error', 'always'],
-            quotes: ['error', 'single'],
-            'max-len': ['error', { code: 80 }]
+            'semi': ['error', 'always'],
+            'quotes': ['error', 'single'],
+            'max-len': ['error', { code: 80 }],
+            'quote-props': ['error', 'consistent-as-needed']
         }
     },
     {
