@@ -18,7 +18,7 @@ browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
         .then(async (data) => {
             const audioSrc = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
+                reader.onloadend = () => {return resolve(reader.result);};
                 reader.onerror = reject;
                 reader.readAsDataURL(data);
             });
@@ -72,7 +72,8 @@ async function fetchDeckNames() {
         const deckNames = await invokeAnkiConnect('deckNames');
         if (!Array.isArray(deckNames)) {
             throw new Error(
-                'Invalid response from AnkiConnect: expected an array of deck names.'
+                'Expected an array of deck names from AnkiConnect, but got: '
+                + JSON.stringify(deckNames)
             );
         }
         return deckNames;
@@ -80,6 +81,7 @@ async function fetchDeckNames() {
         document.getElementById('error-message').textContent = error.message;
         document.getElementById('error-message').style.display = 'block';
     }
+    return [];
 }
 
 function updateCardEditorFromStorage(data) {
@@ -323,14 +325,17 @@ function reloadFrenchSentence() {
         },
         body: JSON.stringify({
             model: 'jobautomation/OpenEuroLLM-French',
-            prompt: `Donne uniquement une phrase en français, niveau A1-A2, avec le mot suivant : ${frenchWord}. La phrase doit avoir 10 mots ou moins. Ne réponds qu'avec la phrase, sans explication ni introduction.`,
+            prompt: 'Donne uniquement une phrase en français, niveau '
+            + `A1-A2, avec le mot suivant : ${frenchWord}. La phrase `
+            + 'doit avoir 10 mots ou moins. Ne réponds qu\'avec la phrase,' 
+            + 'sans explication ni introduction.',
             stream: false,
             options: {
                 temperature: 0.8
             }
         })
     })
-        .then((response) => response.json())
+        .then((response) => {return response.json();})
         .then((data) => {
             const frenchSentence = data.response.trim();
             browser.storage.local.set({ frenchSentence });

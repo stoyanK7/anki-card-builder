@@ -1,7 +1,7 @@
 import { startCardBuildingProcess } from './shared/card-workflow.js';
 import { validateFrenchWord } from './shared/input-validation.js';
 
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message) => {
     if (message.type === 'create-tab') {
         browser.tabs.create({ url: message.url });
     }
@@ -32,7 +32,7 @@ browser.contextMenus.create({
     contexts: ['audio']
 });
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener((info) => {
     if (info.menuItemId === 'prepare-card') {
         handlePrepareCardContextMenu(info);
     }
@@ -56,7 +56,8 @@ function handlePrepareCardContextMenu(info) {
                 type: 'basic',
                 iconUrl: browser.runtime.getURL('icons/icon-48.png'),
                 title: 'Invalid French Word',
-                message: `The selected text is not a valid French word: ${validationResult.reason}`
+                message: 'The selected text is not a valid French word: '
+                            +  `${validationResult.reason}`
             }
         });
         return;

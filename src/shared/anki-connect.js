@@ -13,7 +13,8 @@
  * @param {object} params Parameters for the Anki Connect action.
  * @returns {Promise<any>} The result field of the Anki Connect response.
  *                         The type of the result depends on the action.
- * @throws {Error} If the response is not valid or if Anki Connect returns an error.
+ * @throws {Error} If the response is not valid or if Anki Connect returns
+ *                 an error.
  */
 export function invokeAnkiConnect(action, params = {}) {
     const ankiConnectVersion = 6;
@@ -28,7 +29,7 @@ export function invokeAnkiConnect(action, params = {}) {
         .then((response) => {
             if (!response.ok) {
                 throw new Error(
-                    'Network response was not ok. Status: ' + res.status
+                    'Network response was not ok. Status: ' + response.status
                 );
             }
 
@@ -37,9 +38,8 @@ export function invokeAnkiConnect(action, params = {}) {
         .then((responseObject) => {
             if (Object.keys(responseObject).length !== 2) {
                 throw new Error(
-                    `Response has an unexpected number of fields. Expected 2 fields but got ${
-                        Object.keys(responseObject).length
-                    }.`
+                    'Response has an unexpected number of fields. Expected '
+                    + `2 fields but got ${Object.keys(responseObject).length}.`
                 );
             }
             if (!('error' in responseObject)) {

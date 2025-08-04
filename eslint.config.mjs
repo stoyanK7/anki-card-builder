@@ -37,6 +37,29 @@ export default defineConfig([
         }
     },
     {
+        files: ['src/shared/**/*.js'],
+        rules: {
+            // Shared code does not have 'export' statements.
+            'no-unused-vars': 'off'
+        }
+    },
+    /**
+     * Content scripts do not use 'import' statements, but rather
+     * the function is loaded before the script runs so they have access to it.
+     */
+    {
+        files: [
+            'src/content-scripts/deepl.js',
+            'src/content-scripts/google-translate.js',
+            'src/content-scripts/wiktionary.js'
+        ],
+        languageOptions: {
+            globals: {
+                getStringFromXPath: 'readonly'
+            }
+        }
+    },
+    {
         files: ['**/*.json'],
         plugins: { json },
         language: 'json/json',
@@ -46,7 +69,11 @@ export default defineConfig([
         files: ['**/*.md'],
         plugins: { markdown },
         language: 'markdown/gfm',
-        extends: ['markdown/recommended']
+        extends: ['markdown/recommended'],
+        rules: {
+            // False positive on GitHub special alerts.
+            'markdown/no-missing-label-refs': 'off'
+        }
     },
     {
         files: ['**/*.css'],

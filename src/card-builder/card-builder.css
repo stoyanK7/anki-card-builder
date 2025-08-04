@@ -30,15 +30,15 @@ textarea {
     background: #0077cc;
     color: white;
     cursor: pointer;
+}
 
-    &:disabled {
-        background: #aaa;
-        cursor: not-allowed;
-    }
+#save-card-button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
 
-    &:hover {
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-    }
+#save-card-button:hover {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 #french-word {
@@ -70,17 +70,16 @@ label[for='undefined'] {
     width: 100%;
 }
 
-.sentence-wrapper > textarea {
+.sentence-wrapper>textarea {
     grid-row: span 2;
 }
 
-#reload-french-sentence {
-    &:hover {
-        cursor: pointer;
-    }
-    &:disabled {
-        cursor: not-allowed;
-    }
+#reload-french-sentence:hover {
+    cursor: pointer;
+}
+
+#reload-french-sentence:disabled {
+    cursor: not-allowed;
 }
 
 fieldset {

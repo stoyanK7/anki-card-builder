@@ -48,25 +48,34 @@ function updateAnkiConnectConnectionStatus() {
     invokeAnkiConnect('version')
         .then((version) => {
             if (version && typeof version === 'number') {
-                document.getElementById('anki-status-word').textContent =
-                    'Connected';
-                document.getElementById('anki-status-word').style.color =
-                    'green';
-                document.getElementById(
-                    'anki-status-error-message'
-                ).style.display = 'none';
+                document
+                    .getElementById('anki-status-word')
+                    .textContent ='Connected';
+                document
+                    .getElementById('anki-status-word')
+                    .style.color ='green';
+                document
+                    .getElementById('anki-status-error-message')
+                    .style.display = 'none';
             } else {
                 throw new Error('Invalid AnkiConnect version response');
             }
         })
         .catch((error) => {
-            document.getElementById('anki-status-word').textContent = 'Error';
-            document.getElementById('anki-status-word').style.color = 'red';
-            document.getElementById('anki-status-error-message').style.display =
-                'block';
-            document.getElementById('anki-status-error-message').textContent =
-                'AnkiConnect is not available. Please ensure it is installed, enabled and that Anki is running. Error: ' +
-                error.message;
+            document.
+                getElementById('anki-status-word')
+                .textContent = 'Error';
+            document
+                .getElementById('anki-status-word')
+                .style.color = 'red';
+            document
+                .getElementById('anki-status-error-message')
+                .style.display ='block';
+            document
+                .getElementById('anki-status-error-message')
+                .textContent = 'AnkiConnect is not available. '
+                + 'Please ensure it is installed, enabled and that '
+                + 'Anki is running. Error: ' + error.message;
         });
 }
 

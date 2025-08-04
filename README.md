@@ -42,4 +42,5 @@ If you run into any issues or have questions, please check the [issues page](htt
 Suggestions are welcome! Please open an issue to discuss any major changes or ideas first.
 
 ## License
+
 Anki Card Builder © 2025 by Stoyan Kostadinov is licensed under **CC BY-NC 4.0**. To view a copy of this license, visit [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/).

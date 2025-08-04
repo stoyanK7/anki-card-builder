@@ -79,10 +79,11 @@ kbd {
     padding: 2px 5px;
     position: relative;
     top: -1px;
-    &:hover {
-        box-shadow: 0 1px 0 0.5px #bfbfbf;
-        top: 1px;
-    }
+}
+
+kbd:hover {
+    box-shadow: 0 1px 0 0.5px #bfbfbf;
+    top: 1px;
 }
 
 #prepare-card-button:disabled {
