@@ -9,8 +9,16 @@ export default defineConfig([
     {
         files: ['**/*.{js,mjs,cjs}'],
         plugins: { js },
-        extends: ['js/recommended'],
-        languageOptions: { globals: globals.browser }
+        languageOptions: { globals: globals.browser },
+        rules: {
+            'comma-dangle': ['error', 'never'],
+            indent: ['error', 4],
+            'no-tabs': 'error',
+            'linebreak-style': ['error', 'unix'],
+            semi: ['error', 'always'],
+            quotes: ['error', 'single'],
+            'max-len': ['error', { code: 80 }]
+        }
     },
     {
         files: ['**/*.json'],
