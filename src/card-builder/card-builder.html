@@ -42,7 +42,6 @@
                     placeholder="e.g. voitures"
                 >
 
-                <!-- TODO: Use None, instead of undefined -->
                 <label for="french-gender">Gender:</label>
                 <div>
                     <input
@@ -51,7 +50,10 @@
                         name="french-gender"
                         value="masculin"
                     >
-                    <label for="masculine">M</label>
+                    <label
+                        for="masculine"
+                        title="Masculine gender"
+                    >M</label>
 
                     <input
                         id="feminine"
@@ -59,16 +61,22 @@
                         name="french-gender"
                         value="féminin"
                     >
-                    <label for="feminine">F</label>
+                    <label
+                        for="feminine"
+                        title="Feminine gender"
+                    >F</label>
 
                     <input
-                        id="undefined"
+                        id="none"
                         type="radio"
                         name="french-gender"
-                        value="undefined"
+                        value="none"
                         checked
                     >
-                    <label for="undefined">U</label>
+                    <label
+                        for="none"
+                        title="No gender (e.g. for verbs)"
+                    >N</label>
                 </div>
 
                 <div class="sentence-wrapper">
