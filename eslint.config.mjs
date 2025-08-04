@@ -55,7 +55,9 @@ export default defineConfig([
         ],
         languageOptions: {
             globals: {
-                getStringFromXPath: 'readonly'
+                getStringFromXPath: 'readonly',
+                getElementFromXPath: 'readonly',
+                getAllElementsFromXPath: 'readonly'
             }
         }
     },

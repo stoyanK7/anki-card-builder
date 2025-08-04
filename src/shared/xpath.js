@@ -29,3 +29,24 @@ function getStringFromXPath(xpath) {
     }
     return element.stringValue.trim();
 }
+
+/**
+ * Get all elements matching the given XPath expression.
+ *
+ * @param {string} xpath
+ * @returns {Element[]} An array of matching elements.
+ */
+function getAllElementsFromXPath(xpath) {
+    const result = document.evaluate(
+        xpath,
+        document,
+        null,
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+        null
+    );
+    const elements = [];
+    for (let i = 0; i < result.snapshotLength; i++) {
+        elements.push(result.snapshotItem(i));
+    }
+    return elements;
+}
