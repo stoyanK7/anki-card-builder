@@ -12,6 +12,10 @@ body {
 .status-wrapper {
     margin: 10px 0;
     font-size: 0.7em;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    column-gap: 5px;
+    row-gap: 2px;
 }
 
 .status-word {
@@ -21,7 +25,7 @@ body {
 .status-error-message {
     color: red;
     margin: 10px 0;
-    display: none;
+    visibility: hidden;
 }
 
 .form-group {

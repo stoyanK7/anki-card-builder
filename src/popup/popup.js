@@ -28,7 +28,7 @@ function updateOllamaConnectionStatus() {
                     'green';
                 document.getElementById(
                     'ollama-status-error-message'
-                ).style.display = 'none';
+                ).style.visibility = 'hidden';
             } else {
                 throw new Error('Ollama server is not reachable');
             }
@@ -56,7 +56,7 @@ function updateAnkiConnectConnectionStatus() {
                     .style.color ='green';
                 document
                     .getElementById('anki-status-error-message')
-                    .style.display = 'none';
+                    .style.visibility = 'hidden';
             } else {
                 throw new Error('Invalid AnkiConnect version response');
             }
@@ -89,7 +89,7 @@ function updatePiperConnectionStatus() {
                     'green';
                 document.getElementById(
                     'piper-status-error-message'
-                ).style.display = 'none';
+                ).style.visibility = 'hidden';
             } else {
                 throw new Error('Piper server is not reachable');
             }
