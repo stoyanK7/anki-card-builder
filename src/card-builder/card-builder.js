@@ -31,7 +31,7 @@ browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
         });
 });
 
-reloadFrenchSentence();
+generateFrenchSentence();
 
 (async () => {
     const deckNames = await fetchDeckNames();
@@ -332,19 +332,19 @@ document.querySelectorAll('input[name="french-gender"]').forEach((radio) => {
 document.addEventListener('DOMContentLoaded', updatePluralRequired);
 
 document
-    .getElementById('reload-french-sentence')
-    .addEventListener('click', reloadFrenchSentence);
+    .getElementById('generate-french-sentence')
+    .addEventListener('click', generateFrenchSentence);
 
-function reloadFrenchSentence() {
+function generateFrenchSentence() {
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
     if (!frenchWord) return;
 
-    const reloadButton = document.getElementById('reload-french-sentence');
-    reloadButton.disabled = true;
+    const generateButton = document.getElementById('generate-french-sentence');
+    generateButton.disabled = true;
     // TODO: Make it a spinner.
-    reloadButton.textContent = '⏳';
+    generateButton.textContent = '⏳';
 
     fetch('http://localhost:11434/api/generate', {
         method: 'POST',
@@ -376,7 +376,7 @@ function reloadFrenchSentence() {
             console.error('Error fetching French sentence:', error);
         })
         .finally(() => {
-            reloadButton.disabled = false;
-            reloadButton.textContent = '🎨';
+            generateButton.disabled = false;
+            generateButton.textContent = '🎨';
         });
 }

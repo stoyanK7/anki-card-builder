@@ -74,11 +74,11 @@ label[for='none'] {
     grid-row: span 2;
 }
 
-#reload-french-sentence:hover {
+#generate-french-sentence:hover {
     cursor: pointer;
 }
 
-#reload-french-sentence:disabled {
+#generate-french-sentence:disabled {
     cursor: not-allowed;
 }
 
