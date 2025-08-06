@@ -31,10 +31,11 @@ function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
     const encodedURIfrenchWord = encodeURIComponent(frenchWord);
     const urls = [
         `https://fr.wiktionary.org/wiki/${encodedURIfrenchWord}`,
-        `https://translate.google.com'
-                    + '/?sl=fr&tl=bg&text=${encodedURIfrenchWord}&op=translate`,
+        'https://translate.google.com'
+                    + `/?sl=fr&tl=bg&text=${encodedURIfrenchWord}&op=translate`,
         `https://www.google.com/search?tbm=isch&q=${encodedURIfrenchWord}`
     ];
+    console.log(urls);
 
     browser.windows
         .create({
