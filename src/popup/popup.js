@@ -134,8 +134,10 @@ function startCardPreparation() {
         return;
     }
 
-    browser.storage.local.set({ frenchWord });
-    startCardBuildingProcess(frenchWord);
+    browser.storage.local.set({ frenchWord })
+        .then(() => {
+            startCardBuildingProcess(frenchWord);
+        });
 }
 
 function disableButton(button) {
