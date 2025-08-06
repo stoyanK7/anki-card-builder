@@ -1,14 +1,14 @@
-const frenchGenderXPath =
+const frenchWordGenderXPath =
     '/html/body/div[2]/div/div[3]/main/div[3]'
     + '/div[3]/div[1]/section[2]/section[2]/p/span/i';
-const frenchPluralXPath =
+const frenchWordPluralXPath =
     '/html/body/div[2]/div/div[3]/main/div[3]/div[3]/div[1]'
     + '/section[2]/section[2]/table/tbody/tr[2]/td[2]/bdi/a';
 
-const frenchGender = getStringFromXPath(frenchGenderXPath);
-const frenchPlural = getStringFromXPath(frenchPluralXPath);
+const frenchWordGender = getStringFromXPath(frenchWordGenderXPath);
+const frenchWordPlural = getStringFromXPath(frenchWordPluralXPath);
 
 browser.storage.local.set({
-    frenchGender,
-    frenchPlural
+    frenchWordGender,
+    frenchWordPlural
 });

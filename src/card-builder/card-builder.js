@@ -8,13 +8,15 @@ browser.storage.local.get('frenchWord')
             .getElementById('french-word')
             .textContent = frenchWord;
 
+        generateFrenchSentenceWithWord(frenchWord);
+
         fetchFrenchAudio(frenchWord)
             .then((audioAsBase64) => {
                 document
                     .getElementById('french-word-audio-player')
                     .src = audioAsBase64;
                 browser.storage.local.set({
-                    frenchWordAudioSrc: audioAsBase64
+                    frenchWordAudio: audioAsBase64
                 });
             })
             .catch((error) => {
@@ -94,43 +96,41 @@ function restoreDeckSelectionFromStorage(deckNames, deckNameSelect) {
         });
 }
 
-generateFrenchSentence();
-
 function updateCardEditorFromStorage(data) {
     if ('frenchWord' in data) {
         document
             .getElementById('french-word')
             .textContent = data.frenchWord;
     }
-    if ('frenchWordAudioSrc' in data) {
+    if ('frenchWordAudio' in data) {
         document
             .getElementById('french-word-audio-player')
-            .src = data.frenchWordAudioSrc;
+            .src = data.frenchWordAudio;
     }
-    if ('frenchGender' in data) {
-        const frenchGenderRadios = document.querySelectorAll(
-            'input[name="french-gender"]'
+    if ('frenchWordGender' in data) {
+        const frenchWordGenderRadioButtons = document.querySelectorAll(
+            'input[name="french-word-gender"]'
         );
-        frenchGenderRadios.forEach((radio) => {
-            if (radio.value === data.frenchGender) {
+        frenchWordGenderRadioButtons.forEach((radio) => {
+            if (radio.value === data.frenchWordGender) {
                 radio.checked = true;
             }
         });
     }
-    if ('frenchPlural' in data) {
+    if ('frenchWordPlural' in data) {
         document
-            .getElementById('french-plural')
-            .value = data.frenchPlural;
+            .getElementById('french-word-plural')
+            .value = data.frenchWordPlural;
     }
     if ('frenchSentence' in data) {
         document
             .getElementById('french-sentence')
             .value = data.frenchSentence;
     }
-    if ('frenchSentenceAudioSrc' in data) {
+    if ('frenchSentenceAudio' in data) {
         document
             .getElementById('french-sentence-audio-player')
-            .src = data.frenchSentenceAudioSrc;
+            .src = data.frenchSentenceAudio;
     }
     if ('bulgarianWord' in data) {
         document
@@ -168,7 +168,7 @@ browser.storage.onChanged.addListener((changes, areaName) => {
         fetchFrenchAudio(frenchSentence)
             .then((frenchSentenceBase64Audio) => {
                 browser.storage.local.set({
-                    frenchSentenceAudioSrc: frenchSentenceBase64Audio
+                    frenchSentenceAudio: frenchSentenceBase64Audio
                 });
             });
 
@@ -225,19 +225,19 @@ async function saveCard(event) {
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
-    const frenchWordAudioSrc = document
+    const frenchWordAudio = document
         .getElementById('french-word-audio-player')
         .src.trim();
-    const frenchPlural = document
-        .getElementById('french-plural')
+    const frenchWordPlural = document
+        .getElementById('french-word-plural')
         .value.trim();
-    const frenchGender = document
-        .querySelector('input[name="french-gender"]:checked')
+    const frenchWordGender = document
+        .querySelector('input[name="french-word-gender"]:checked')
         .value.trim();
     const frenchSentence = document
         .getElementById('french-sentence')
         .value.trim();
-    const frenchSentenceAudioSrc = document
+    const frenchSentenceAudio = document
         .getElementById('french-sentence-audio-player')
         .src.trim();
     const bulgarianWord = document
@@ -257,7 +257,7 @@ async function saveCard(event) {
                 params: {
                     filename: `${frenchWord}.wav`,
                     // Anki Connect expects the base64 data without the prefix
-                    data: frenchWordAudioSrc.split(',')[1]
+                    data: frenchWordAudio.split(',')[1]
                 }
             },
             {
@@ -265,7 +265,7 @@ async function saveCard(event) {
                 params: {
                     filename: `${frenchSentence}.wav`,
                     // Anki Connect expects the base64 data without the prefix
-                    data: frenchSentenceAudioSrc.split(',')[1]
+                    data: frenchSentenceAudio.split(',')[1]
                 }
             },
             {
@@ -280,8 +280,8 @@ async function saveCard(event) {
                             'French Sentence': frenchSentence,
                             'French Sentence Audio':
                                     `[sound:${frenchSentence}.wav]`,
-                            'French Word Gender': frenchGender,
-                            'French Word Plural': frenchPlural,
+                            'French Word Gender': frenchWordGender,
+                            'French Word Plural': frenchWordPlural,
                             'Bulgarian Word': bulgarianWord,
                             'Bulgarian Sentence': bulgarianSentence,
                             'Image': `<img src='${imageSrc}' />`
@@ -324,11 +324,11 @@ async function saveCard(event) {
 
     browser.storage.local.remove([
         'frenchWord',
-        'frenchWordAudioSrc',
-        'frenchPlural',
-        'frenchGender',
+        'frenchWordAudio',
+        'frenchWordPlural',
+        'frenchWordGender',
         'frenchSentence',
-        'frenchSentenceAudioSrc',
+        'frenchSentenceAudio',
         'bulgarianWord',
         'bulgarianSentence',
         'imageSrc'
@@ -361,7 +361,7 @@ document.addEventListener('keydown', (event) => {
  */
 function isGenderSelected() {
     const checked = document.querySelector(
-        'input[name="french-gender"]:checked'
+        'input[name="french-word-gender"]:checked'
     );
     return (
         checked && (checked.value === 'masculin' || checked.value === 'féminin')
@@ -373,7 +373,7 @@ function isGenderSelected() {
  * based on whether a gender (M/F) is selected.
  */
 function updatePluralRequiredProperty() {
-    const pluralInput = document.getElementById('french-plural');
+    const pluralInput = document.getElementById('french-word-plural');
     if (isGenderSelected()) {
         pluralInput.required = true;
     } else {
@@ -381,22 +381,24 @@ function updatePluralRequiredProperty() {
     }
 }
 
-document.querySelectorAll('input[name="french-gender"]').forEach((radio) => {
-    radio.addEventListener('change', updatePluralRequiredProperty);
-});
+document
+    .querySelectorAll('input[name="french-word-gender"]')
+    .forEach((radio) => {
+        radio.addEventListener('change', updatePluralRequiredProperty);
+    });
 
 document.addEventListener('DOMContentLoaded', updatePluralRequiredProperty);
 
 document
     .getElementById('generate-french-sentence')
-    .addEventListener('click', generateFrenchSentence);
+    .addEventListener('click', () => {
+        const frenchWord = document
+            .getElementById('french-word')
+            .textContent.trim();
+        generateFrenchSentenceWithWord(frenchWord);
+    });
 
-function generateFrenchSentence() {
-    const frenchWord = document
-        .getElementById('french-word')
-        .textContent.trim();
-    if (!frenchWord) return;
-
+function generateFrenchSentenceWithWord(frenchWord) {
     const generateButton = document.getElementById('generate-french-sentence');
     generateButton.disabled = true;
     generateButton.textContent = 'Loading...';
