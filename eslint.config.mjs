@@ -24,6 +24,7 @@ export default defineConfig([
             'eol-last': ['error', 'always'],
             'quote-props': ['error', 'consistent-as-needed'],
             'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
+            'no-trailing-spaces': 'error',
             // Suggestions
             'arrow-body-style': ['error', 'as-needed'],
             'block-scoped-var': 'error',
