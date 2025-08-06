@@ -14,8 +14,8 @@ body {
     font-size: 0.7em;
     display: grid;
     grid-template-columns: auto auto 1fr;
-    column-gap: 5px;
-    row-gap: 2px;
+    column-gap: 8px;
+    row-gap: 5px;
 }
 
 .status-word {
@@ -24,7 +24,6 @@ body {
 
 .status-error-message {
     color: red;
-    margin: 10px 0;
     visibility: hidden;
 }
 
