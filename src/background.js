@@ -88,5 +88,5 @@ function handleUseAudioContextMenu(info) {
         console.warn('No audio source URL found in context menu info:', info);
         return;
     }
-    browser.storage.local.set({ audioSrc: info.srcUrl });
+    browser.storage.local.set({ frenchWordAudioSrc: info.srcUrl });
 }

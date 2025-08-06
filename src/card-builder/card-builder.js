@@ -1,48 +1,62 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
+import { fetchFrenchAudio } from '../shared/piper.js';
 
-browser.storage.local.get(['frenchWord', 'deckName']).then((result) => {
-    document.getElementById('french-word').textContent = result.frenchWord;
-    document.getElementById('deck-name').value = result.deckName;
+browser.storage.local.get('frenchWord')
+    .then((result) => {
+        const frenchWord = result.frenchWord;
+        document
+            .getElementById('french-word')
+            .textContent = frenchWord;
 
-    fetch('http://localhost:5000', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: result.frenchWord })
+        fetchFrenchAudio(frenchWord)
+            .then((audioAsBase64) => {
+                document
+                    .getElementById('french-word-audio-player')
+                    .src = audioAsBase64;
+                browser.storage.local.set({ 
+                    frenchWordAudioSrc: audioAsBase64 
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching audio:', error);
+            });            
+    });
+
+invokeAnkiConnect('deckNames')
+    .then((result) => {
+        if (!Array.isArray(result)) {
+            throw new Error(
+                'Expected an array of deck names from AnkiConnect, but got: '
+                + JSON.stringify(result)
+            );
+        }
+        return result;
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.blob();
-        })
-        .then(async (data) => {
-            const audioSrc = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(data);
-            });
+    .then((deckNames) => {
+        const deckNameDropdown = document.getElementById('deck-name-dropdown');
+        populateDeckNameDropdown(deckNames, deckNameDropdown);
+        restoreDeckSelectionFromStorage(deckNames, deckNameDropdown);
+    })
+    .catch((error) => {
+        document.getElementById('error-message').textContent = error.message;
+        document.getElementById('error-message').style.display = 'block';
+    });
 
-            document.getElementById('audio-player').src = audioSrc;
-            browser.storage.local.set({ audioSrc });
-        })
-        .catch((error) => {
-            console.error('Error fetching audio:', error);
-        });
-});
-
-generateFrenchSentence();
-
-(async () => {
-    const deckNames = await fetchDeckNames();
-    // Remove 'Default' deck if it exists.
-    // Nobody uses that deck, so it is better to not show it.
+/**
+ * Populate the deck name dropdown with the given deck names.
+ *
+ * @param {string[]} deckNames - The list of deck names.
+ * @param {HTMLSelectElement} deckNameSelect - The select element to populate.
+ */
+function populateDeckNameDropdown(deckNames, deckNameSelect) {
+    /**
+     * Remove 'Default' deck if it exists.
+     * Nobody uses that deck, so it is better to not show it.
+     */
     const defaultIndex = deckNames.indexOf('Default');
     if (defaultIndex !== -1) {
         deckNames.splice(defaultIndex, 1);
     }
-
-    const deckNameSelect = document.getElementById('deck-name');
 
     // Populate dropdown with deck names
     deckNames.forEach((deckName) => {
@@ -52,47 +66,51 @@ generateFrenchSentence();
         deckNameSelect.appendChild(option);
     });
 
-    deckNameSelect.addEventListener('change', async (event) => {
+    deckNameSelect.addEventListener('change', (event) => {
         const deckName = event.target.value;
         browser.storage.local.set({ deckName });
     });
-
-    // Load previously selected deck name from storage (if any) and select it
-    const storageResult = await browser.storage.local.get('deckName');
-    if (storageResult.deckName && deckNames.includes(storageResult.deckName)) {
-        deckNameSelect.value = storageResult.deckName;
-    } else {
-        // Else, don't choose anything. Let the user select a deck.
-        deckNameSelect.value = '';
-    }
-})();
-
-async function fetchDeckNames() {
-    try {
-        const deckNames = await invokeAnkiConnect('deckNames');
-        if (!Array.isArray(deckNames)) {
-            throw new Error(
-                'Expected an array of deck names from AnkiConnect, but got: '
-                + JSON.stringify(deckNames)
-            );
-        }
-        return deckNames;
-    } catch (error) {
-        document.getElementById('error-message').textContent = error.message;
-        document.getElementById('error-message').style.display = 'block';
-    }
-    return [];
 }
+
+/**
+ * Restore the deck selection from storage. Usually, when the user
+ * selects a deck, it is saved in storage. If the user has previously
+ * selected a deck, it will be restored here.
+ *
+ * @param {string[]} deckNames - The list of deck names.
+ * @param {HTMLSelectElement} deckNameSelect - The select element to 
+ *                                             restore the selection in.
+ */
+function restoreDeckSelectionFromStorage(deckNames, deckNameSelect) {
+    browser.storage.local.get('deckName')
+        .then((result) => {
+            const deckName = result.deckName;
+            if (deckName
+                && deckNames.includes(deckName)) {
+                deckNameSelect.value = deckName;
+            } else {
+                deckNameSelect.value = '';
+            }
+        });
+}
+
+generateFrenchSentence();
 
 function updateCardEditorFromStorage(data) {
     if ('frenchWord' in data) {
-        document.getElementById('french-word').textContent = data.frenchWord;
+        document
+            .getElementById('french-word')
+            .textContent = data.frenchWord;
     }
-    if ('audioSrc' in data) {
-        document.getElementById('audio-player').src = data.audioSrc;
+    if ('frenchWordAudioSrc' in data) {
+        document
+            .getElementById('french-word-audio-player')
+            .src = data.frenchWordAudioSrc;
     }
     if ('frenchPlural' in data) {
-        document.getElementById('french-plural').value = data.frenchPlural;
+        document
+            .getElementById('french-plural')
+            .value = data.frenchPlural;
     }
     if ('frenchGender' in data) {
         const frenchGenderRadios = document.querySelectorAll(
@@ -105,18 +123,27 @@ function updateCardEditorFromStorage(data) {
         });
     }
     if ('frenchSentence' in data) {
-        document.getElementById('french-sentence').value = data.frenchSentence;
+        document
+            .getElementById('french-sentence')
+            .value = data.frenchSentence;
     }
     if ('bulgarianWord' in data) {
-        document.getElementById('bulgarian-word').value = data.bulgarianWord;
+        document
+            .getElementById('bulgarian-word')
+            .value = data.bulgarianWord;
     }
     if ('bulgarianSentence' in data) {
-        document.getElementById('bulgarian-sentence').value =
-            data.bulgarianSentence;
+        document
+            .getElementById('bulgarian-sentence')
+            .value = data.bulgarianSentence;
     }
     if ('imageSrc' in data) {
-        document.getElementById('image-src').value = data.imageSrc;
-        document.getElementById('image-preview').src = data.imageSrc;
+        document
+            .getElementById('image-src')
+            .value = data.imageSrc;
+        document
+            .getElementById('image-preview')
+            .src = data.imageSrc;
     }
 }
 
@@ -194,13 +221,13 @@ async function saveCard(event) {
 
     // Get the values from the form. It is the source of truth.
     const deckName = document
-        .getElementById('deck-name')
+        .getElementById('deck-name-dropdown')
         .value.trim();
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
-    const audioSrc = document
-        .getElementById('audio-player')
+    const frenchWordAudioSrc = document
+        .getElementById('french-word-audio-player')
         .src.trim();
     const frenchPlural = document
         .getElementById('french-plural')
@@ -217,7 +244,9 @@ async function saveCard(event) {
     const bulgarianSentence = document
         .getElementById('bulgarian-sentence')
         .value.trim();
-    const imageSrc = document.getElementById('image-src').value.trim();
+    const imageSrc = document
+        .getElementById('image-src')
+        .value.trim();
 
     const requestParams = {
         actions: [
@@ -226,7 +255,7 @@ async function saveCard(event) {
                 params: {
                     filename: `${frenchWord}.wav`,
                     // Anki Connect expects the base64 data without the prefix
-                    data: audioSrc.split(',')[1]
+                    data: frenchWordAudioSrc.split(',')[1]
                 }
             },
             {
@@ -283,7 +312,7 @@ async function saveCard(event) {
 
     browser.storage.local.remove([
         'frenchWord',
-        'audioSrc',
+        'frenchWordAudioSrc',
         'frenchPlural',
         'frenchGender',
         'frenchSentence',
