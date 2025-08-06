@@ -307,19 +307,27 @@ async function saveCard(event) {
     }
 
     // Close the card builder popup.
-    browser.windows.getCurrent().then((currentWindow) => {
-        browser.windows.remove(currentWindow.id);
-    });
-
-    const storageResult = await browser.storage.local.get('resourcesWindowId');
-    const resourcesWindowId = storageResult.resourcesWindowId;
-    browser.windows
-        .remove(resourcesWindowId)
-        .then(() => {
-            browser.storage.local.remove('resourcesWindowId');
+    browser.storage.local.get('cardBuilderWindowId')
+        .then((storageResult) => storageResult.cardBuilderWindowId)
+        .then((cardBuilderWindowId) => {
+            browser.windows.remove(cardBuilderWindowId);
         })
         .catch((error) => {
+            console.error('Error closing card builder window:', error);
+        })
+        .finally(() => {
+            browser.storage.local.remove('cardBuilderWindowId');
+        });
+
+    // Close the window with resources (Google Images, DeepL, etc.)
+    browser.storage.local.get('resourcesWindowId')
+        .then((storageResult) => storageResult.resourcesWindowId)
+        .then((resourcesWindowId) => browser.windows.remove(resourcesWindowId))
+        .catch((error) => {
             console.error('Error closing resources window:', error);
+        })
+        .finally(() => {
+            browser.storage.local.remove('resourcesWindowId');
         });
 
     browser.storage.local.remove([
@@ -334,8 +342,11 @@ async function saveCard(event) {
         'image'
     ]);
 
-    // Send a message to the background script to create a notification.
-    // Only the background script can create notifications.
+
+    /**
+     * Send a message to the background script to create a notification.
+     * Only the background script can create notifications.
+     */
     browser.runtime.sendMessage({
         type: 'create-notification',
         id: `card-saved-${frenchWord}`,

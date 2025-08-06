@@ -14,7 +14,10 @@ function openCardBuilderInPopupWindow() {
         width: 350,
         height: 560,
         focused: true
-    });
+    })
+        .then((window) => {
+            browser.storage.local.set({ cardBuilderWindowId: window.id });
+        });
 }
 
 /**
