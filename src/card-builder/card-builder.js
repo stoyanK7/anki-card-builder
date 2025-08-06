@@ -343,8 +343,7 @@ function generateFrenchSentence() {
 
     const generateButton = document.getElementById('generate-french-sentence');
     generateButton.disabled = true;
-    // TODO: Make it a spinner.
-    generateButton.textContent = '⏳';
+    generateButton.textContent = 'Loading...';
 
     fetch('http://localhost:11434/api/generate', {
         method: 'POST',
@@ -377,6 +376,6 @@ function generateFrenchSentence() {
         })
         .finally(() => {
             generateButton.disabled = false;
-            generateButton.textContent = '🎨';
+            generateButton.textContent = 'Generate';
         });
 }
