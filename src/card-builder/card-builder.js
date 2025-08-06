@@ -144,9 +144,6 @@ function updateCardEditorFromStorage(data) {
     }
     if ('imageSrc' in data) {
         document
-            .getElementById('image-src')
-            .value = data.imageSrc;
-        document
             .getElementById('image-preview')
             .src = data.imageSrc;
     }
@@ -209,18 +206,6 @@ browser.storage.onChanged.addListener((changes, areaName) => {
     }
 });
 
-document.getElementById('image-src').addEventListener('input', (event) => {
-    const imageSrc = event.target.value.trim();
-    const imagePreview = document.getElementById('image-preview');
-    if (imageSrc) {
-        imagePreview.src = imageSrc;
-        browser.storage.local.set({ imageSrc });
-    } else {
-        imagePreview.src = '';
-        browser.storage.local.remove('imageSrc');
-    }
-});
-
 async function saveCard(event) {
     event.preventDefault();
 
@@ -262,8 +247,8 @@ async function saveCard(event) {
         .getElementById('bulgarian-sentence')
         .value.trim();
     const imageSrc = document
-        .getElementById('image-src')
-        .value.trim();
+        .getElementById('image-preview')
+        .src.trim();
 
     const requestParams = {
         actions: [
