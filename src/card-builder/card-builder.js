@@ -13,13 +13,13 @@ browser.storage.local.get('frenchWord')
                 document
                     .getElementById('french-word-audio-player')
                     .src = audioAsBase64;
-                browser.storage.local.set({ 
-                    frenchWordAudioSrc: audioAsBase64 
+                browser.storage.local.set({
+                    frenchWordAudioSrc: audioAsBase64
                 });
             })
             .catch((error) => {
                 console.error('Error fetching audio:', error);
-            });            
+            });
     });
 
 invokeAnkiConnect('deckNames')
@@ -78,7 +78,7 @@ function populateDeckNameDropdown(deckNames, deckNameSelect) {
  * selected a deck, it will be restored here.
  *
  * @param {string[]} deckNames - The list of deck names.
- * @param {HTMLSelectElement} deckNameSelect - The select element to 
+ * @param {HTMLSelectElement} deckNameSelect - The select element to
  *                                             restore the selection in.
  */
 function restoreDeckSelectionFromStorage(deckNames, deckNameSelect) {
@@ -107,11 +107,6 @@ function updateCardEditorFromStorage(data) {
             .getElementById('french-word-audio-player')
             .src = data.frenchWordAudioSrc;
     }
-    if ('frenchPlural' in data) {
-        document
-            .getElementById('french-plural')
-            .value = data.frenchPlural;
-    }
     if ('frenchGender' in data) {
         const frenchGenderRadios = document.querySelectorAll(
             'input[name="french-gender"]'
@@ -122,10 +117,20 @@ function updateCardEditorFromStorage(data) {
             }
         });
     }
+    if ('frenchPlural' in data) {
+        document
+            .getElementById('french-plural')
+            .value = data.frenchPlural;
+    }
     if ('frenchSentence' in data) {
         document
             .getElementById('french-sentence')
             .value = data.frenchSentence;
+    }
+    if ('frenchSentenceAudioSrc' in data) {
+        document
+            .getElementById('french-sentence-audio-player')
+            .src = data.frenchSentenceAudioSrc;
     }
     if ('bulgarianWord' in data) {
         document
@@ -162,6 +167,15 @@ browser.storage.onChanged.addListener((changes, areaName) => {
 
     if ('frenchSentence' in changedData) {
         const frenchSentence = changedData.frenchSentence.trim();
+
+        fetchFrenchAudio(frenchSentence)
+            .then((frenchSentenceBase64Audio) => {
+                browser.storage.local.set({
+                    frenchSentenceAudioSrc: frenchSentenceBase64Audio
+                });
+            });
+
+
         browser.storage.local.get('resourcesWindowId')
             .then((storageResult) => storageResult.resourcesWindowId)
             .then((resourcesWindowId) => {
@@ -238,6 +252,9 @@ async function saveCard(event) {
     const frenchSentence = document
         .getElementById('french-sentence')
         .value.trim();
+    const frenchSentenceAudioSrc = document
+        .getElementById('french-sentence-audio-player')
+        .src.trim();
     const bulgarianWord = document
         .getElementById('bulgarian-word')
         .value.trim();
@@ -259,20 +276,30 @@ async function saveCard(event) {
                 }
             },
             {
+                action: 'storeMediaFile',
+                params: {
+                    filename: `${frenchSentence}.wav`,
+                    // Anki Connect expects the base64 data without the prefix
+                    data: frenchSentenceAudioSrc.split(',')[1]
+                }
+            },
+            {
                 action: 'addNote',
                 params: {
                     note: {
                         deckName: deckName,
                         modelName: 'Custom Vocabulary',
                         fields: {
-                            'French': frenchWord,
+                            'French Word': frenchWord,
+                            'French Word Audio': `[sound:${frenchWord}.wav]`,
                             'French Sentence': frenchSentence,
-                            'Bulgarian': bulgarianWord,
+                            'French Sentence Audio':
+                                    `[sound:${frenchSentence}.wav]`,
+                            'French Word Gender': frenchGender,
+                            'French Word Plural': frenchPlural,
+                            'Bulgarian Word': bulgarianWord,
                             'Bulgarian Sentence': bulgarianSentence,
-                            'Image': `<img src='${imageSrc}' />`,
-                            'French Speech': `[sound:${frenchWord}.wav]`,
-                            'French Gender': frenchGender,
-                            'French Plural': frenchPlural
+                            'Image': `<img src='${imageSrc}' />`
                         },
                         options: {
                             allowDuplicate: false,
@@ -316,6 +343,7 @@ async function saveCard(event) {
         'frenchPlural',
         'frenchGender',
         'frenchSentence',
+        'frenchSentenceAudioSrc',
         'bulgarianWord',
         'bulgarianSentence',
         'imageSrc'
