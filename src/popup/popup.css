@@ -9,6 +9,10 @@ body {
     max-width: 400px;
 }
 
+#anki-icon {
+    height: 1.2em;
+}
+
 .status-wrapper {
     margin: 10px 0;
     font-size: 0.7em;
