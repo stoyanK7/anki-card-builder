@@ -142,10 +142,10 @@ function updateCardEditorFromStorage(data) {
             .getElementById('bulgarian-sentence')
             .value = data.bulgarianSentence;
     }
-    if ('imageSrc' in data) {
+    if ('image' in data) {
         document
             .getElementById('image-preview')
-            .src = data.imageSrc;
+            .src = data.image;
     }
 }
 
@@ -246,7 +246,7 @@ async function saveCard(event) {
     const bulgarianSentence = document
         .getElementById('bulgarian-sentence')
         .value.trim();
-    const imageSrc = document
+    const image = document
         .getElementById('image-preview')
         .src.trim();
 
@@ -284,7 +284,7 @@ async function saveCard(event) {
                             'French Word Plural': frenchWordPlural,
                             'Bulgarian Word': bulgarianWord,
                             'Bulgarian Sentence': bulgarianSentence,
-                            'Image': `<img src='${imageSrc}' />`
+                            'Image': `<img src='${image}' />`
                         },
                         options: {
                             allowDuplicate: false,
@@ -331,7 +331,7 @@ async function saveCard(event) {
         'frenchSentenceAudio',
         'bulgarianWord',
         'bulgarianSentence',
-        'imageSrc'
+        'image'
     ]);
 
     // Send a message to the background script to create a notification.

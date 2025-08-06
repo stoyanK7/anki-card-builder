@@ -87,7 +87,7 @@ function handleUseImageContextMenu(info) {
         console.warn('No image source URL found in context menu info:', info);
         return;
     }
-    browser.storage.local.set({ imageSrc: info.srcUrl });
+    browser.storage.local.set({ image: info.srcUrl });
 }
 
 function handleUseAudioContextMenu(info) {

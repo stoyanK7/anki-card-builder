@@ -33,7 +33,7 @@ const observer = new MutationObserver(() => {
          * Store the initial image src. It's low quality,
          * but better than nothing if scraping fails.
          */
-        browser.storage.local.set({ imageSrc: firstImg.src });
+        browser.storage.local.set({ image: firstImg.src });
     }
 
     const highQualityImage = getElementFromXPath(highQualityImagesXPath);
@@ -46,7 +46,7 @@ const observer = new MutationObserver(() => {
 
     for (const img of highQualityImages) {
         if (img.src && !img.src.includes('gstatic.com')) {
-            browser.storage.local.set({ imageSrc: img.src });
+            browser.storage.local.set({ image: img.src });
             observer.disconnect();
         }
     }
