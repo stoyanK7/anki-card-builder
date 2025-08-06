@@ -22,25 +22,32 @@ function updateOllamaConnectionStatus() {
     fetch('http://localhost:11434')
         .then((response) => {
             if (response.ok) {
-                document.getElementById('ollama-status-word').textContent =
-                    'Connected';
-                document.getElementById('ollama-status-word').style.color =
-                    'green';
-                document.getElementById(
-                    'ollama-status-error-message'
-                ).style.visibility = 'hidden';
+                document
+                    .getElementById('ollama-status-word')
+                    .textContent = 'Connected';
+                document
+                    .getElementById('ollama-status-word')
+                    .style.color = 'green';
+                document
+                    .getElementById('ollama-status-error-message')
+                    .style.visibility = 'hidden';
             } else {
                 throw new Error('Ollama server is not reachable');
             }
         })
         .catch((error) => {
-            document.getElementById('ollama-status-word').textContent = 'Error';
-            document.getElementById('ollama-status-word').style.color = 'red';
-            document.getElementById(
-                'ollama-status-error-message'
-            ).style.display = 'block';
-            document.getElementById('ollama-status-error-message').textContent =
-                error.message;
+            document
+                .getElementById('ollama-status-word')
+                .textContent = 'Error';
+            document
+                .getElementById('ollama-status-word')
+                .style.color = 'red';
+            document
+                .getElementById('ollama-status-error-message')
+                .style.visibility = 'visible';
+            document
+                .getElementById('ollama-status-error-message')
+                .textContent = error.message;
         });
 }
 
@@ -70,7 +77,7 @@ function updateAnkiConnectConnectionStatus() {
                 .style.color = 'red';
             document
                 .getElementById('anki-status-error-message')
-                .style.display ='block';
+                .style.visibility ='visible';
             document
                 .getElementById('anki-status-error-message')
                 .textContent = 'AnkiConnect is not available. '
@@ -83,25 +90,32 @@ function updatePiperConnectionStatus() {
     fetch('http://localhost:5000/voices')
         .then((response) => {
             if (response.ok) {
-                document.getElementById('piper-status-word').textContent =
-                    'Connected';
-                document.getElementById('piper-status-word').style.color =
-                    'green';
-                document.getElementById(
-                    'piper-status-error-message'
-                ).style.visibility = 'hidden';
+                document
+                    .getElementById('piper-status-word')
+                    .textContent = 'Connected';
+                document
+                    .getElementById('piper-status-word')
+                    .style.color = 'green';
+                document
+                    .getElementById('piper-status-error-message')
+                    .style.visibility = 'hidden';
             } else {
                 throw new Error('Piper server is not reachable');
             }
         })
         .catch((error) => {
-            document.getElementById('piper-status-word').textContent = 'Error';
-            document.getElementById('piper-status-word').style.color = 'red';
-            document.getElementById(
-                'piper-status-error-message'
-            ).style.display = 'block';
-            document.getElementById('piper-status-error-message').textContent =
-                error.message;
+            document
+                .getElementById('piper-status-word')
+                .textContent = 'Error';
+            document
+                .getElementById('piper-status-word')
+                .style.color = 'red';
+            document
+                .getElementById('piper-status-error-message')
+                .style.visibility = 'visible';
+            document
+                .getElementById('piper-status-error-message')
+                .textContent = error.message;
         });
 }
 
@@ -113,9 +127,9 @@ function startCardPreparation() {
     const validationResult = validateFrenchWord(frenchWord);
     if (!validationResult.valid) {
         placeRedBorder(document.getElementById('french-word-input'));
-        document.getElementById(
-            'error-message'
-        ).textContent = `Invalid word: ${validationResult.reason}`;
+        document
+            .getElementById('error-message')
+            .textContent = `Invalid word: ${validationResult.reason}`;
         disableButton(document.getElementById('prepare-card-button'));
         return;
     }
