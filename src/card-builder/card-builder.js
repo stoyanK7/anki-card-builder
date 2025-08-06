@@ -193,12 +193,18 @@ async function saveCard(event) {
     errorDiv.style.display = 'none';
 
     // Get the values from the form. It is the source of truth.
-    const deckName = document.getElementById('deck-name').value.trim();
+    const deckName = document
+        .getElementById('deck-name')
+        .value.trim();
     const frenchWord = document
         .getElementById('french-word')
         .textContent.trim();
-    const audioSrc = document.getElementById('audio-player').src.trim();
-    const frenchPlural = document.getElementById('french-plural').value.trim();
+    const audioSrc = document
+        .getElementById('audio-player')
+        .src.trim();
+    const frenchPlural = document
+        .getElementById('french-plural')
+        .value.trim();
     const frenchGender = document
         .querySelector('input[name="french-gender"]:checked')
         .value.trim();
@@ -307,6 +313,10 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+/**
+ * Checks whether a gender (M/F) is selected.
+ * @returns {boolean} true if a gender is selected, false otherwise.
+ */
 function isGenderSelected() {
     const checked = document.querySelector(
         'input[name="french-gender"]:checked'
@@ -316,7 +326,11 @@ function isGenderSelected() {
     );
 }
 
-function updatePluralRequired() {
+/**
+ * Updates the 'required' attribute of the french plural input field
+ * based on whether a gender (M/F) is selected.
+ */
+function updatePluralRequiredProperty() {
     const pluralInput = document.getElementById('french-plural');
     if (isGenderSelected()) {
         pluralInput.required = true;
@@ -326,10 +340,10 @@ function updatePluralRequired() {
 }
 
 document.querySelectorAll('input[name="french-gender"]').forEach((radio) => {
-    radio.addEventListener('change', updatePluralRequired);
+    radio.addEventListener('change', updatePluralRequiredProperty);
 });
 
-document.addEventListener('DOMContentLoaded', updatePluralRequired);
+document.addEventListener('DOMContentLoaded', updatePluralRequiredProperty);
 
 document
     .getElementById('generate-french-sentence')
