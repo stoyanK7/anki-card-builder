@@ -56,10 +56,12 @@
             <label for="french-word-input">🇫🇷 French Word:</label>
             <!-- eslint-disable @html-eslint/use-baseline -->
             <input
+                id="french-word-input"
                 type="text"
                 placeholder="Enter word in French..."
-                id="french-word-input"
                 autofocus
+                pattern="^[a-zàâçéèêëîïôûùüÿñæœ .,!?'`]*$"
+                title="Please enter only valid French characters."
                 required
                 autocomplete="off"
             >

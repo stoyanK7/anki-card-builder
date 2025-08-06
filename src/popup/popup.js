@@ -1,5 +1,3 @@
-import { invokeAnkiConnect } from '../shared/anki-connect.js';
-import { validateFrenchWord } from '../shared/input-validation.js';
 import { startCardBuildingProcess } from '../shared/card-workflow.js';
 
 updateAnkiConnectConnectionStatus();
@@ -32,7 +30,9 @@ function updateOllamaConnectionStatus() {
                     .getElementById('ollama-status-error-message')
                     .style.visibility = 'hidden';
             } else {
-                throw new Error('Ollama server is not reachable');
+                throw new Error(
+                    'Ollama server is not reachable. Status: ' + response.status
+                );
             }
         })
         .catch((error) => {
@@ -52,9 +52,9 @@ function updateOllamaConnectionStatus() {
 }
 
 function updateAnkiConnectConnectionStatus() {
-    invokeAnkiConnect('version')
-        .then((version) => {
-            if (version && typeof version === 'number') {
+    fetch('http://127.0.0.1:8765')
+        .then((response) => {
+            if (response.ok) {
                 document
                     .getElementById('anki-status-word')
                     .textContent ='Connected';
@@ -65,7 +65,10 @@ function updateAnkiConnectConnectionStatus() {
                     .getElementById('anki-status-error-message')
                     .style.visibility = 'hidden';
             } else {
-                throw new Error('Invalid AnkiConnect version response');
+                throw new Error(
+                    'AnkiConnect server is not reachable. Status: '
+                    + response.status
+                );
             }
         })
         .catch((error) => {
@@ -100,7 +103,9 @@ function updatePiperConnectionStatus() {
                     .getElementById('piper-status-error-message')
                     .style.visibility = 'hidden';
             } else {
-                throw new Error('Piper server is not reachable');
+                throw new Error(
+                    'Piper server is not reachable. Status: ' + response.status
+                );
             }
         })
         .catch((error) => {
@@ -124,32 +129,8 @@ function startCardPreparation() {
         .getElementById('french-word-input')
         .value.trim();
 
-    const validationResult = validateFrenchWord(frenchWord);
-    if (!validationResult.valid) {
-        placeRedBorder(document.getElementById('french-word-input'));
-        document
-            .getElementById('error-message')
-            .textContent = `Invalid word: ${validationResult.reason}`;
-        disableButton(document.getElementById('prepare-card-button'));
-        return;
-    }
-
     browser.storage.local.set({ frenchWord })
         .then(() => {
             startCardBuildingProcess(frenchWord);
         });
-}
-
-function disableButton(button) {
-    button.disabled = true;
-    setTimeout(() => {
-        button.disabled = false;
-    }, 750);
-}
-
-function placeRedBorder(element) {
-    element.style.border = '2px solid red';
-    setTimeout(() => {
-        element.style.border = '';
-    }, 750);
 }
