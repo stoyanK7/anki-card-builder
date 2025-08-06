@@ -16,6 +16,13 @@ textarea {
     padding: 2px;
 }
 
+input:focus,
+textarea:focus {
+    /* eslint-disable css/use-baseline */
+    outline: none;
+    border: 2px solid #0077cc;
+}
+
 #error-message {
     color: red;
     margin: 5px 0;
@@ -48,6 +55,18 @@ textarea {
 audio {
     height: 25px;
     grid-column: 1 / -1;
+}
+
+input#masculine {
+    accent-color: rgb(45, 45, 255);
+}
+
+input#feminine {
+    accent-color: rgb(250, 86, 113);
+}
+
+input#none {
+    accent-color: rgb(97, 97, 97);
 }
 
 label[for='masculine'] {
