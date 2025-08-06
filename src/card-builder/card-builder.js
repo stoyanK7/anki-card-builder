@@ -149,6 +149,17 @@ function updateCardEditorFromStorage(data) {
     }
 }
 
+document
+    .getElementById('french-sentence')
+    .addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            browser.storage.local.set({
+                frenchSentence: event.target.value.trim()
+            });
+        }
+    });
+
 browser.storage.onChanged.addListener((changes, areaName) => {
     if (areaName !== 'local') return;
 
