@@ -57,21 +57,6 @@ function handlePrepareCardContextMenu(info) {
         return;
     }
 
-    if (!isValidFrenchWord(frenchWord)) {
-        console.warn('Invalid French word format:', frenchWord);
-        browser.runtime.sendMessage({
-            type: 'create-notification',
-            id: 'french-word-validation-failed',
-            options: {
-                type: 'basic',
-                iconUrl: browser.runtime.getURL('icons/icon-48.png'),
-                title: 'Invalid French Word',
-                message: 'The selected text does not match the expected format.'
-            }
-        });
-        return;
-    }
-
     browser.storage.local.set({ frenchWord })
         .then(() => {
             startCardBuildingProcess(info.selectionText.trim());
@@ -100,17 +85,4 @@ function handleUseAudioContextMenu(info) {
         return;
     }
     browser.storage.local.set({ frenchWordAudio: info.srcUrl });
-}
-
-/**
- * Check if the given word is a valid French word - i.e.,
- * it contains only characters from the French alphabet.
- * Taken from https://stackoverflow.com/a/1922147/9553927.
- *
- * @param {string} word
- * @returns {boolean} true if the word is valid, false otherwise
- */
-function isValidFrenchWord(word) {
-    const regex = /^[a-zàâçéèêëîïôûùüÿñæœ .,!?'`]*$/i;
-    return regex.test(word.trim());
 }
