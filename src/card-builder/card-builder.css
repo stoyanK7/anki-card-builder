@@ -42,6 +42,14 @@ form {
     gap: var(--space-3);
 }
 
+fieldset {
+    display: grid;
+    gap: var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-3);
+}
+
 input[type='text'],
 textarea {
     width: 100%;
