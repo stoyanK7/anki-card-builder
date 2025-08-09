@@ -40,8 +40,7 @@ invokeAnkiConnect('deckNames')
         restoreDeckSelectionFromStorage(deckNames, deckNameDropdown);
     })
     .catch((error) => {
-        document.getElementById('error-message').textContent = error.message;
-        document.getElementById('error-message').style.display = 'block';
+        // TODO: Display error.message
     });
 
 /**
@@ -248,11 +247,6 @@ async function saveCard(event) {
     // Disable to prevent multiple requests triggering
     const saveButton = document.getElementById('save-card-button');
     saveButton.disabled = true;
-
-    // Clear any previous error message
-    const errorDiv = document.getElementById('error-message');
-    errorDiv.textContent = '';
-    errorDiv.style.display = 'none';
 
     // Get the values from the form. It is the source of truth.
     const deckName = document
