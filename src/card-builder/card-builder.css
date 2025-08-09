@@ -30,7 +30,9 @@ body {
     font-size: 14px;
     margin: 0;
     padding: var(--space-2);
+    /* Extension popups are limited to 800px width and 600px height by browsers. */
     width: 450px;
+    height: 600px;
     background: var(--bg);
     color: var(--text);
 }
