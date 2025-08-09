@@ -29,6 +29,10 @@
         --female: rgb(255, 139, 159);
         --none: rgb(151, 151, 151);
     }
+
+    #image-preview {
+        content: url("img/placeholder-dark.png");
+    }
 }
 
 body {
@@ -180,6 +184,7 @@ audio {
 }
 
 img {
+    height: 100%;
     width: 100%;
     max-width: 130px;
     max-height: 130px;
