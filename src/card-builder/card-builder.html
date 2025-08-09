@@ -11,133 +11,180 @@
     </head>
 
     <body>
-        <form>
-            <fieldset>
+        <div
+            id="error-message"
+            role="alert"
+            aria-live="polite"
+        ></div>
+
+        <form
+            id="card-form"
+            novalidate
+        >
+            <fieldset class="section">
                 <legend>French (🇫🇷)</legend>
 
-                <label for="french-word">Word:</label>
-                <input
-                    id="french-word"
-                    type="text"
-                    placeholder="e.g. voiture"
-                >
-
-                <label for="french-word-audio-player">Audio:</label>
-                <!-- eslint-disable @html-eslint/use-baseline -->
-                <audio
-                    id="french-word-audio-player"
-                    controls
-                    autoplay 
-                ></audio>
-
-                <label for="french-word-plural">Plural Form:</label>
-                <input
-                    id="french-word-plural"
-                    type="text"
-                    placeholder="e.g. voitures"
-                >
-
-                <label for="french-word-gender">Gender:</label>
-                <div>
-                    <input
-                        id="masculine"
-                        type="radio"
-                        name="french-word-gender"
-                        value="masculin"
-                    >
+                <div class="row two-inputs">
                     <label
-                        for="masculine"
-                        title="Masculine gender"
-                    >Masculin</label>
-
+                        for="french-word"
+                        class="label"
+                    >Word</label>
                     <input
-                        id="feminine"
-                        type="radio"
-                        name="french-word-gender"
-                        value="féminin"
+                        id="french-word"
+                        class="input"
+                        type="text"
+                        placeholder="e.g. voiture"
                     >
-                    <label
-                        for="feminine"
-                        title="Feminine gender"
-                    >Féminin</label>
 
-                    <input
-                        id="none"
-                        type="radio"
-                        name="french-word-gender"
-                        value="none"
-                        checked
-                    >
                     <label
-                        for="none"
-                        title="No gender (e.g. for verbs)"
-                    >None</label>
+                        for="french-word-plural"
+                        class="label"
+                    >Plural</label>
+                    <input
+                        id="french-word-plural"
+                        class="input"
+                        type="text"
+                        placeholder="e.g. voitures"
+                    >
                 </div>
 
-                <div class="sentence-wrapper">
-                    <label for="french-sentence">Sentence:</label>
-                    <textarea
-                        id="french-sentence"
-                        rows="2"
-                        cols="30"
-                        placeholder="e.g. Je peux conduire une voiture."
-                    ></textarea>
-                    <button
-                        type="button"
-                        id="generate-french-sentence"
-                    >
-                        Generate
-                    </button>
+                <div class="row">
+                    <span class="label">Pronunciation</span>
+                    <!-- eslint-disable @html-eslint/use-baseline -->
+                    <audio
+                        id="french-word-audio-player"
+                        controls
+                        autoplay
+                        controlslist="nodownload"
+                    ></audio>
                 </div>
-                <!-- eslint-disable @html-eslint/use-baseline -->
-                <audio
-                    id="french-sentence-audio-player"
-                    controls
-                    autoplay
-                ></audio>
+
+                <div class="row">
+                    <span class="label">Gender</span>
+                    <div
+                        class="segmented"
+                        role="radiogroup"
+                        aria-label="French word gender"
+                    >
+                        <input
+                            id="masculine"
+                            type="radio"
+                            name="french-word-gender"
+                            value="masculin"
+                        >
+                        <label for="masculine">Masculin</label>
+
+                        <input
+                            id="feminine"
+                            type="radio"
+                            name="french-word-gender"
+                            value="féminin"
+                        >
+                        <label for="feminine">Féminin</label>
+
+                        <input
+                            id="none"
+                            type="radio"
+                            name="french-word-gender"
+                            value="none"
+                            checked
+                        >
+                        <label for="none">None</label>
+                    </div>
+                </div>
+
+                <div class="row align-top">
+                    <label
+                        for="french-sentence"
+                        class="label"
+                    >Sentence</label>
+                    <div class="col">
+                        <div class="with-action">
+                            <textarea
+                                id="french-sentence"
+                                rows="2"
+                                placeholder="e.g. Je peux conduire une voiture."
+                            ></textarea>
+                            <button
+                                type="button"
+                                id="generate-french-sentence"
+                                class="ghost"
+                            >Generate</button>
+                        </div>
+                        <!-- eslint-disable @html-eslint/use-baseline -->
+                        <audio
+                            id="french-sentence-audio-player"
+                            controls
+                            autoplay
+                            controlslist="nodownload"
+                        ></audio>
+                    </div>
+                </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="section">
                 <legend>Bulgarian (🇧🇬)</legend>
 
-                <label for="bulgarian-word">Word:</label>
-                <input
-                    id="bulgarian-word"
-                    type="text"
-                    placeholder="e.g. кола"
-                >
+                <div class="row">
+                    <label
+                        for="bulgarian-word"
+                        class="label"
+                    >Word</label>
+                    <input
+                        id="bulgarian-word"
+                        class="input"
+                        type="text"
+                        placeholder="e.g. кола"
+                    >
+                </div>
 
-                <label for="bulgarian-sentence">Sentence:</label>
-                <textarea
-                    id="bulgarian-sentence"
-                    rows="2"
-                    cols="30"
-                    placeholder="напр. Мога да карам кола."
-                ></textarea>
+                <div class="row align-top">
+                    <label
+                        for="bulgarian-sentence"
+                        class="label"
+                    >Sentence</label>
+                    <textarea
+                        id="bulgarian-sentence"
+                        rows="2"
+                        placeholder="напр. Мога да карам кола."
+                    ></textarea>
+                </div>
             </fieldset>
 
-            <fieldset>
-                <legend>Image (📷)</legend>
+            <div class="image-and-deck">
+                <fieldset class="section">
+                    <legend>Image (📷)</legend>
 
-                <label for="image-preview">Image Preview:</label>
-                <img
-                    id="image-preview"
-                    src="https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg"
-                    alt="Image Preview"
-                >
-            </fieldset>
+                    <img
+                        id="image-preview"
+                        src="https://www.shutterstock.com/shutterstock/photos/2286554497/display_1500/stock-photo-random-pictures-cute-and-funny-2286554497.jpg"
+                        alt="Selected image preview"
+                    >
+                </fieldset>
 
-            <fieldset>
-                <legend>Deck (📁)</legend>
-                <label for="deck-name-dropdown">Deck Name:</label>
-                <select id="deck-name-dropdown"></select>
-            </fieldset>
+                <fieldset class="section">
+                    <legend>Deck (📁)</legend>
+
+                    <select
+                        id="deck-name-dropdown"
+                        class="input"
+                    >
+                        <option
+                            disabled
+                            selected
+                        >Loading…</option>
+                    </select>
+
+                </fieldset>
+            </div>
 
             <button
                 id="save-card-button"
                 type="submit"
             >Save Card</button>
         </form>
+
         <script src="card-builder.js" type="module"></script>
     </body>
+
 </html>
