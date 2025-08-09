@@ -102,8 +102,10 @@ label[for='none'] {
 }
 
 fieldset {
+    width: 100%;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
     row-gap: 3px;
     column-gap: 5px;
 }

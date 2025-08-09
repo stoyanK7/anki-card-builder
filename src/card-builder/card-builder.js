@@ -60,11 +60,36 @@ function populateDeckNameDropdown(deckNames, deckNameSelect) {
         deckNames.splice(defaultIndex, 1);
     }
 
-    // Populate dropdown with deck names
+    /**
+     * Populates the <select> element with deck names, formatting them to
+     * reflect a hierarchical parent/child structure based on "::"
+     * separators in their names.
+     *
+     * - Deck names are split on "::" to determine nesting depth.
+     * - Each child level is indented using non-breaking spaces.
+     * - A "↳" arrow is prepended to child items to visually indicate hierarchy.
+     * - The displayed text shows only the last segment of the deck name,
+     *   while the <option> value retains the full original deck path.
+     *
+     * Example:
+     *   "🇫🇷 French"                         → "French"
+     *   "🇫🇷 French::Lawless French"         → "    ↳ Lawless French"
+     *   "🇫🇷 French::Lawless French::Numbers 0-19" → "        ↳ Numbers 0-19"
+     */
     deckNames.forEach((deckName) => {
         let option = document.createElement('option');
         option.value = deckName;
-        option.textContent = deckName;
+
+        let parts = deckName.split('::');
+        let level = parts.length - 1;
+        let displayText = parts[parts.length - 1].trim();
+
+        // Return arrow for indented items
+        let arrow = level > 0 ? '↳ ' : '';
+
+        let indent = '\u00A0'.repeat(level * 8);
+
+        option.textContent = indent + arrow + displayText;
         deckNameSelect.appendChild(option);
     });
 
