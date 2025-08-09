@@ -37,6 +37,11 @@ body {
     color: var(--text);
 }
 
+form {
+    display: grid;
+    gap: var(--space-3);
+}
+
 input[type='text'],
 textarea {
     width: 100%;
