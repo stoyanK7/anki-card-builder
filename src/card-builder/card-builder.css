@@ -2,12 +2,37 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg: #fff;
+    --text: #1b1f24;
+    --muted: #6b7280;
+    --brand: #0077cc;
+    --border: #e5e7eb;
+    --radius: 10px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0b0e12;
+        --text: #e5e7eb;
+        --muted: #9aa3af;
+        --border: #1f2937;
+        --brand: #3aa0ff;
+    }
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     margin: 0;
+    padding: var(--space-2);
     width: 450px;
-    padding: 5px;
+    background: var(--bg);
+    color: var(--text);
 }
 
 input[type='text'],
