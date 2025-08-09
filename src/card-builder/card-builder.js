@@ -6,7 +6,7 @@ browser.storage.local.get('frenchWord')
         const frenchWord = result.frenchWord;
         document
             .getElementById('french-word')
-            .textContent = frenchWord;
+            .value = frenchWord;
 
         generateFrenchSentenceWithWord(frenchWord);
 
@@ -100,7 +100,7 @@ function updateCardEditorFromStorage(data) {
     if ('frenchWord' in data) {
         document
             .getElementById('french-word')
-            .textContent = data.frenchWord;
+            .value = data.frenchWord;
     }
     if ('frenchWordAudio' in data) {
         document
@@ -235,7 +235,7 @@ async function saveCard(event) {
         .value.trim();
     const frenchWord = document
         .getElementById('french-word')
-        .textContent.trim();
+        .value.trim();
     const frenchWordAudio = document
         .getElementById('french-word-audio-player')
         .src.trim();
@@ -416,7 +416,7 @@ document
     .addEventListener('click', () => {
         const frenchWord = document
             .getElementById('french-word')
-            .textContent.trim();
+            .value.trim();
         generateFrenchSentenceWithWord(frenchWord);
     });
 
