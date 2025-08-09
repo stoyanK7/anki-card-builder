@@ -11,7 +11,7 @@ function openCardBuilderInPopupWindow() {
     browser.windows.create({
         url: browser.runtime.getURL('src/card-builder/card-builder.html'),
         type: 'popup',
-        width: 350,
+        width: 450,
         height: 560,
         focused: true
     })
