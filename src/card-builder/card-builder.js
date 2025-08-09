@@ -330,8 +330,7 @@ async function saveCard(event) {
     try {
         await invokeAnkiConnect('multi', requestParams);
     } catch (error) {
-        errorDiv.textContent = error.message;
-        errorDiv.style.display = 'block';
+        // TODO: Display an error message to the user.
         saveButton.disabled = false;
         return;
     }
