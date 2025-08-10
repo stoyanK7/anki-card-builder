@@ -371,7 +371,6 @@ async function saveCard(event) {
         'image'
     ]);
 
-
     /**
      * Send a message to the background script to create a notification.
      * Only the background script can create notifications.

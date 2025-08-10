@@ -38,7 +38,6 @@ function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
                     + `/?sl=fr&tl=bg&text=${encodedURIfrenchWord}&op=translate`,
         `https://www.google.com/search?tbm=isch&q=${encodedURIfrenchWord}`
     ];
-    console.log(urls);
 
     browser.windows
         .create({
