@@ -286,16 +286,14 @@ async function saveCard(event) {
                 action: 'storeMediaFile',
                 params: {
                     filename: `${frenchWord}.wav`,
-                    // Anki Connect expects the base64 data without the prefix
-                    data: frenchWordAudio.split(',')[1]
+                    ...getAudioParam(frenchWordAudio)
                 }
             },
             {
                 action: 'storeMediaFile',
                 params: {
                     filename: `${frenchSentence}.wav`,
-                    // Anki Connect expects the base64 data without the prefix
-                    data: frenchSentenceAudio.split(',')[1]
+                    ...getAudioParam(frenchSentenceAudio)
                 }
             },
             {
@@ -385,6 +383,27 @@ async function saveCard(event) {
             message: `Card "${frenchWord}" saved in deck "${deckName}".`
         }
     });
+}
+
+/**
+ * Returns the appropriate parameter object for AnkiConnect's storeMediaFile
+ * action, depending on the format of the audio input.
+ *
+ * @param {string} audio - The audio source, either a URL, a data URL,
+ *                         or a base64 string.
+ * @returns {{url?: string, data?: string}} An object with either a
+ *                                          'url' or 'data' property
+ *                                          for AnkiConnect.
+ */
+function getAudioParam(audio) {
+    if (audio.startsWith('http://')
+        || audio.startsWith('https://')) {
+        return { url: audio };
+    } else if (audio.includes('data:audio/wav;base64,')) {
+        return { data: audio.split(',')[1] };
+    } else {
+        return { data: audio };
+    }
 }
 
 document.querySelector('form').addEventListener('submit', saveCard);
