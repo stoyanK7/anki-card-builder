@@ -47,11 +47,10 @@ async function scrapeBulgarianWord() {
         const observer = new MutationObserver(async (mutations, obs) => {
             try {
                 const bulgarianWord = getStringFromXPath(bulgarianWordXPath);
-                if (bulgarianWord) {
-                    clearTimeout(timeoutId);
-                    observer.disconnect();
-                    resolve(bulgarianWord);
-                }
+
+                clearTimeout(timeoutId);
+                observer.disconnect();
+                resolve(bulgarianWord);
             } catch(error) {
                 /**
                  * Do nothing, continue observing.
