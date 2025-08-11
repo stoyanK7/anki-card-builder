@@ -1,5 +1,6 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 import { fetchFrenchAudio } from '../shared/piper.js';
+import { initializeDeckDropdown } from './deck-dropdown.js';
 
 function x() {
     const params = new URLSearchParams(window.location.search);
@@ -25,6 +26,8 @@ function x() {
         });
 }
 x();
+
+initializeDeckDropdown();
 
 
 function updateCardEditorFromStorage(data) {
