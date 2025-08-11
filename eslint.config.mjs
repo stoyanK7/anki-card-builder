@@ -26,7 +26,7 @@ export default defineConfig([
             'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
             'no-trailing-spaces': 'error',
             // Suggestions
-            'arrow-body-style': ['error', 'as-needed'],
+            // 'arrow-body-style': ['error', 'as-needed'],
             'block-scoped-var': 'error',
             'camelcase': ['error', { properties: 'always' }],
             'capitalized-comments': ['error', 'always'],
