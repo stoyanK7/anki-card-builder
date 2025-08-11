@@ -1,15 +1,19 @@
 export function startCardBuildingProcess(frenchWord) {
-    openCardBuilderInPopupWindow();
+    openCardBuilderInPopupWindow(frenchWord);
     openResourceTabsForFrenchWordInNewWindow(frenchWord);
 }
 
 /**
  * Open the card builder panel in a popup window. The window will
  * always be on top of the other windows.
+ *
+ * @param {string} frenchWord The French word to be used in the card builder.
  */
-function openCardBuilderInPopupWindow() {
+function openCardBuilderInPopupWindow(frenchWord) {
     browser.windows.create({
-        url: browser.runtime.getURL('src/card-builder/card-builder.html'),
+        url: browser.runtime.getURL(
+            'src/card-builder/card-builder.html'
+        ) + '?frenchWord=' + encodeURIComponent(frenchWord),
         type: 'popup',
         width: 500,
         height: 580,
@@ -28,7 +32,7 @@ function openCardBuilderInPopupWindow() {
  * The manifest.json file maps the URLs to content scripts that will
  * scrape the data.
  *
- * @param {string} frenchWord
+ * @param {string} frenchWord The French word to search for.
  */
 function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
     const encodedURIfrenchWord = encodeURIComponent(frenchWord);

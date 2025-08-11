@@ -1,4 +1,4 @@
-import { startCardBuildingProcess } from '../shared/card-workflow.js';
+import { startCardBuildingProcess } from './card-workflow.js';
 
 browser.runtime.onMessage.addListener((message) => {
     if (message.type === 'create-notification') {
@@ -6,6 +6,9 @@ browser.runtime.onMessage.addListener((message) => {
         setTimeout(() => {
             browser.notifications.clear(message.id);
         }, 5000);
+    }
+    if (message.action === 'start-card-building-process') {
+        startCardBuildingProcess(message.frenchWord);
     }
 });
 
@@ -57,10 +60,7 @@ function handlePrepareCardContextMenu(info) {
         return;
     }
 
-    browser.storage.local.set({ frenchWord })
-        .then(() => {
-            startCardBuildingProcess(info.selectionText.trim());
-        });
+    startCardBuildingProcess(frenchWord);
 }
 
 function handleUseImageContextMenu(info) {

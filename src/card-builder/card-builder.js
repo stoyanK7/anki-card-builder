@@ -1,28 +1,30 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 import { fetchFrenchAudio } from '../shared/piper.js';
 
-browser.storage.local.get('frenchWord')
-    .then((result) => {
-        const frenchWord = result.frenchWord;
-        document
-            .getElementById('french-word')
-            .value = frenchWord;
+function x() {
+    const params = new URLSearchParams(window.location.search);
+    const frenchWord = params.get('frenchWord');
 
-        generateFrenchSentenceWithWord(frenchWord);
+    document
+        .getElementById('french-word')
+        .value = frenchWord;
 
-        fetchFrenchAudio(frenchWord)
-            .then((audioAsBase64) => {
-                document
-                    .getElementById('french-word-audio-player')
-                    .src = audioAsBase64;
-                browser.storage.local.set({
-                    frenchWordAudio: audioAsBase64
-                });
-            })
-            .catch((error) => {
-                console.error('Error fetching audio:', error);
+    generateFrenchSentenceWithWord(frenchWord);
+
+    fetchFrenchAudio(frenchWord)
+        .then((audioAsBase64) => {
+            document
+                .getElementById('french-word-audio-player')
+                .src = audioAsBase64;
+            browser.storage.local.set({
+                frenchWordAudio: audioAsBase64
             });
-    });
+        })
+        .catch((error) => {
+            console.error('Error fetching audio:', error);
+        });
+}
+x();
 
 invokeAnkiConnect('deckNames')
     .then((result) => {

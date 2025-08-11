@@ -1,5 +1,3 @@
-import { startCardBuildingProcess } from '../shared/card-workflow.js';
-
 updateAnkiConnectConnectionStatus();
 updateOllamaConnectionStatus();
 updatePiperConnectionStatus();
@@ -129,8 +127,9 @@ function startCardPreparation() {
         .getElementById('french-word-input')
         .value.trim();
 
-    browser.storage.local.set({ frenchWord })
-        .then(() => {
-            startCardBuildingProcess(frenchWord);
-        });
+    // TODO: Validate the French word before proceeding
+    browser.runtime.sendMessage({
+        action: 'start-card-building-process',
+        frenchWord
+    });
 }
