@@ -51,7 +51,7 @@ async function scrapeBulgarianWord() {
                 clearTimeout(timeoutId);
                 observer.disconnect();
                 resolve(bulgarianWord);
-            } catch(error) {
+            } catch (error) {
                 /**
                  * Do nothing, continue observing.
                  * getStringFromXPath() will throw an error if the element
