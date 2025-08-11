@@ -44,7 +44,7 @@ async function scrapeBulgarianWord() {
         + '/div[2]/div[2]/c-wiz/div/div[6]/div/div[1]/span[1]/span/span';
 
     return new Promise((resolve, reject) => {
-        const observer = new MutationObserver(async (mutations, obs) => {
+        const observer = new MutationObserver((mutations, obs) => {
             try {
                 const bulgarianWord = getStringFromXPath(bulgarianWordXPath);
 
