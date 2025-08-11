@@ -333,30 +333,6 @@ async function saveCard(event) {
         return;
     }
 
-    // Close the card builder popup.
-    browser.storage.local.get('cardBuilderWindowId')
-        .then((storageResult) => storageResult.cardBuilderWindowId)
-        .then((cardBuilderWindowId) => {
-            browser.windows.remove(cardBuilderWindowId);
-        })
-        .catch((error) => {
-            console.error('Error closing card builder window:', error);
-        })
-        .finally(() => {
-            browser.storage.local.remove('cardBuilderWindowId');
-        });
-
-    // Close the window with resources (Google Images, DeepL, etc.)
-    browser.storage.local.get('resourcesWindowId')
-        .then((storageResult) => storageResult.resourcesWindowId)
-        .then((resourcesWindowId) => browser.windows.remove(resourcesWindowId))
-        .catch((error) => {
-            console.error('Error closing resources window:', error);
-        })
-        .finally(() => {
-            browser.storage.local.remove('resourcesWindowId');
-        });
-
     browser.storage.local.remove([
         'frenchWord',
         'frenchWordAudio',
@@ -383,6 +359,37 @@ async function saveCard(event) {
             message: `Card "${frenchWord}" saved in deck "${deckName}".`
         }
     });
+
+    closeAndCleanupWindows();
+}
+
+/**
+ * Closes the card builder and resources windows if they are open,
+ * and removes their window IDs from browser storage.
+ *
+ * The order of closing is important. The card builder window
+ * must be closed last, because it is the one that is running
+ * this code. Else, the anything after closing the card builder
+ * window will not execute.
+ */
+async function closeAndCleanupWindows() {
+    // TODO: A better idea would be to do all this in the background script.
+    const storageResult = await browser.storage.local.get([
+        'cardBuilderWindowId',
+        'resourcesWindowId'
+    ]);
+    const { cardBuilderWindowId, resourcesWindowId } = storageResult;
+
+    if (resourcesWindowId) {
+        await browser.windows.remove(resourcesWindowId);
+        await browser.storage.local.remove('resourcesWindowId');
+    }
+
+    if (cardBuilderWindowId) {
+        await browser.storage.local.remove('cardBuilderWindowId');
+        // IMPORTANT: This must be the last line in this function.
+        await browser.windows.remove(cardBuilderWindowId);
+    }
 }
 
 /**
