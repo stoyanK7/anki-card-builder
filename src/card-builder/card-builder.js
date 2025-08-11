@@ -399,7 +399,7 @@ function getAudioParam(audio) {
     if (audio.startsWith('http://')
         || audio.startsWith('https://')) {
         return { url: audio };
-    } else if (audio.includes('data:audio/wav;base64,')) {
+    } else if (audio.includes('base64,')) {
         return { data: audio.split(',')[1] };
     } else {
         return { data: audio };
