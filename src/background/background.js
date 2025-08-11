@@ -1,4 +1,4 @@
-import { startCardBuildingProcess } from './shared/card-workflow.js';
+import { startCardBuildingProcess } from '../shared/card-workflow.js';
 
 browser.runtime.onMessage.addListener((message) => {
     if (message.type === 'create-notification') {
