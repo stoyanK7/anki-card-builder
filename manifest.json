@@ -41,7 +41,7 @@
     "content_scripts": [
         {
             "matches": ["https://fr.wiktionary.org/*"],
-            "js": ["src/shared/xpath.js", "src/content-scripts/wiktionary.js"]
+            "js": ["src/content-scripts/wiktionary.js"]
         },
         {
             "matches": ["https://translate.google.com/*"],
