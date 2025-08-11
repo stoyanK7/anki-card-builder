@@ -197,7 +197,7 @@ browser.storage.onChanged.addListener((changes, areaName) => {
 
     updateCardEditorFromStorage(changedData);
 
-    if ('frenchSentence' in changedData) {
+    if ('frenchSentence' in changedData && changedData.frenchSentence) {
         const frenchSentence = changedData.frenchSentence.trim();
 
         fetchFrenchAudio(frenchSentence)
