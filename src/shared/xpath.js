@@ -31,7 +31,7 @@ function getElementFromXPath(xpath) {
  */
 function getStringFromXPath(xpath) {
     const element = getElementFromXPath(xpath);
-    if (!element.hasAttribute('textContent')) {
+    if (!element.textContent) {
         throw new Error(
             `Element for XPath ${xpath} has no textContent attribute.`
         );
