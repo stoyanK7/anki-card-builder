@@ -129,7 +129,7 @@ function startCardPreparation() {
 
     // TODO: Validate the French word before proceeding
     browser.runtime.sendMessage({
-        action: 'start-card-building-process',
+        action: 'start-card-building-workflow',
         frenchWord
     });
 }
