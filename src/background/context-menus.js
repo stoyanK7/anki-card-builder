@@ -42,21 +42,7 @@ function addContextMenuListeners() {
 function handlePrepareCardContextMenu(info) {
     const frenchWord = info.selectionText.trim();
 
-    // TODO: Add better way to validate that
-    if (!frenchWord) {
-        console.warn('No selection text found in context menu info:', info);
-        browser.runtime.sendMessage({
-            type: 'create-notification',
-            id: 'french-word-validation-failed',
-            options: {
-                type: 'basic',
-                iconUrl: browser.runtime.getURL('icons/icon-48.png'),
-                title: 'Invalid French Word',
-                message: 'The selected text is empty.'
-            }
-        });
-        return;
-    }
+    // TODO: Add validation
 
     startCardBuildingWorkflow(frenchWord);
 }
