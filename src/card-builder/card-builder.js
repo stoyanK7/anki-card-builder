@@ -1,101 +1,33 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 import { fetchFrenchAudio } from '../shared/piper.js';
 import { initializeDeckDropdown } from './deck-dropdown.js';
-import { initUiUpdateListeners } from './ui-updater.js';
+import { initUiUpdateListeners,
+    updateFrenchWord, updateFrenchWordAudio } from './ui-updater.js';
 
-function x() {
-    const params = new URLSearchParams(window.location.search);
-    const frenchWord = params.get('frenchWord');
-
-    document
-        .getElementById('french-word')
-        .value = frenchWord;
-
-    generateFrenchSentenceWithWord(frenchWord);
-
-    fetchFrenchAudio(frenchWord)
-        .then((audioAsBase64) => {
-            document
-                .getElementById('french-word-audio-player')
-                .src = audioAsBase64;
-            browser.storage.local.set({
-                frenchWordAudio: audioAsBase64
-            });
-        })
-        .catch((error) => {
-            console.error('Error fetching audio:', error);
+const frenchWord = getFrenchWordFromUrl();
+updateFrenchWord(frenchWord);
+generateFrenchSentenceWithWord(frenchWord);
+fetchFrenchAudio(frenchWord)
+    .then((audioAsBase64) => {
+        updateFrenchWordAudio(audioAsBase64);
+        browser.storage.local.set({
+            frenchWordAudio: audioAsBase64
         });
-}
-x();
-
+    })
+    .catch((error) => {
+        console.error('Error fetching audio:', error);
+    });
 initializeDeckDropdown();
 initUiUpdateListeners();
 
-document
-    .getElementById('french-sentence')
-    .addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            browser.storage.local.set({
-                frenchSentence: event.target.value.trim()
-            });
-        }
-    });
+function getFrenchWordFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const frenchWord = params.get('frenchWord');
+    // TODO: Add some error handling
+    return frenchWord;
+}
 
-browser.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName !== 'local') return;
-
-    // Build an object with only the changed new values
-    const changedData = {};
-    for (const key in changes) {
-        if (changes[key].newValue !== changes[key].oldValue) {
-            changedData[key] = changes[key].newValue;
-        }
-    }
-
-    if ('frenchSentence' in changedData && changedData.frenchSentence) {
-        const frenchSentence = changedData.frenchSentence.trim();
-
-        fetchFrenchAudio(frenchSentence)
-            .then((frenchSentenceBase64Audio) => {
-                browser.storage.local.set({
-                    frenchSentenceAudio: frenchSentenceBase64Audio
-                });
-            });
-
-
-        browser.storage.local.get('resourcesWindowId')
-            .then((storageResult) => storageResult.resourcesWindowId)
-            .then((resourcesWindowId) => {
-                if (!resourcesWindowId) return;
-
-                /**
-                 * Update DeepL tab with new sentence if open;
-                 * otherwise, create a new tab with it.
-                 */
-                browser.tabs.query({
-                    windowId: resourcesWindowId,
-                    url: 'https://www.deepl.com/*'
-                })
-                    .then((tabs) => {
-                        if (tabs.length > 0) {
-                            // If it is open, just update the tab.
-                            browser.tabs.update(tabs[0].id, {
-                                url: 'https://www.deepl.com/translator#fr/bg/'
-                                    + encodeURIComponent(frenchSentence)
-                            });
-                        } else {
-                            // If it is not open, create a new tab.
-                            browser.tabs.create({
-                                url: 'https://www.deepl.com/translator#fr/bg/'
-                                    + encodeURIComponent(frenchSentence),
-                                windowId: resourcesWindowId
-                            });
-                        }
-                    });
-            });
-    }
-});
+document.querySelector('form').addEventListener('submit', saveCard);
 
 async function saveCard(event) {
     event.preventDefault();
@@ -216,47 +148,6 @@ function getAudioParam(audio) {
         return { data: audio };
     }
 }
-
-document.querySelector('form').addEventListener('submit', saveCard);
-document.addEventListener('keydown', (event) => {
-    if (event.ctrlKey && event.key === 'Enter') {
-        document.querySelector('form').requestSubmit();
-    }
-});
-
-/**
- * Checks whether a gender (M/F) is selected.
- * @returns {boolean} true if a gender is selected, false otherwise.
- */
-function isGenderSelected() {
-    const checked = document.querySelector(
-        'input[name="french-word-gender"]:checked'
-    );
-    return (
-        checked && (checked.value === 'masculin' || checked.value === 'féminin')
-    );
-}
-
-/**
- * Updates the 'required' attribute of the french plural input field
- * based on whether a gender (M/F) is selected.
- */
-function updatePluralRequiredProperty() {
-    const pluralInput = document.getElementById('french-word-plural');
-    if (isGenderSelected()) {
-        pluralInput.required = true;
-    } else {
-        pluralInput.removeAttribute('required');
-    }
-}
-
-document
-    .querySelectorAll('input[name="french-word-gender"]')
-    .forEach((radio) => {
-        radio.addEventListener('change', updatePluralRequiredProperty);
-    });
-
-document.addEventListener('DOMContentLoaded', updatePluralRequiredProperty);
 
 document
     .getElementById('generate-french-sentence')

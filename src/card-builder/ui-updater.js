@@ -36,13 +36,19 @@ function handleScrapeSuccess(message) {
     }
 }
 
+export function updateFrenchWord(newValue) {
+    document
+        .getElementById('french-word')
+        .value = newValue;
+}
+
 function updateFrenchWordPlural(newValue) {
     document
         .getElementById('french-word-plural')
         .value = newValue;
 }
 
-function updateFrenchWordAudio(newValue) {
+export function updateFrenchWordAudio(newValue) {
     document
         .getElementById('french-word-audio-player')
         .src = newValue;
