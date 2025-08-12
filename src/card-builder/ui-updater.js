@@ -1,10 +1,38 @@
 export function initUiUpdateListeners() {
     browser.runtime.onMessage.addListener((message) => {
         console.log('Received message in UI updater:', message);
+        if (message.action === 'scrape-start') {
+            handleScrapeStart(message);
+        }
         if (message.action === 'scrape-success') {
             handleScrapeSuccess(message);
         }
     });
+}
+
+function handleScrapeStart(message) {
+    switch (message.parameter) {
+    case 'frenchWordPlural':
+        document.querySelector('#french-word-plural')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loading');
+        break;
+    case 'frenchSentence':
+        document.getElementById('french-sentence')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loading');
+        break;
+    case 'bulgarianWord':
+        document.getElementById('bulgarian-word')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loading');
+        break;
+    case 'bulgarianSentence':
+        document.getElementById('bulgarian-sentence')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loading');
+        break;
+    }
 }
 
 function handleScrapeSuccess(message) {
@@ -46,6 +74,10 @@ function updateFrenchWordPlural(newValue) {
     document
         .getElementById('french-word-plural')
         .value = newValue;
+    document
+        .querySelector('#french-word-plural')
+        .closest('.input-with-loading')
+        .setAttribute('data-state', 'loaded');
 }
 
 export function updateFrenchWordAudio(newValue) {
@@ -69,6 +101,10 @@ export function updateFrenchSentence(newValue) {
     document
         .getElementById('french-sentence')
         .value = newValue;
+    document
+        .getElementById('french-sentence')
+        .closest('.input-with-loading')
+        .setAttribute('data-state', 'loaded');
 }
 
 export function updateFrenchSentenceAudio(newValue) {
@@ -81,12 +117,20 @@ function updateBulgarianWord(newValue) {
     document
         .getElementById('bulgarian-word')
         .value = newValue;
+    document
+        .getElementById('bulgarian-word')
+        .closest('.input-with-loading')
+        .setAttribute('data-state', 'loaded');
 }
 
 function updateBulgarianSentence(newValue) {
     document
         .getElementById('bulgarian-sentence')
         .value = newValue;
+    document
+        .getElementById('bulgarian-sentence')
+        .closest('.input-with-loading')
+        .setAttribute('data-state', 'loaded');
 }
 
 function updateImage(newValue) {
