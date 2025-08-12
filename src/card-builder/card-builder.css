@@ -158,31 +158,6 @@ audio {
     color: var(--none);
 }
 
-.with-action {
-    position: relative;
-}
-
-.with-action textarea {
-    padding-right: 84px;
-}
-
-.with-action .ghost {
-    position: absolute;
-    right: 6px;
-    top: 6px;
-    height: 28px;
-    border: 1px solid var(--border);
-    background: transparent;
-    border-radius: 6px;
-    padding: 0 8px;
-    cursor: pointer;
-}
-
-.with-action .ghost:disabled {
-    opacity: .6;
-    cursor: not-allowed;
-}
-
 img {
     height: 100%;
     width: 100%;
@@ -232,4 +207,35 @@ img {
 #deck-name-dropdown {
     height: 60%;
     align-self: center;
+}
+
+.input-with-loading {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.loading-indicator {
+    position: absolute;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    border-top: 2px solid var(--brand);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.input-with-loading[data-state="loading"] .loading-indicator {
+    display: block;
+}
+
+.input-with-loading[data-state="loaded"] .loading-indicator {
+    display: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }

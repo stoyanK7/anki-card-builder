@@ -149,20 +149,7 @@ function getAudioParam(audio) {
     }
 }
 
-document
-    .getElementById('generate-french-sentence')
-    .addEventListener('click', () => {
-        const frenchWord = document
-            .getElementById('french-word')
-            .value.trim();
-        generateFrenchSentenceWithWord(frenchWord);
-    });
-
 function generateFrenchSentenceWithWord(frenchWord) {
-    const generateButton = document.getElementById('generate-french-sentence');
-    generateButton.disabled = true;
-    generateButton.textContent = 'Loading...';
-
     fetch('http://localhost:11434/api/generate', {
         method: 'POST',
         headers: {

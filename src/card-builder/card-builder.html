@@ -40,12 +40,20 @@
                         for="french-word-plural"
                         class="label"
                     >Plural</label>
-                    <input
-                        id="french-word-plural"
-                        class="input"
-                        type="text"
-                        placeholder="e.g. voitures"
+                    <div
+                        class="input-with-loading"
+                        data-state="loaded"
                     >
+                        <input
+                            id="french-word-plural"
+                            class="input"
+                            type="text"
+                            placeholder="e.g. voitures"
+                        >
+                        <div
+                            class="loading-indicator"
+                        ></div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -99,17 +107,18 @@
                         class="label"
                     >Sentence</label>
                     <div class="col">
-                        <div class="with-action">
+                        <div
+                            class="input-with-loading"
+                            data-state="loaded"
+                        >
                             <textarea
                                 id="french-sentence"
                                 rows="2"
                                 placeholder="e.g. Je peux conduire une voiture."
                             ></textarea>
-                            <button
-                                type="button"
-                                id="generate-french-sentence"
-                                class="ghost"
-                            >Generate</button>
+                            <div
+                                class="loading-indicator"
+                            ></div>
                         </div>
                         <!-- eslint-disable @html-eslint/use-baseline -->
                         <audio
@@ -130,12 +139,20 @@
                         for="bulgarian-word"
                         class="label"
                     >Word</label>
-                    <input
-                        id="bulgarian-word"
-                        class="input"
-                        type="text"
-                        placeholder="e.g. кола"
+                    <div
+                        class="input-with-loading"
+                        data-state="loaded"
                     >
+                        <input
+                            id="bulgarian-word"
+                            class="input"
+                            type="text"
+                            placeholder="e.g. кола"
+                        >
+                        <div
+                            class="loading-indicator"
+                        ></div>
+                    </div>
                 </div>
 
                 <div class="row align-top">
@@ -143,11 +160,20 @@
                         for="bulgarian-sentence"
                         class="label"
                     >Sentence</label>
-                    <textarea
-                        id="bulgarian-sentence"
-                        rows="2"
-                        placeholder="напр. Мога да карам кола."
-                    ></textarea>
+                    <div
+                        class="input-with-loading"
+                        data-state="loaded"
+                    >
+                        <textarea
+                            id="bulgarian-sentence"
+                            rows="2"
+                            placeholder="напр. Мога да карам кола."
+                        ></textarea>
+                        <div
+                            class="loading-indicator"
+                        ></div>
+                    </div>
+
                 </div>
             </fieldset>
 
