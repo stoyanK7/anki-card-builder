@@ -27,6 +27,8 @@ export default defineConfig([
             'no-trailing-spaces': 'error',
             'arrow-parens': ['error', 'as-needed'],
             'keyword-spacing': ['error', { before: true, after: true }],
+            'object-curly-spacing': ['error', 'always'],
+            'array-bracket-spacing': ['error', 'never'],
             // Suggestions
             // 'arrow-body-style': ['error', 'as-needed'],
             'block-scoped-var': 'error',
