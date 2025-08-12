@@ -20,15 +20,15 @@ browser.runtime.onMessage.addListener((message) => {
      * that will be sent.
      */
     if (message.action === 'card-builder-ready') {
-        orchestrateFrenchAudioGeneration(message.frenchWord);
+        orchestrateFrenchAudioGeneration(message.frenchWord, 'frenchWordAudio');
         orchestrateFrenchSentenceGeneration(message.frenchWord);
     }
 });
 
-function orchestrateFrenchAudioGeneration(text) {
+function orchestrateFrenchAudioGeneration(text, parameter) {
     browser.runtime.sendMessage({
         action: 'scrape-start',
-        parameter: 'frenchWordAudio'
+        parameter: parameter
     })
         .then(() => {
             return fetchFrenchAudio(text);
@@ -36,14 +36,14 @@ function orchestrateFrenchAudioGeneration(text) {
         .then((audioAsBase64) => {
             browser.runtime.sendMessage({
                 action: 'scrape-success',
-                parameter: 'frenchWordAudio',
+                parameter: parameter,
                 value: audioAsBase64
             });
         })
         .catch(error => {
             browser.runtime.sendMessage({
                 action: 'scrape-error',
-                parameter: 'frenchWordAudio',
+                parameter: parameter,
                 error: error
             });
         });
@@ -58,7 +58,7 @@ function orchestrateFrenchSentenceGeneration(frenchWord) {
             return fetchFrenchSentence(frenchWord);
         })
         .then((frenchSentence) => {
-            orchestrateFrenchAudioGeneration(frenchSentence);
+            orchestrateFrenchAudioGeneration(frenchSentence, 'frenchSentenceAudio');
 
             browser.storage.local.get('resourcesWindowId')
                 .then((storageResult) => storageResult.resourcesWindowId)
