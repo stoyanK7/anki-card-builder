@@ -7,6 +7,9 @@ export function initUiUpdateListeners() {
         if (message.action === 'scrape-success') {
             handleScrapeSuccess(message);
         }
+        if (message.action === 'scrape-error') {
+            handleScrapeError(message);
+        }
     });
 }
 
@@ -137,4 +140,29 @@ function updateImage(newValue) {
     document
         .getElementById('image-preview')
         .src = newValue;
+}
+
+function handleScrapeError(message) {
+    switch (message.parameter) {
+    case 'frenchWordPlural':
+        document.querySelector('#french-word-plural')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loaded');
+        break;
+    case 'frenchSentence':
+        document.getElementById('french-sentence')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loaded');
+        break;
+    case 'bulgarianWord':
+        document.getElementById('bulgarian-word')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loaded');
+        break;
+    case 'bulgarianSentence':
+        document.getElementById('bulgarian-sentence')
+            .closest('.input-with-loading')
+            .setAttribute('data-state', 'loaded');
+        break;
+    }
 }
