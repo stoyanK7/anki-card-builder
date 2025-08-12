@@ -94,35 +94,48 @@
 
                 <div class="row">
                     <span class="label">Gender</span>
+
                     <div
-                        class="segmented"
-                        role="radiogroup"
-                        aria-label="French word gender"
+                        class="segmented-with-loading"
+                        data-state="loaded"
                     >
-                        <input
-                            id="masculine"
-                            type="radio"
-                            name="french-word-gender"
-                            value="masculin"
+                        <div
+                            class="segmented"
+                            role="radiogroup"
+                            aria-label="French word gender"
                         >
-                        <label for="masculine">Masculin</label>
+                            <input
+                                id="masculine"
+                                type="radio"
+                                name="french-word-gender"
+                                value="masculin"
+                            >
+                            <label for="masculine">Masculin</label>
 
-                        <input
-                            id="feminine"
-                            type="radio"
-                            name="french-word-gender"
-                            value="féminin"
-                        >
-                        <label for="feminine">Féminin</label>
+                            <input
+                                id="feminine"
+                                type="radio"
+                                name="french-word-gender"
+                                value="féminin"
+                            >
+                            <label for="feminine">Féminin</label>
 
-                        <input
-                            id="none"
-                            type="radio"
-                            name="french-word-gender"
-                            value="none"
-                            checked
+                            <input
+                                id="none"
+                                type="radio"
+                                name="french-word-gender"
+                                value="none"
+                                checked
+                            >
+                            <label for="none">None</label>
+                        </div>
+                        <div class="loading-indicator"></div>
+                        <img
+                            src="img/error.png"
+                            alt="Error icon"
+                            class="error-icon"
+                            title="An error occurred while getting the French gender."
                         >
-                        <label for="none">None</label>
                     </div>
                 </div>
 

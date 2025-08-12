@@ -28,7 +28,9 @@ function handleScrapeStart(message) {
             .setAttribute('data-state', 'loading');
         break;
     case 'frenchWordGender':
-        // TODO:
+        document
+            .querySelector('.segmented-with-loading')
+            .setAttribute('data-state', 'loading');
         break;
     case 'frenchSentence':
         document
@@ -126,6 +128,9 @@ function updateFrenchWordGender(newValue) {
             radio.checked = true;
         }
     });
+    document
+        .querySelector('.segmented-with-loading')
+        .setAttribute('data-state', 'loaded');
 }
 
 export function updateFrenchSentence(newValue) {
@@ -142,6 +147,10 @@ export function updateFrenchSentenceAudio(newValue) {
     document
         .getElementById('french-sentence-audio-player')
         .src = newValue;
+    document
+        .getElementById('french-sentence-audio-player')
+        .closest('.audio-slot')
+        .setAttribute('data-state', 'loaded');
 }
 
 function updateBulgarianWord(newValue) {
@@ -188,7 +197,9 @@ function handleScrapeError(message) {
             .setAttribute('data-state', 'error');
         break;
     case 'frenchWordGender':
-        // TODO
+        document
+            .querySelector('.segmented-with-loading')
+            .setAttribute('data-state', 'error');
         break;
     case 'frenchSentence':
         document

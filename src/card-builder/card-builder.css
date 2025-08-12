@@ -118,8 +118,31 @@ audio {
     row-gap: 3px;
 }
 
+.segmented-with-loading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.segmented-with-loading[data-state="loading"] .loading-indicator {
+    display: block;
+}
+
+.segmented-with-loading[data-state="loading"] .error-icon,
+.segmented-with-loading[data-state="loaded"] .loading-indicator,
+.segmented-with-loading[data-state="loaded"] .error-icon,
+.segmented-with-loading[data-state="error"] .loading-indicator {
+    display: none;
+}
+
+.segmented-with-loading[data-state="error"] .error-icon {
+    display: block;
+}
+
 .segmented {
     display: inline-grid;
+    width: 100%;
     grid-auto-flow: column;
     gap: 2px;
     background: var(--border);
