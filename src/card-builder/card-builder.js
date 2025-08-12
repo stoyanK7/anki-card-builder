@@ -1,6 +1,7 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 import { fetchFrenchAudio } from '../shared/piper.js';
 import { initializeDeckDropdown } from './deck-dropdown.js';
+import { initUiUpdateListeners } from './ui-updater.js';
 
 function x() {
     const params = new URLSearchParams(window.location.search);
@@ -28,60 +29,7 @@ function x() {
 x();
 
 initializeDeckDropdown();
-
-
-function updateCardEditorFromStorage(data) {
-    if ('frenchWord' in data) {
-        document
-            .getElementById('french-word')
-            .value = data.frenchWord;
-    }
-    if ('frenchWordAudio' in data) {
-        document
-            .getElementById('french-word-audio-player')
-            .src = data.frenchWordAudio;
-    }
-    if ('frenchWordGender' in data) {
-        const frenchWordGenderRadioButtons = document.querySelectorAll(
-            'input[name="french-word-gender"]'
-        );
-        frenchWordGenderRadioButtons.forEach((radio) => {
-            if (radio.value === data.frenchWordGender) {
-                radio.checked = true;
-            }
-        });
-    }
-    if ('frenchWordPlural' in data) {
-        document
-            .getElementById('french-word-plural')
-            .value = data.frenchWordPlural;
-    }
-    if ('frenchSentence' in data) {
-        document
-            .getElementById('french-sentence')
-            .value = data.frenchSentence;
-    }
-    if ('frenchSentenceAudio' in data) {
-        document
-            .getElementById('french-sentence-audio-player')
-            .src = data.frenchSentenceAudio;
-    }
-    if ('bulgarianWord' in data) {
-        document
-            .getElementById('bulgarian-word')
-            .value = data.bulgarianWord;
-    }
-    if ('bulgarianSentence' in data) {
-        document
-            .getElementById('bulgarian-sentence')
-            .value = data.bulgarianSentence;
-    }
-    if ('image' in data) {
-        document
-            .getElementById('image-preview')
-            .src = data.image;
-    }
-}
+initUiUpdateListeners();
 
 document
     .getElementById('french-sentence')
@@ -104,8 +52,6 @@ browser.storage.onChanged.addListener((changes, areaName) => {
             changedData[key] = changes[key].newValue;
         }
     }
-
-    updateCardEditorFromStorage(changedData);
 
     if ('frenchSentence' in changedData && changedData.frenchSentence) {
         const frenchSentence = changedData.frenchSentence.trim();
