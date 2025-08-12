@@ -65,12 +65,31 @@
                 <div class="row">
                     <span class="label">Pronunciation</span>
                     <!-- eslint-disable @html-eslint/use-baseline -->
-                    <audio
-                        id="french-word-audio-player"
-                        controls
-                        autoplay
-                        controlslist="nodownload"
-                    ></audio>
+                    <div
+                        class="audio-slot"
+                        data-state="loaded"
+                    >
+                        <div
+                            class="audio-placeholder"
+                        >
+                            <span
+                                class="spinner"
+                            ></span>
+                        </div>
+                        <audio
+                            id="french-word-audio-player"
+                            class="audio-player"
+                            controls
+                            autoplay
+                            controlslist="nodownload"
+                        ></audio>
+                        <img 
+                            src="img/error.png"
+                            alt="Error icon"
+                            class="error-icon"
+                            title="An error occurred while getting the French word audio."
+                        >
+                    </div>
                 </div>
 
                 <div class="row">
@@ -133,12 +152,31 @@
                             >
                         </div>
                         <!-- eslint-disable @html-eslint/use-baseline -->
-                        <audio
-                            id="french-sentence-audio-player"
-                            controls
-                            autoplay
-                            controlslist="nodownload"
-                        ></audio>
+                        <div
+                            class="audio-slot"
+                            data-state="loaded"
+                        >
+                            <div
+                                class="audio-placeholder"
+                            >
+                                <span
+                                    class="spinner"
+                                ></span>
+                            </div>
+                            <audio
+                                id="french-sentence-audio-player"
+                                class="audio-player"
+                                controls
+                                autoplay
+                                controlslist="nodownload"
+                            ></audio>
+                            <img 
+                                src="img/error.png"
+                                alt="Error icon"
+                                class="error-icon"
+                                title="An error occurred while getting the French sentence audio."
+                            >
+                        </div>
                     </div>
                 </div>
             </fieldset>
