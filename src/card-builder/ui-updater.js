@@ -16,12 +16,14 @@ export function initUiUpdateListeners() {
 function handleScrapeStart(message) {
     switch (message.parameter) {
     case 'frenchWordPlural':
-        document.querySelector('#french-word-plural')
+        document
+            .querySelector('#french-word-plural')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'loading');
         break;
     case 'frenchWordAudio':
-        document.getElementById('french-word-audio-player')
+        document
+            .getElementById('french-word-audio-player')
             .closest('.audio-slot')
             .setAttribute('data-state', 'loading');
         break;
@@ -29,27 +31,33 @@ function handleScrapeStart(message) {
         // TODO:
         break;
     case 'frenchSentence':
-        document.getElementById('french-sentence')
+        document
+            .getElementById('french-sentence')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'loading');
         break;
     case 'frenchSentenceAudio':
-        document.getElementById('french-sentence-audio-player')
+        document
+            .getElementById('french-sentence-audio-player')
             .closest('.audio-slot')
             .setAttribute('data-state', 'loading');
         break;
     case 'bulgarianWord':
-        document.getElementById('bulgarian-word')
+        document
+            .getElementById('bulgarian-word')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'loading');
         break;
     case 'bulgarianSentence':
-        document.getElementById('bulgarian-sentence')
+        document
+            .getElementById('bulgarian-sentence')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'loading');
         break;
     case 'image':
-        // TODO
+        document
+            .getElementById('image-preview-container')
+            .setAttribute('data-state', 'loading');
         break;
     }
 }
@@ -103,6 +111,10 @@ export function updateFrenchWordAudio(newValue) {
     document
         .getElementById('french-word-audio-player')
         .src = newValue;
+    document
+        .getElementById('french-word-audio-player')
+        .closest('.audio-slot')
+        .setAttribute('data-state', 'loaded');
 }
 
 function updateFrenchWordGender(newValue) {
@@ -156,17 +168,22 @@ function updateImage(newValue) {
     document
         .getElementById('image-preview')
         .src = newValue;
+    document
+        .getElementById('image-preview-container')
+        .setAttribute('data-state', 'loaded');
 }
 
 function handleScrapeError(message) {
     switch (message.parameter) {
     case 'frenchWordPlural':
-        document.querySelector('#french-word-plural')
+        document
+            .querySelector('#french-word-plural')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'error');
         break;
     case 'frenchWordAudio':
-        document.getElementById('french-word-audio-player')
+        document
+            .getElementById('french-word-audio-player')
             .closest('.audio-slot')
             .setAttribute('data-state', 'error');
         break;
@@ -174,27 +191,33 @@ function handleScrapeError(message) {
         // TODO
         break;
     case 'frenchSentence':
-        document.getElementById('french-sentence')
+        document
+            .getElementById('french-sentence')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'error');
         break;
     case 'frenchSentenceAudio':
-        document.getElementById('french-sentence-audio-player')
+        document
+            .getElementById('french-sentence-audio-player')
             .closest('.audio-slot')
             .setAttribute('data-state', 'error');
         break;
     case 'bulgarianWord':
-        document.getElementById('bulgarian-word')
+        document
+            .getElementById('bulgarian-word')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'error');
         break;
     case 'bulgarianSentence':
-        document.getElementById('bulgarian-sentence')
+        document
+            .getElementById('bulgarian-sentence')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'error');
         break;
     case 'image':
-        // TODO
+        document
+            .getElementById('image-preview-container')
+            .setAttribute('data-state', 'error');
         break;
     }
 }

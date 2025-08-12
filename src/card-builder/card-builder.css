@@ -30,7 +30,7 @@
         --none: rgb(151, 151, 151);
     }
 
-    #image-preview {
+    #image-preview[src="img/placeholder-light.png"] {
         content: url("img/placeholder-dark.png");
     }
 }
@@ -158,20 +158,53 @@ audio {
     color: var(--none);
 }
 
-#image-preview {
-    height: 100%;
-    width: 100%;
-    max-width: 130px;
-    max-height: 130px;
-    border-radius: 8px;
+#image-preview-container {
+    display: grid;
+    width: 125px;
+    height: 125px;
     border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 0;
     place-self: center;
 }
 
-#error-message {
-    color: #d14343;
-    margin: var(--space-2) 0;
+#image-preview-container[data-state="error"] {
+    border: 1px solid red;
+}
+
+#image-preview-container[data-state="loading"] .spinner,
+#image-preview-container[data-state="loaded"] img,
+#image-preview-container[data-state="error"] .error-icon {
+    display: block;
+}
+
+#image-preview-container[data-state="loading"] img,
+#image-preview-container[data-state="error"] img,
+#image-preview-container[data-state="loading"] .error-icon,
+#image-preview-container[data-state="loaded"] .error-icon,
+#image-preview-container[data-state="loaded"] .spinner,
+#image-preview-container[data-state="error"] .spinner {
     display: none;
+}
+
+#image-preview-container #image-preview {
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    place-self: center;
+}
+
+#image-preview-container .spinner {
+    place-self: center;
+    position: absolute;
+}
+
+#image-preview-container .error-icon {
+    place-self: center;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: unset;
 }
 
 #save-card-button {

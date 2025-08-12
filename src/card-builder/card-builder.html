@@ -243,11 +243,25 @@
                 <fieldset class="section">
                     <legend>Image (📷)</legend>
 
-                    <img
-                        id="image-preview"
-                        src="img/placeholder-light.png"
-                        alt="Selected image will appear here."
+                    <figure
+                        id="image-preview-container"
+                        data-state="loaded"
                     >
+                        <img
+                            id="image-preview"
+                            src="img/placeholder-light.png"
+                            alt="Selected image will appear here."
+                        >
+                        <span
+                            class="spinner"
+                        ></span>
+                        <img
+                            src="img/error.png"
+                            alt="Error icon"
+                            class="error-icon"
+                            title="An error occurred while scraping the image."
+                        >
+                    </figure>
                 </fieldset>
 
                 <fieldset class="section">
