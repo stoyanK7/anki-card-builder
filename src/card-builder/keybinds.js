@@ -3,21 +3,21 @@ import { updateFrenchSentenceAudio } from './ui-updater.js';
 
 document
     .getElementById('french-sentence')
-    .addEventListener('keydown', (event) => {
+    .addEventListener('keydown', event => {
         if (event.key === 'Enter') {
             event.preventDefault();
 
             const frenchSentence = event.target.value.trim();
 
             fetchFrenchAudio(frenchSentence)
-                .then((frenchSentenceBase64Audio) => {
+                .then(frenchSentenceBase64Audio => {
                     updateFrenchSentenceAudio(frenchSentenceBase64Audio);
                 });
 
 
             browser.storage.local.get('resourcesWindowId')
-                .then((storageResult) => storageResult.resourcesWindowId)
-                .then((resourcesWindowId) => {
+                .then(storageResult => storageResult.resourcesWindowId)
+                .then(resourcesWindowId => {
                     if (!resourcesWindowId) return;
 
                     /**
@@ -28,7 +28,7 @@ document
                         windowId: resourcesWindowId,
                         url: 'https://www.deepl.com/*'
                     })
-                        .then((tabs) => {
+                        .then(tabs => {
                             if (tabs.length > 0) {
                             // If it is open, just update the tab.
                                 browser.tabs.update(tabs[0].id, {
@@ -49,7 +49,7 @@ document
     });
 
 
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', event => {
     if (event.ctrlKey && event.key === 'Enter') {
         document.querySelector('form').requestSubmit();
     }

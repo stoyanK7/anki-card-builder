@@ -12,7 +12,7 @@ export function fetchFrenchAudio(text) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text })
     })
-        .then((response) => {
+        .then(response => {
             if (!response.ok) {
                 throw new Error(
                     'Network response from Piper was not ok: '
@@ -25,13 +25,13 @@ export function fetchFrenchAudio(text) {
          * Convert the blob to a base64 data URL.
          * For instance, data:audio/wav;base64, UklGRiQAAAB...
          */
-        .then((data) => new Promise((resolve, reject) => {
+        .then(data => new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onloadend = () => resolve(reader.result);
             reader.onerror = reject;
             reader.readAsDataURL(data);
         }))
-        .catch((error) => {
+        .catch(error => {
             console.error('Error fetching French audio:', error);
         });
 }

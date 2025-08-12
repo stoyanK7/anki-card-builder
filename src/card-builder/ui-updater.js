@@ -1,5 +1,5 @@
 export function initUiUpdateListeners() {
-    browser.runtime.onMessage.addListener((message) => {
+    browser.runtime.onMessage.addListener(message => {
         console.log('Received message in UI updater:', message);
         if (message.action === 'scrape-start') {
             handleScrapeStart(message);
@@ -123,7 +123,7 @@ function updateFrenchWordGender(newValue) {
     const frenchWordGenderRadioButtons = document.querySelectorAll(
         'input[name="french-word-gender"]'
     );
-    frenchWordGenderRadioButtons.forEach((radio) => {
+    frenchWordGenderRadioButtons.forEach(radio => {
         if (radio.value === newValue) {
             radio.checked = true;
         }

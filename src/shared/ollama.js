@@ -19,9 +19,9 @@ export function fetchFrenchSentence(frenchWord) {
             }
         })
     })
-        .then((response) => response.json())
-        .then((data) => data.response.trim())
-        .catch((error) => {
+        .then(response => response.json())
+        .then(data => data.response.trim())
+        .catch(error => {
             throw new Error(`Error fetching French sentence: ${error.message}`);
         });
 }

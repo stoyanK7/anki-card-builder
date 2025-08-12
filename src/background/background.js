@@ -6,7 +6,7 @@ import { fetchFrenchSentence } from '../shared/ollama.js';
 
 setupContextMenus();
 
-browser.runtime.onMessage.addListener((message) => {
+browser.runtime.onMessage.addListener(message => {
     if (message.action === 'start-card-building-workflow') {
         startCardBuildingWorkflow(message.frenchWord);
     }
@@ -33,7 +33,7 @@ function orchestrateFrenchAudioGeneration(text, parameter) {
         .then(() => {
             return fetchFrenchAudio(text);
         })
-        .then((audioAsBase64) => {
+        .then(audioAsBase64 => {
             browser.runtime.sendMessage({
                 action: 'scrape-success',
                 parameter: parameter,
@@ -57,12 +57,12 @@ function orchestrateFrenchSentenceGeneration(frenchWord) {
         .then(() => {
             return fetchFrenchSentence(frenchWord);
         })
-        .then((frenchSentence) => {
+        .then(frenchSentence => {
             orchestrateFrenchAudioGeneration(frenchSentence, 'frenchSentenceAudio');
 
             browser.storage.local.get('resourcesWindowId')
-                .then((storageResult) => storageResult.resourcesWindowId)
-                .then((resourcesWindowId) => {
+                .then(storageResult => storageResult.resourcesWindowId)
+                .then(resourcesWindowId => {
                     if (!resourcesWindowId) return;
 
                     /**
@@ -73,7 +73,7 @@ function orchestrateFrenchSentenceGeneration(frenchWord) {
                         windowId: resourcesWindowId,
                         url: 'https://www.deepl.com/*'
                     })
-                        .then((tabs) => {
+                        .then(tabs => {
                             if (tabs.length > 0) {
                                 // If it is open, just update the tab.
                                 browser.tabs.update(tabs[0].id, {
@@ -93,7 +93,7 @@ function orchestrateFrenchSentenceGeneration(frenchWord) {
 
             return frenchSentence;
         })
-        .then((frenchSentence) => {
+        .then(frenchSentence => {
             browser.runtime.sendMessage({
                 action: 'scrape-success',
                 parameter: 'frenchSentence',

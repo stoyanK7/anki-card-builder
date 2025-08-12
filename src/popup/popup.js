@@ -8,7 +8,7 @@ document
 
 document
     .getElementById('french-word-input')
-    .addEventListener('keydown', (event) => {
+    .addEventListener('keydown', event => {
         if (event.key === 'Enter') {
             startCardPreparation();
         }
@@ -16,7 +16,7 @@ document
 
 function updateOllamaConnectionStatus() {
     fetch('http://localhost:11434')
-        .then((response) => {
+        .then(response => {
             if (response.ok) {
                 document
                     .getElementById('ollama-status-word')
@@ -33,7 +33,7 @@ function updateOllamaConnectionStatus() {
                 );
             }
         })
-        .catch((error) => {
+        .catch(error => {
             document
                 .getElementById('ollama-status-word')
                 .textContent = 'Error';
@@ -51,7 +51,7 @@ function updateOllamaConnectionStatus() {
 
 function updateAnkiConnectConnectionStatus() {
     fetch('http://127.0.0.1:8765')
-        .then((response) => {
+        .then(response => {
             if (response.ok) {
                 document
                     .getElementById('anki-status-word')
@@ -69,7 +69,7 @@ function updateAnkiConnectConnectionStatus() {
                 );
             }
         })
-        .catch((error) => {
+        .catch(error => {
             document.
                 getElementById('anki-status-word')
                 .textContent = 'Error';
@@ -89,7 +89,7 @@ function updateAnkiConnectConnectionStatus() {
 
 function updatePiperConnectionStatus() {
     fetch('http://localhost:5000/voices')
-        .then((response) => {
+        .then(response => {
             if (response.ok) {
                 document
                     .getElementById('piper-status-word')
@@ -106,7 +106,7 @@ function updatePiperConnectionStatus() {
                 );
             }
         })
-        .catch((error) => {
+        .catch(error => {
             document
                 .getElementById('piper-status-word')
                 .textContent = 'Error';

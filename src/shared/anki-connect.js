@@ -26,7 +26,7 @@ export function invokeAnkiConnect(action, params = {}) {
         },
         body: JSON.stringify({ action, version: ankiConnectVersion, params })
     })
-        .then((response) => {
+        .then(response => {
             if (!response.ok) {
                 throw new Error(
                     'Network response was not ok. Status: ' + response.status
@@ -35,7 +35,7 @@ export function invokeAnkiConnect(action, params = {}) {
 
             return response.json();
         })
-        .then((responseObject) => {
+        .then(responseObject => {
             if (Object.keys(responseObject).length !== 2) {
                 throw new Error(
                     'Response has an unexpected number of fields. Expected '
@@ -55,7 +55,7 @@ export function invokeAnkiConnect(action, params = {}) {
             // Anki Connect returns an object but we only need the result field.
             return responseObject.result;
         })
-        .catch((error) => {
+        .catch(error => {
             throw new Error('AnkiConnect request failed: ' + error.message);
         });
 }

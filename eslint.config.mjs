@@ -25,6 +25,7 @@ export default defineConfig([
             'quote-props': ['error', 'consistent-as-needed'],
             'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
             'no-trailing-spaces': 'error',
+            'arrow-parens': ['error', 'as-needed'],
             // Suggestions
             // 'arrow-body-style': ['error', 'as-needed'],
             'block-scoped-var': 'error',

@@ -19,7 +19,7 @@ function openCardBuilderInPopupWindow(frenchWord) {
         height: 580,
         focused: true
     })
-        .then((window) => {
+        .then(window => {
             browser.storage.local.set({ cardBuilderWindowId: window.id });
         });
 }
@@ -49,7 +49,7 @@ function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
             type: 'normal',
             focused: true
         })
-        .then((window) => {
+        .then(window => {
             browser.storage.local.set({ resourcesWindowId: window.id });
         });
 }

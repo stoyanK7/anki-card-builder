@@ -26,7 +26,7 @@ function createContextMenus() {
 }
 
 function addContextMenuListeners() {
-    browser.contextMenus.onClicked.addListener((info) => {
+    browser.contextMenus.onClicked.addListener(info => {
         if (info.menuItemId === 'prepare-card') {
             handlePrepareCardContextMenu(info);
         }

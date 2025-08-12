@@ -6,7 +6,7 @@ import { invokeAnkiConnect } from '../shared/anki-connect.js';
  */
 export function initializeDeckDropdown() {
     invokeAnkiConnect('deckNames')
-        .then((result) => {
+        .then(result => {
             if (!Array.isArray(result)) {
                 throw new Error(
                     'Expected an array of deck names from AnkiConnect, '
@@ -15,13 +15,13 @@ export function initializeDeckDropdown() {
             }
             return result;
         })
-        .then((deckNames) => {
+        .then(deckNames => {
             const deckNameDropdown =
                 document.getElementById('deck-name-dropdown');
             populateDeckNameDropdown(deckNames, deckNameDropdown);
             restoreDeckSelectionFromStorage(deckNames, deckNameDropdown);
         })
-        .catch((error) => {
+        .catch(error => {
             // TODO: Display error.message
         });
 }
@@ -58,7 +58,7 @@ function populateDeckNameDropdown(deckNames, deckNameSelect) {
      *   "🇫🇷 French::Lawless French"         → "    ↳ Lawless French"
      *   "🇫🇷 French::Lawless French::Numbers 0-19" → "        ↳ Numbers 0-19"
      */
-    deckNames.forEach((deckName) => {
+    deckNames.forEach(deckName => {
         let option = document.createElement('option');
         option.value = deckName;
 
@@ -75,7 +75,7 @@ function populateDeckNameDropdown(deckNames, deckNameSelect) {
         deckNameSelect.appendChild(option);
     });
 
-    deckNameSelect.addEventListener('change', (event) => {
+    deckNameSelect.addEventListener('change', event => {
         const deckName = event.target.value;
         browser.storage.local.set({ deckName });
     });
@@ -92,7 +92,7 @@ function populateDeckNameDropdown(deckNames, deckNameSelect) {
  */
 function restoreDeckSelectionFromStorage(deckNames, deckNameSelect) {
     browser.storage.local.get('deckName')
-        .then((result) => {
+        .then(result => {
             const deckName = result.deckName;
             if (deckName
                 && deckNames.includes(deckName)) {
