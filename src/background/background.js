@@ -1,4 +1,4 @@
-import { startCardBuildingProcess } from './card-workflow.js';
+import { startCardBuildingWorkflow } from './start-workflow.js';
 import {setupContextMenus} from './context-menus.js';
 
 setupContextMenus();
@@ -11,7 +11,7 @@ browser.runtime.onMessage.addListener((message) => {
         }, 5000);
     }
     if (message.action === 'start-card-building-process') {
-        startCardBuildingProcess(message.frenchWord);
+        startCardBuildingWorkflow(message.frenchWord);
     }
 });
 

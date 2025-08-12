@@ -1,4 +1,4 @@
-export function startCardBuildingProcess(frenchWord) {
+export function startCardBuildingWorkflow(frenchWord) {
     openCardBuilderInPopupWindow(frenchWord);
     openResourceTabsForFrenchWordInNewWindow(frenchWord);
 }

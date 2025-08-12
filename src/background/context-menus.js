@@ -1,4 +1,4 @@
-import { startCardBuildingProcess } from './card-workflow.js';
+import { startCardBuildingWorkflow } from './start-workflow.js';
 
 export function setupContextMenus() {
     createContextMenus();
@@ -58,7 +58,7 @@ function handlePrepareCardContextMenu(info) {
         return;
     }
 
-    startCardBuildingProcess(frenchWord);
+    startCardBuildingWorkflow(frenchWord);
 }
 
 function handleUseImageContextMenu(info) {
