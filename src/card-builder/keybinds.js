@@ -1,4 +1,5 @@
 import { fetchFrenchAudio } from '../shared/piper.js';
+import { updateFrenchSentenceAudio } from './ui-updater.js';
 
 document
     .getElementById('french-sentence')
@@ -10,9 +11,7 @@ document
 
             fetchFrenchAudio(frenchSentence)
                 .then((frenchSentenceBase64Audio) => {
-                    browser.storage.local.set({
-                        frenchSentenceAudio: frenchSentenceBase64Audio
-                    });
+                    updateFrenchSentenceAudio(frenchSentenceBase64Audio);
                 });
 
 

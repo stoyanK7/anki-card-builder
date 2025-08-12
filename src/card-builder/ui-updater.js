@@ -65,13 +65,13 @@ function updateFrenchWordGender(newValue) {
     });
 }
 
-function updateFrenchSentence(newValue) {
+export function updateFrenchSentence(newValue) {
     document
         .getElementById('french-sentence')
         .value = newValue;
 }
 
-function updateFrenchSentenceAudio(newValue) {
+export function updateFrenchSentenceAudio(newValue) {
     document
         .getElementById('french-sentence-audio-player')
         .src = newValue;

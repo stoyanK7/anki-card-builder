@@ -2,7 +2,10 @@ import { invokeAnkiConnect } from '../shared/anki-connect.js';
 import { fetchFrenchAudio } from '../shared/piper.js';
 import { initializeDeckDropdown } from './deck-dropdown.js';
 import { initUiUpdateListeners,
-    updateFrenchWord, updateFrenchWordAudio } from './ui-updater.js';
+    updateFrenchWord,
+    updateFrenchWordAudio,
+    updateFrenchSentenceAudio,
+    updateFrenchSentence } from './ui-updater.js';
 
 const frenchWord = getFrenchWordFromUrl();
 updateFrenchWord(frenchWord);
@@ -10,9 +13,6 @@ generateFrenchSentenceWithWord(frenchWord);
 fetchFrenchAudio(frenchWord)
     .then((audioAsBase64) => {
         updateFrenchWordAudio(audioAsBase64);
-        browser.storage.local.set({
-            frenchWordAudio: audioAsBase64
-        });
     })
     .catch((error) => {
         console.error('Error fetching audio:', error);
@@ -186,7 +186,45 @@ function generateFrenchSentenceWithWord(frenchWord) {
         .then((response) => response.json())
         .then((data) => {
             const frenchSentence = data.response.trim();
-            browser.storage.local.set({ frenchSentence });
+            updateFrenchSentence(frenchSentence);
+
+            // TODO: Super ugly, copied straight from keybinds. Fix.
+            fetchFrenchAudio(frenchSentence)
+                .then((frenchSentenceBase64Audio) => {
+                    updateFrenchSentenceAudio(frenchSentenceBase64Audio);
+                });
+
+
+            browser.storage.local.get('resourcesWindowId')
+                .then((storageResult) => storageResult.resourcesWindowId)
+                .then((resourcesWindowId) => {
+                    if (!resourcesWindowId) return;
+
+                    /**
+                     * Update DeepL tab with new sentence if open;
+                     * otherwise, create a new tab with it.
+                     */
+                    browser.tabs.query({
+                        windowId: resourcesWindowId,
+                        url: 'https://www.deepl.com/*'
+                    })
+                        .then((tabs) => {
+                            if (tabs.length > 0) {
+                            // If it is open, just update the tab.
+                                browser.tabs.update(tabs[0].id, {
+                                    url: 'https://www.deepl.com/translator#fr/bg/'
+                                    + encodeURIComponent(frenchSentence)
+                                });
+                            } else {
+                            // If it is not open, create a new tab.
+                                browser.tabs.create({
+                                    url: 'https://www.deepl.com/translator#fr/bg/'
+                                    + encodeURIComponent(frenchSentence),
+                                    windowId: resourcesWindowId
+                                });
+                            }
+                        });
+                });
         })
         .catch((error) => {
             // TODO: Display an error message to the user.

@@ -67,7 +67,7 @@ async function scrapeBulgarianWord() {
 
         const timeoutId = setTimeout(() => {
             observer.disconnect();
-            reject(new Error('Bulgarian word not found within 8 seconds.'));
-        }, 8000);
+            reject(new Error('Bulgarian word not found within 15 seconds.'));
+        }, 15000);
     });
 }
