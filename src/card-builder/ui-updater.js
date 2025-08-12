@@ -20,9 +20,22 @@ function handleScrapeStart(message) {
             .closest('.input-with-loading')
             .setAttribute('data-state', 'loading');
         break;
+    case 'frenchWordAudio':
+        document.getElementById('french-word-audio-player')
+            .closest('.audio-slot')
+            .setAttribute('data-state', 'loading');
+        break;
+    case 'frenchWordGender':
+        // TODO:
+        break;
     case 'frenchSentence':
         document.getElementById('french-sentence')
             .closest('.input-with-loading')
+            .setAttribute('data-state', 'loading');
+        break;
+    case 'frenchSentenceAudio':
+        document.getElementById('french-sentence-audio-player')
+            .closest('.audio-slot')
             .setAttribute('data-state', 'loading');
         break;
     case 'bulgarianWord':
@@ -34,6 +47,9 @@ function handleScrapeStart(message) {
         document.getElementById('bulgarian-sentence')
             .closest('.input-with-loading')
             .setAttribute('data-state', 'loading');
+        break;
+    case 'image':
+        // TODO
         break;
     }
 }
@@ -147,22 +163,38 @@ function handleScrapeError(message) {
     case 'frenchWordPlural':
         document.querySelector('#french-word-plural')
             .closest('.input-with-loading')
-            .setAttribute('data-state', 'loaded');
+            .setAttribute('data-state', 'error');
+        break;
+    case 'frenchWordAudio':
+        document.getElementById('french-word-audio-player')
+            .closest('.audio-slot')
+            .setAttribute('data-state', 'error');
+        break;
+    case 'frenchWordGender':
+        // TODO
         break;
     case 'frenchSentence':
         document.getElementById('french-sentence')
             .closest('.input-with-loading')
-            .setAttribute('data-state', 'loaded');
+            .setAttribute('data-state', 'error');
+        break;
+    case 'frenchSentenceAudio':
+        document.getElementById('french-sentence-audio-player')
+            .closest('.audio-slot')
+            .setAttribute('data-state', 'error');
         break;
     case 'bulgarianWord':
         document.getElementById('bulgarian-word')
             .closest('.input-with-loading')
-            .setAttribute('data-state', 'loaded');
+            .setAttribute('data-state', 'error');
         break;
     case 'bulgarianSentence':
         document.getElementById('bulgarian-sentence')
             .closest('.input-with-loading')
-            .setAttribute('data-state', 'loaded');
+            .setAttribute('data-state', 'error');
+        break;
+    case 'image':
+        // TODO
         break;
     }
 }

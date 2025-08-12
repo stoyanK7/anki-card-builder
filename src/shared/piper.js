@@ -30,5 +30,8 @@ export function fetchFrenchAudio(text) {
             reader.onloadend = () => resolve(reader.result);
             reader.onerror = reject;
             reader.readAsDataURL(data);
-        }));
+        }))
+        .catch((error) => {
+            console.error('Error fetching French audio:', error);
+        });
 }

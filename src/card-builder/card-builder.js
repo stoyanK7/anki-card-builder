@@ -9,7 +9,8 @@ initializeDeckDropdown();
 initUiUpdateListeners();
 listenForSaveCard();
 browser.runtime.sendMessage({
-    action: 'card-builder-ready'
+    action: 'card-builder-ready',
+    frenchWord
 });
 
 function getFrenchWordFromUrl() {
