@@ -1,5 +1,24 @@
 import { fetchFrenchAudio } from '../shared/piper.js';
-import { updateFrenchSentenceAudio } from './ui-updater.js';
+import {
+    updateFrenchWordAudio,
+    updateFrenchSentenceAudio
+} from './ui-updater.js';
+
+// TODO: move the orchestrate functions to a separate file and use them insstead
+document
+    .getElementById('french-word')
+    .addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            const frenchWord = event.target.value.trim();
+
+            fetchFrenchAudio(frenchWord)
+                .then(frenchWordBase64Audio => {
+                    updateFrenchWordAudio(frenchWordBase64Audio);
+                });
+        }
+    });
 
 document
     .getElementById('french-sentence')
