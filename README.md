@@ -46,12 +46,11 @@ Suggestions are welcome! Please open an issue to discuss any major changes or id
 Anki Card Builder © 2025 by Stoyan Kostadinov is licensed under **CC BY-NC 4.0**. To view a copy of this license, visit [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/).
 
 ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 49) // On enter in french word, refresh audio
-ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 50) // Loading indicators for everything - gender, translateion
 ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 51) // Google translate is slow
 ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 52) // See if Deepl really needs opening
 ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 53) // Make error be within the fieldset (#error-message), error for deck names
-ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 54) // Example sentences at <https://context.reverso.net/translation/french-english/je+suis>
-ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 55) // Eslint rule about semicolos
+ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 54) // Example sentences at <https://context.reverso.net/translation/french-english/je+suis>//
 
-// Space between if, catch else
-// Context menus to separate file
+// Nom commun 1 - livre
+
+// When user clicks to type in a field, the eror effect is not applied
