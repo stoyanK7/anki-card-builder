@@ -37,9 +37,12 @@ function openCardBuilderInPopupWindow(frenchWord) {
 function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
     const encodedURIfrenchWord = encodeURIComponent(frenchWord);
     const urls = [
-        `https://fr.wiktionary.org/wiki/${encodedURIfrenchWord}`,
+        /** Google Translate must be first to stay in focus. If not focused,
+        * the browser treats it as background, throttles resources, and
+        * translation fetching can take 10+ seconds. */
         'https://translate.google.com'
                     + `/?sl=fr&tl=bg&text=${encodedURIfrenchWord}&op=translate`,
+        `https://fr.wiktionary.org/wiki/${encodedURIfrenchWord}`,
         `https://www.google.com/search?tbm=isch&q=${encodedURIfrenchWord}`
     ];
 
