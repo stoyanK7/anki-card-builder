@@ -66,10 +66,3 @@ document
                 });
         }
     });
-
-
-document.addEventListener('keydown', event => {
-    if (event.ctrlKey && event.key === 'Enter') {
-        document.querySelector('form').requestSubmit();
-    }
-});

@@ -1,7 +1,9 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 
 export function listenForSaveCard() {
-    document.querySelector('form').addEventListener('submit', saveCard);
+    document
+        .getElementById('save-card-button')
+        .addEventListener('click', saveCard);
 }
 
 async function saveCard(event) {
