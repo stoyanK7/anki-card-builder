@@ -4,7 +4,7 @@ import {
     updateFrenchSentenceAudio
 } from './ui-updater.js';
 
-export function initKeybinds() {
+export function initializeKeybinds() {
 // TODO: move the orchestrate functions to a separate file and use them insstead
     document
         .getElementById('french-word')

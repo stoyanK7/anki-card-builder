@@ -1,4 +1,4 @@
-export function initUiUpdateListeners() {
+export function initializeUiUpdateListeners() {
     browser.runtime.onMessage.addListener(message => {
         if (message.action === 'scrape-start') {
             handleScrapeStart(message);
