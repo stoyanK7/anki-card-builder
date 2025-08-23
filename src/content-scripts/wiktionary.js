@@ -208,10 +208,17 @@ function getNomCommunSectionElement() {
         throw new Error('<section> parent for Français heading not found.');
     }
 
-    const nomCommunH3Element =
+    let nomCommunH3Element =
         frenchSectionElement.querySelector('h3#Nom_commun');
-    if (!nomCommunH3Element) {
-        throw new Error('Nom commun heading not found.');
+    // Also check for nom commun 1 because some words have multiple entries
+    const nomCommun1H3Element =
+        frenchSectionElement.querySelector('h3#Nom_commun_1');
+    if (!nomCommunH3Element && !nomCommun1H3Element) {
+        throw new Error('Nom commun headings not found.');
+    }
+
+    if (!nomCommunH3Element && nomCommun1H3Element) {
+        nomCommunH3Element = nomCommun1H3Element;
     }
 
     const nomCommunSectionElement = nomCommunH3Element.closest('section');
