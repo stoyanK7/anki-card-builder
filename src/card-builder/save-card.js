@@ -1,6 +1,6 @@
 import { invokeAnkiConnect } from '../shared/anki-connect.js';
 
-export function listenForSaveCard() {
+export function initializeSaveCardListener() {
     document
         .getElementById('save-card-button')
         .addEventListener('click', saveCard);

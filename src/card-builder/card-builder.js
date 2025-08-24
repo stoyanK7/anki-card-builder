@@ -1,6 +1,6 @@
 import { initializeDeckDropdown } from './deck-dropdown.js';
 import { initializeKeybinds } from './keybinds.js';
-import { listenForSaveCard } from './save-card.js';
+import { initializeSaveCardListener } from './save-card.js';
 import { initializeUiUpdateListeners,
     updateFrenchWord } from './ui-updater.js';
 
@@ -9,7 +9,7 @@ updateFrenchWord(frenchWord);
 initializeDeckDropdown();
 initializeUiUpdateListeners();
 initializeKeybinds();
-listenForSaveCard();
+initializeSaveCardListener();
 browser.runtime.sendMessage({
     action: 'card-builder-ready',
     frenchWord
