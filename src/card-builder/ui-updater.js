@@ -10,6 +10,8 @@ export function initializeUiUpdateListeners() {
             handleScrapeError(message);
         }
     });
+
+    createUserInteractionListeners();
 }
 
 function handleScrapeStart(message) {
@@ -230,4 +232,38 @@ function handleScrapeError(message) {
             .setAttribute('data-state', 'error');
         break;
     }
+}
+
+function createUserInteractionListeners() {
+    document
+        .querySelectorAll(
+            '.input-with-loading input, .input-with-loading textarea'
+        )
+        .forEach(el => {
+            const markLoaded = () => {
+                const container = el.closest('.input-with-loading');
+                if (container && container.getAttribute('data-state') === 'error') {
+                    container.setAttribute('data-state', 'loaded');
+                }
+            };
+            el.addEventListener('focus', markLoaded);
+            el.addEventListener('click', markLoaded);
+        });
+
+    document
+        .querySelectorAll('input[name="french-word-gender"]')
+        .forEach(radio => {
+            radio.addEventListener('change', () => {
+                const seg = radio.closest('.segmented-with-loading');
+                if (seg && seg.getAttribute('data-state') === 'error') {
+                    seg.setAttribute('data-state', 'loaded');
+                }
+            });
+            radio.addEventListener('click', () => {
+                const seg = radio.closest('.segmented-with-loading');
+                if (seg && seg.getAttribute('data-state') === 'error') {
+                    seg.setAttribute('data-state', 'loaded');
+                }
+            });
+        });
 }
