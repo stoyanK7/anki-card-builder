@@ -99,7 +99,7 @@ async function saveCard(event) {
     }
 
     browser.runtime.sendMessage({
-        action: 'end-card-building-process',
+        action: 'end-card-building-workflow',
         frenchWord: frenchWord,
         deckName: deckName
     });

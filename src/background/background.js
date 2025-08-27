@@ -10,8 +10,7 @@ browser.runtime.onMessage.addListener(message => {
     if (message.action === 'start-card-building-workflow') {
         startCardBuildingWorkflow(message.frenchWord);
     }
-    // TODO: rename
-    if (message.action === 'end-card-building-process') {
+    if (message.action === 'end-card-building-workflow') {
         endCardBuildingWorkflow(message.frenchWord, message.deckName);
     }
     /**
