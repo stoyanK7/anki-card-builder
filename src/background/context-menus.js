@@ -55,8 +55,15 @@ function addContextMenuListeners() {
 
 function handlePrepareCardContextMenu(info) {
     const frenchWord = info.selectionText.trim();
-
-    // TODO: Add validation
+    if (!frenchWord) {
+        browser.notifications.create('french-word-is-empty', {
+            type: 'basic',
+            iconUrl: browser.runtime.getURL('icons/flashcards-64.png'),
+            title: 'Empty French Word',
+            message: 'Please select a valid French word.'
+        });
+        return;
+    }
 
     startCardBuildingWorkflow(frenchWord);
 }
