@@ -69,15 +69,16 @@ function handlePrepareCardContextMenu(info) {
 }
 
 function handleUseImageContextMenu(info) {
-    if (info && info.mediaType !== 'image') {
-        // TODO: Add better notification for this
-        console.warn('Context menu clicked on non-image element:', info);
-        return;
-    }
     if (!info.srcUrl) {
-        console.warn('No image source URL found in context menu info:', info);
+        browser.notifications.create('no-image-src-url', {
+            type: 'basic',
+            iconUrl: browser.runtime.getURL('icons/flashcards-64.png'),
+            title: 'No Image Source URL',
+            message: 'Please select a valid image.'
+        });
         return;
     }
+
     browser.runtime.sendMessage({
         action: 'scrape-success',
         parameter: 'image',
@@ -94,13 +95,13 @@ function handleClearImageContextMenu() {
 }
 
 function handleUseAudioContextMenu(info) {
-    if (info && info.mediaType !== 'audio') {
-        // TODO: Add better notification for this
-        console.warn('Context menu clicked on non-audio element:', info);
-        return;
-    }
     if (!info.srcUrl) {
-        console.warn('No audio source URL found in context menu info:', info);
+        browser.notifications.create('no-audio-src-url', {
+            type: 'basic',
+            iconUrl: browser.runtime.getURL('icons/flashcards-64.png'),
+            title: 'No Audio Source URL',
+            message: 'Please select a valid audio.'
+        });
         return;
     }
     browser.runtime.sendMessage({
