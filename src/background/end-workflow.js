@@ -11,10 +11,6 @@ function notifyCardSaved(frenchWord, deckName) {
         title: 'Card Saved',
         message: `Card "${frenchWord}" saved in deck "${deckName}".`
     });
-
-    setTimeout(() => {
-        browser.notifications.clear(notificationId);
-    }, 5000);
 }
 
 /**
