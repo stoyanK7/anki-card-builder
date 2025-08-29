@@ -27,7 +27,6 @@ function notifyCardSaved(frenchWord, deckName) {
  * window will not execute.
  */
 async function closeAndCleanupWindows() {
-    // TODO: A better idea would be to do all this in the background script.
     const storageResult = await browser.storage.local.get([
         'cardBuilderWindowId',
         'resourcesWindowId'
