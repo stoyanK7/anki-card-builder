@@ -18,7 +18,6 @@ browser.runtime.sendMessage({
 function getFrenchWordFromUrl() {
     const params = new URLSearchParams(window.location.search);
     const frenchWord = params.get('frenchWord');
-    // TODO: Add some error handling
     return frenchWord;
 }
 

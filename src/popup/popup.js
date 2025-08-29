@@ -127,7 +127,6 @@ function startCardPreparation() {
         .getElementById('french-word-input')
         .value.trim();
 
-    // TODO: Validate the French word before proceeding
     browser.runtime.sendMessage({
         action: 'start-card-building-workflow',
         frenchWord

@@ -5,7 +5,6 @@ import {
 } from './ui-updater.js';
 
 export function initializeKeybinds() {
-// TODO: move the orchestrate functions to a separate file and use them insstead
     document
         .getElementById('french-word')
         .addEventListener('keydown', event => {
