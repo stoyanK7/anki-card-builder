@@ -1,7 +1,16 @@
-# Anki Card Builder
+# Anki Card Builder [FR-BG]
+
+![HTML](https://shields.io/badge/HTML-E34F26?logo=html5&logoColor=white&style=flat-square)
+![CSS](https://shields.io/badge/CSS-1572B6?logo=css&logoColor=white&style=flat-square)
+![JavaScript](https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square)
+
+![Chrome](https://img.shields.io/badge/Chrome-4285F4?logo=googlechrome&logoColor=white&style=flat-square)
+![Firefox](https://img.shields.io/badge/Firefox-FF7139?logo=firefox&logoColor=white&style=flat-square)
+
+![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue?style=flat-square)
 
 > [!NOTE]
-> The extension only works for French words that need to be translated to Bulgarian. I have not yet made the tool more generic, but I hope to do so in the future.
+> Currently, the tool only works for people who study French through Bulgarian.
 
 ## What is Anki Card Builder?
 
@@ -19,8 +28,7 @@ Normally, when you find a new foreign language word, you have to do something li
 
 That’s a lot of steps, and it gets old fast.
 
-With Anki Card Builder, all of that busywork is done for you automatically.
-Just highlight a word, and the extension gathers everything.
+With Anki Card Builder, all of that busywork is done for you automatically. Just highlight a word, and the extension gathers everything.
 
 ## Why is this project useful?
 
@@ -33,17 +41,6 @@ Just highlight a word, and the extension gathers everything.
 
 TODO
 
-## Where to get help
-
-If you run into any issues or have questions, please check the [issues page](https://github.com/stoyanK7/anki-card-builder/issues).
-
-## Contributing
-
-Suggestions are welcome! Please open an issue to discuss any major changes or ideas first.
-
 ## License
 
 Anki Card Builder © 2025 by Stoyan Kostadinov is licensed under **CC BY-NC 4.0**. To view a copy of this license, visit [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/).
-
-ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 53) // Make error be within the fieldset (#error-message), error for deck names
-ec9c4571 (Stoyan 2025-08-11 17:27:41 +0300 54) // Example sentences at <https://context.reverso.net/translation/french-english/je+suis>//
