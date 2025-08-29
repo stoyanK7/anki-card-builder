@@ -240,12 +240,13 @@ function createUserInteractionListeners() {
             '.input-with-loading input, .input-with-loading textarea'
         )
         .forEach(el => {
-            const markLoaded = () => {
+            function markLoaded() {
                 const container = el.closest('.input-with-loading');
-                if (container && container.getAttribute('data-state') === 'error') {
+                if (container
+                    && container.getAttribute('data-state') === 'error') {
                     container.setAttribute('data-state', 'loaded');
                 }
-            };
+            }
             el.addEventListener('focus', markLoaded);
             el.addEventListener('click', markLoaded);
         });
