@@ -30,6 +30,10 @@ That’s a lot of steps, and it gets old fast.
 
 With Anki Card Builder, all of that busywork is done for you automatically. Just highlight a word, and the extension gathers everything.
 
+## How does it work? - General Workflow
+
+![General Workflow of Anki Card Builder](./docs/general-workflow.drawio.png)
+
 ## Why is this project useful?
 
 - **Save time**: No more endless searching, copying, and pasting. You can build cards in seconds.
