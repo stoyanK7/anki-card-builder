@@ -9,12 +9,12 @@
 
 ![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue?style=flat-square)
 
-> [!NOTE]
-> Currently, the tool only works for people who study French through Bulgarian.
+> [!IMPORTANT]
+> Designed only for learners of French whose base language is Bulgarian.
 
 ## What is Anki Card Builder?
 
-Anki Card Builder is a little browser extension made to take the pain out of making language flashcards for Anki.
+Anki Card Builder is a little browser extension made to take the pain out of making language flashcards for [Anki](https://apps.ankiweb.net/).
 
 Normally, when you find a new foreign language word, you have to do something like this:
 
