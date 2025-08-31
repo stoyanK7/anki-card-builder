@@ -39,16 +39,19 @@ function orchestrateBulgarianSentenceScraping() {
  * @throws {Error} If the sentence is not found within 8 seconds.
  */
 async function scrapeBulgarianSentence() {
-    const bulgarianSentenceXPath =
-        '/html/body/div[1]/div[1]/div[3]/div[2]/div[1]/div[2]/div[1]'
-        + '/main/div[2]/nav/div/div[2]/div/div/div[1]/div/div/div/'
-        + 'div/div/div/section/div/div[2]/div[3]/section/div[1]/d-textarea';
-
     return new Promise((resolve, reject) => {
         const observer = new MutationObserver((mutations, obs) => {
             try {
-                const bulgarianSentence =
-                    getStringFromXPath(bulgarianSentenceXPath);
+                const dTextareas = document.querySelectorAll('d-textarea');
+
+                // Ensure there are at least 2 <d-textarea>s
+                if (dTextareas.length < 2) return;
+
+                // The second <d-textarea> contains the Bulgarian sentence
+                const bulgarianSentence = dTextareas[1].textContent.trim();
+
+                // Ensure the sentence has loaded
+                if (!bulgarianSentence) return;
 
                 clearTimeout(timeoutId);
                 observer.disconnect();
