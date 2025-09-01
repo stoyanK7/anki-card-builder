@@ -185,8 +185,6 @@ audio {
     display: grid;
     width: 125px;
     height: 125px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
     margin: 0;
     place-self: center;
 }
