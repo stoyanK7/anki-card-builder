@@ -17,18 +17,8 @@ function createContextMenus() {
         contexts: ['image']
     });
     browser.contextMenus.create({
-        id: 'clear-image',
-        title: '❌🖼️ Clear Image',
-        contexts: ['image']
-    });
-    browser.contextMenus.create({
         id: 'use-audio',
         title: '🔊 Use Audio',
-        contexts: ['audio']
-    });
-    browser.contextMenus.create({
-        id: 'clear-audio',
-        title: '❌🔊 Clear Audio',
         contexts: ['audio']
     });
 }
@@ -41,14 +31,8 @@ function addContextMenuListeners() {
         if (info.menuItemId === 'use-image') {
             handleUseImageContextMenu(info);
         }
-        if (info.menuItemId === 'clear-image') {
-            handleClearImageContextMenu();
-        }
         if (info.menuItemId === 'use-audio') {
             handleUseAudioContextMenu(info);
-        }
-        if (info.menuItemId === 'clear-audio') {
-            handleClearAudioContextMenu();
         }
     });
 }
@@ -86,14 +70,6 @@ function handleUseImageContextMenu(info) {
     });
 }
 
-function handleClearImageContextMenu() {
-    browser.runtime.sendMessage({
-        action: 'scrape-success',
-        parameter: 'image',
-        value: null
-    });
-}
-
 function handleUseAudioContextMenu(info) {
     if (!info.srcUrl) {
         browser.notifications.create('no-audio-src-url', {
@@ -108,13 +84,5 @@ function handleUseAudioContextMenu(info) {
         action: 'scrape-success',
         parameter: 'frenchWordAudio',
         value: info.srcUrl
-    });
-}
-
-function handleClearAudioContextMenu() {
-    browser.runtime.sendMessage({
-        action: 'scrape-success',
-        parameter: 'frenchWordAudio',
-        value: null
     });
 }
