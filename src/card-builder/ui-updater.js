@@ -267,4 +267,16 @@ function createUserInteractionListeners() {
                 }
             });
         });
+
+    document
+        .getElementById('clear-french-word-audio')
+        .addEventListener('click', () => {
+            updateFrenchWordAudio(null);
+        });
+
+    document
+        .getElementById('clear-french-sentence-audio')
+        .addEventListener('click', () => {
+            updateFrenchSentenceAudio(null);
+        });
 }
