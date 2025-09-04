@@ -45,19 +45,22 @@ async function saveCard(event) {
         .getElementById('image-preview')
         .src.trim();
 
+    const frenchWordAudioFilename = await makeSafeFilename(frenchWord);
+    const frenchSentenceAudioFilename = await makeSafeFilename(frenchSentence);
+
     const requestParams = {
         actions: [
             {
                 action: 'storeMediaFile',
                 params: {
-                    filename: `${frenchWord}.wav`,
+                    filename: frenchWordAudioFilename,
                     ...getAudioParam(frenchWordAudio)
                 }
             },
             {
                 action: 'storeMediaFile',
                 params: {
-                    filename: `${frenchSentence}.wav`,
+                    filename: frenchSentenceAudioFilename,
                     ...getAudioParam(frenchSentenceAudio)
                 }
             },
@@ -69,10 +72,11 @@ async function saveCard(event) {
                         modelName: 'Custom Vocabulary',
                         fields: {
                             'French Word': frenchWord,
-                            'French Word Audio': `[sound:${frenchWord}.wav]`,
+                            'French Word Audio':
+                                    `[sound:${frenchWordAudioFilename}]`,
                             'French Sentence': frenchSentence,
                             'French Sentence Audio':
-                                    `[sound:${frenchSentence}.wav]`,
+                                    `[sound:${frenchSentenceAudioFilename}]`,
                             'French Word Gender': frenchWordGender,
                             'French Word Plural': frenchWordPlural,
                             'Bulgarian Word': bulgarianWord,
@@ -103,6 +107,24 @@ async function saveCard(event) {
         frenchWord: frenchWord,
         deckName: deckName
     });
+}
+
+async function makeSafeFilename(sentence) {
+    const hash = await hashFilename(sentence);
+    return `${hash}.wav`;
+}
+
+async function hashFilename(input) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(input);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex =
+        hashArray
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+
+    return hashHex.slice(0, 32);
 }
 
 /**
