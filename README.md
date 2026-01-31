@@ -45,6 +45,12 @@ With Anki Card Builder, all of that busywork is done for you automatically. Just
 
 TODO
 
+## Development setup
+
+1. Visit `about:debugging#/runtime/this-firefox`
+2. Click `Load Temporary Add-on...`
+3. Select the `manifest.json`
+
 ## License
 
 Anki Card Builder © 2025 by Stoyan Kostadinov is licensed under **CC BY-NC 4.0**. To view a copy of this license, visit [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/).
