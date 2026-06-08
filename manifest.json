@@ -36,24 +36,44 @@
         "https://upload.wikimedia.org/*",
         "https://translate.google.com/*",
         "https://www.google.com/search*",
-        "https://www.deepl.com/*"
+        "https://www.deepl.com/*",
+        "https://fr.glosbe.com/*"
     ],
     "content_scripts": [
         {
-            "matches": ["https://fr.wiktionary.org/*"],
-            "js": ["src/content-scripts/wiktionary.js"]
+            "matches": [
+                "https://fr.wiktionary.org/*"
+            ],
+            "js": [
+                "src/content-scripts/wiktionary.js"
+            ]
         },
         {
-            "matches": ["https://translate.google.com/*"],
-            "js": ["src/shared/xpath.js", "src/content-scripts/google-translate.js"]
+            "matches": [
+                "https://translate.google.com/*"
+            ],
+            "js": [
+                "src/shared/xpath.js",
+                "src/content-scripts/google-translate.js"
+            ]
         },
         {
-            "matches": ["https://www.google.com/search*"],
-            "js": ["src/shared/xpath.js", "src/content-scripts/google-images.js"]
+            "matches": [
+                "https://www.google.com/search*"
+            ],
+            "js": [
+                "src/shared/xpath.js",
+                "src/content-scripts/google-images.js"
+            ]
         },
         {
-            "matches": ["https://www.deepl.com/*"],
-            "js": ["src/shared/xpath.js", "src/content-scripts/deepl.js"]
+            "matches": [
+                "https://www.deepl.com/*"
+            ],
+            "js": [
+                "src/shared/xpath.js",
+                "src/content-scripts/deepl.js"
+            ]
         }
     ]
 }
