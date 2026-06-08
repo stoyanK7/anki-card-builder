@@ -44,7 +44,7 @@ function openResourceTabsForFrenchWordInNewWindow(frenchWord) {
                     + `/?sl=fr&tl=bg&text=${encodedURIfrenchWord}&op=translate`,
         `https://fr.wiktionary.org/wiki/${encodedURIfrenchWord}`,
         `https://www.google.com/search?tbm=isch&q=${encodedURIfrenchWord}`,
-        `https://fr.glosbe.com/fr/bg/${encodedURIfrenchWord}`,
+        `https://fr.glosbe.com/fr/bg/${encodedURIfrenchWord}`
     ];
 
     browser.windows
